@@ -118,10 +118,12 @@ class HslTest extends PHPUnit_Framework_TestCase
     {
         $hsl = new Hsl(348, 100, 50);
 
+        $this->assertFalse($hsl->hasAlpha());
         $this->assertEquals(1.0, $hsl->getAlpha());
 
         $hsl = new Hsl(348, 100, 50, 0.7);
 
+        $this->assertTrue($hsl->hasAlpha());
         $this->assertEquals(0.7, $hsl->getAlpha());
     }
 

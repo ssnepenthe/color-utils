@@ -136,6 +136,11 @@ class Hsl implements ColorInterface
         return $this->saturation;
     }
 
+    public function hasAlpha() : bool
+    {
+        return $this->withAlpha;
+    }
+
     public function toArray() : array
     {
         $values = [$this->hue, $this->saturation, $this->lightness];

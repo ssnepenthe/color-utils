@@ -42,11 +42,13 @@ class RgbTest extends PHPUnit_Framework_TestCase
     {
         $rgb = new Rgb(255, 0, 51);
 
+        $this->assertFalse($rgb->hasAlpha());
         $this->assertEquals(1.0, $rgb->getAlpha());
         $this->assertEquals('ff', $rgb->getAlphaByte());
 
         $rgb = new Rgb(255, 0, 51, 0.7);
 
+        $this->assertTrue($rgb->hasAlpha());
         $this->assertEquals(0.7, $rgb->getAlpha());
         $this->assertEquals('b2', $rgb->getAlphaByte());
     }

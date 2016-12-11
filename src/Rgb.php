@@ -219,6 +219,11 @@ class Rgb implements ColorInterface
         return $this->intToHexByte($this->red);
     }
 
+    public function hasAlpha() : bool
+    {
+        return $this->withAlpha;
+    }
+
     public function toArray() : array
     {
         $values = [$this->red, $this->green, $this->blue];
