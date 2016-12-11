@@ -114,9 +114,10 @@ class Rgb implements ColorInterface
         }
 
         // Get matches and filter out empty strings.
-        $rgb = array_filter(explode(',', $matches[1]), function (string $val) : bool {
+        $rgb = explode(',', $matches[1]);
+        $rgb = array_values(array_filter($rgb, function (string $val) : bool {
             return '' !== $val;
-        });
+        }));
         $count = count($rgb);
 
         if (3 !== $count && 4 !== $count) {
@@ -257,7 +258,7 @@ class Rgb implements ColorInterface
         // You must provide at least one of red, green, blue or alpha.
         if (empty(array_intersect(['red', 'green', 'blue', 'alpha'], $props))) {
             // @todo
-            throw new InvalidArgumentException;
+            throw new \InvalidArgumentException;
         }
 
         // Merge defaults.

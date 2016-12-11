@@ -349,6 +349,13 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(1, 2);
     }
 
+    public function test_it_cant_be_instantiated_with_a_non_numeric_alpha()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $rgb = new Rgb(123, 234, 132, 'apples');
+    }
+
     public function test_it_cant_be_instantiated_with_an_unrecognized_keyword()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -403,5 +410,12 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $rgb = Rgb::fromRgbString('rgb(240, 75%)');
+    }
+
+    public function test_it_cant_create_a_new_instance_without_valid_attrs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $rgb = Rgb::fromRgbString('rgb(1,2,3)')->with(['hue' => 120]);
     }
 }
