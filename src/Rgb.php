@@ -32,8 +32,8 @@ class Rgb implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        $args = array_map(function (int $value) : int {
-            return $this->forceIntoRange($value, 0, 255);
+        $args = array_map(function ($value) : int {
+            return $this->forceIntoRange(intval(round(floatval($value))), 0, 255);
         }, $args);
 
         $args[] = $this->forceIntoRange(floatval($a), 0.0, 1.0);

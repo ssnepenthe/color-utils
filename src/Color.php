@@ -171,10 +171,11 @@ class Color implements ColorInterface
         return $this->__toString();
     }
 
-    public function with(array $attr) : ColorInterface
+    public function with(array $attrs) : ColorInterface
     {
-        $props = array_keys($attr);
+        $props = array_keys($attrs);
 
+        $withAlpha = isset($attrs['alpha']);
         $withHsl = ! empty(array_intersect(
             ['hue', 'saturation', 'lightness'],
             $props
@@ -190,17 +191,21 @@ class Color implements ColorInterface
         }
 
         if ($withHsl) {
-            $color = new Color($this->hsl->with($attr));
+            $color = new Color($this->hsl->with($attrs));
             $color->setType($this->getType());
 
             return $color;
         }
 
         if ($withRgb) {
-            $color = new Color($this->rgb->with($attr));
+            $color = new Color($this->rgb->with($attrs));
             $color->setType($this->getType());
 
             return $color;
+        }
+
+        if ($withAlpha) {
+            return new Color($this->{$this->type}->with($attrs));
         }
 
         // @todo

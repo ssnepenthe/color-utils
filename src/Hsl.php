@@ -32,10 +32,10 @@ class Hsl implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        $hue = $this->shiftIntoRange(intval($args[0]), 0, 360);
+        $hue = $this->shiftIntoRange(intval(round(floatval($args[0]))), 0, 360);
 
-        list($saturation, $lightness) = array_map(function(int $val) : int {
-            return $this->forceIntoRange($val, 0, 100);
+        list($saturation, $lightness) = array_map(function($val) : int {
+            return $this->forceIntoRange(intval(round(floatval($val))), 0, 100);
         }, [$args[1], $args[2]]);
 
         $alpha = $this->forceIntoRange(floatval($alpha), 0.0, 1.0);

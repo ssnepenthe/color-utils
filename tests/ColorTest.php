@@ -278,6 +278,39 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $orange->getBlue());
     }
 
+    public function test_it_can_modify_alpha_to_create_a_new_color()
+    {
+        $transparent = Color::fromKeyword('red')->with(['alpha' => 0]);
+
+        $this->assertEquals(255, $transparent->getRed());
+        $this->assertEquals(0, $transparent->getGreen());
+        $this->assertEquals(0, $transparent->getBlue());
+        $this->assertEquals(0, $transparent->getAlpha());
+    }
+
+    public function test_it_can_modify_alpha_and_other_values_at_once()
+    {
+        $transparent = Color::fromKeyword('red')->with([
+            'alpha' => 0.5,
+            'blue' => 255
+        ]);
+
+        $this->assertEquals(255, $transparent->getRed());
+        $this->assertEquals(0, $transparent->getGreen());
+        $this->assertEquals(255, $transparent->getBlue());
+        $this->assertEquals(0.5, $transparent->getAlpha());
+
+        $transparent = Color::fromHsl(348, 100, 50)->with([
+            'alpha' => 0.5,
+            'hue' => 270
+        ]);
+
+        $this->assertEquals(270, $transparent->getHue());
+        $this->assertEquals(100, $transparent->getSaturation());
+        $this->assertEquals(50, $transparent->getLightness());
+        $this->assertEquals(0.5, $transparent->getAlpha());
+    }
+
     public function test_it_can_modify_multiple_rgb_attributes_at_once()
     {
         $white = Color::fromKeyword('black')
