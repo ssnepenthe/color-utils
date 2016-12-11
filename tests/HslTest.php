@@ -15,11 +15,15 @@ class HslTest extends PHPUnit_Framework_TestCase
     {
         $hsl = new Hsl(348, 100, 50);
 
+        $this->assertInstanceOf(Hsl::class, $hsl);
+
         $this->assertEquals(348, $hsl->getHue());
         $this->assertEquals(100, $hsl->getSaturation());
         $this->assertEquals(50, $hsl->getLightness());
 
         $hsl = new Hsl(348, 100, 50, 0.7);
+
+        $this->assertInstanceOf(Hsl::class, $hsl);
 
         $this->assertEquals(348, $hsl->getHue());
         $this->assertEquals(100, $hsl->getSaturation());

@@ -15,11 +15,15 @@ class RgbTest extends PHPUnit_Framework_TestCase
     {
         $rgb = new Rgb(255, 0, 51);
 
+        $this->assertInstanceOf(Rgb::class, $rgb);
+
         $this->assertEquals(255, $rgb->getRed());
         $this->assertEquals(0, $rgb->getGreen());
         $this->assertEquals(51, $rgb->getBlue());
 
         $rgb = new Rgb(255, 0, 51, 0.7);
+
+        $this->assertInstanceOf(Rgb::class, $rgb);
 
         $this->assertEquals(255, $rgb->getRed());
         $this->assertEquals(0, $rgb->getGreen());
