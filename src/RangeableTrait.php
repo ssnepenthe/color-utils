@@ -2,7 +2,8 @@
 
 namespace SSNepenthe\ColorUtils;
 
-trait RangeableTrait {
+trait RangeableTrait
+{
     protected function forceIntoRange($value, $min, $max)
     {
         if ($min > $value) {

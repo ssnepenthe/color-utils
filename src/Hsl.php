@@ -34,7 +34,7 @@ class Hsl implements ColorInterface
 
         $hue = $this->shiftIntoRange(intval(round(floatval($args[0]))), 0, 360);
 
-        list($saturation, $lightness) = array_map(function($val) : int {
+        list($saturation, $lightness) = array_map(function ($val) : int {
             return $this->forceIntoRange(intval(round(floatval($val))), 0, 100);
         }, [$args[1], $args[2]]);
 
@@ -95,15 +95,14 @@ class Hsl implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        if (
-            ! static::isPercentageString($saturation) ||
+        if (! static::isPercentageString($saturation) ||
             ! static::isPercentageString($lightness)
         ) {
             // @todo
             throw new \InvalidArgumentException;
         }
 
-        $hsl = array_map(function(string $val) : int {
+        $hsl = array_map(function (string $val) : int {
             return intval(trim($val, '%'));
         }, [$hue, $saturation, $lightness]);
 

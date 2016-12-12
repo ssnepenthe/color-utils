@@ -13,7 +13,7 @@ class ScaleColor implements TransformerInterface
 
     public function __construct(array $attrs)
     {
-        $this->attrs = array_map(function(int $adjustment) {
+        $this->attrs = array_map(function (int $adjustment) {
             if (-100 > $adjustment) {
                 $adjustment = -100;
             }

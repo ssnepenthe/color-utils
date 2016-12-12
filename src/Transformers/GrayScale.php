@@ -4,7 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 
-class GrayScale Implements TransformerInterface
+class GrayScale implements TransformerInterface
 {
     protected $transformer;
 

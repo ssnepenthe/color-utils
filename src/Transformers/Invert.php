@@ -4,7 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 
-class Invert Implements TransformerInterface
+class Invert implements TransformerInterface
 {
     public function transform(Color $color) : Color
     {

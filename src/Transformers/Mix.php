@@ -30,7 +30,6 @@ class Mix implements TransformerInterface
         }
 
         $this->weight = $weight;
-
     }
 
     public function transform(Color $color) : Color

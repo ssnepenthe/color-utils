@@ -4,7 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 
-class Complement Implements TransformerInterface
+class Complement implements TransformerInterface
 {
     protected $transformer;
 

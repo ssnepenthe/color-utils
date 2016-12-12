@@ -120,7 +120,7 @@ class Converter
         }
 
         // Return to proper scale, round and convert to int.
-        $colors = array_map(function(float $value) : int {
+        $colors = array_map(function (float $value) : int {
             return intval(round($value));
         }, [$hue * 60, $saturation * 100, $lightness * 100]);
 
