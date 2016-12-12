@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\ColorInterface;
 
 class Darken implements TransformerInterface
 {
@@ -13,7 +13,7 @@ class Darken implements TransformerInterface
         $this->transformer = new AdjustColor(['lightness' => -1 * $amount]);
     }
 
-    public function transform(Color $color) : Color
+    public function transform(ColorInterface $color) : ColorInterface
     {
         return $this->transformer->transform($color);
     }
