@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 class GrayScale implements TransformerInterface
 {
@@ -13,7 +13,7 @@ class GrayScale implements TransformerInterface
         $this->transformer = new ChangeColor(['saturation' => 0]);
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);
     }

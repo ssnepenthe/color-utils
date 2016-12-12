@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 /**
  * @todo Should we filter out any non-adjustments? I.e. 0 for any allowed attributes?
@@ -26,7 +26,7 @@ class ScaleColor implements TransformerInterface
         }, $attrs);
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         $adjustments = [];
 

@@ -2,11 +2,11 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 class Invert implements TransformerInterface
 {
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         return $color->with([
             'red' => 255 - $color->getRed(),

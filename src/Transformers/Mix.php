@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 /**
  * Not exactly in-line with the SASS function. SASS uses the user supplied weight
@@ -17,7 +17,7 @@ class Mix implements TransformerInterface
     protected $color;
     protected $weight;
 
-    public function __construct(ColorInterface $color, int $weight = 50)
+    public function __construct(Color $color, int $weight = 50)
     {
         $this->color = $color;
 
@@ -32,7 +32,7 @@ class Mix implements TransformerInterface
         $this->weight = $weight;
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         $p = floatval($this->weight / 100.0);
         $w = $p * 2 - 1;

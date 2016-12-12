@@ -3,7 +3,6 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\ColorInterface;
 
 class Tint implements TransformerInterface
 {
@@ -14,7 +13,7 @@ class Tint implements TransformerInterface
         $this->transformer = new Mix(Color::fromRgb(255, 255, 255), $weight);
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);
     }

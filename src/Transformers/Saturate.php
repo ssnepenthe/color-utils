@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 class Saturate implements TransformerInterface
 {
@@ -13,7 +13,7 @@ class Saturate implements TransformerInterface
         $this->transformer = new AdjustColor(['saturation' => $amount]);
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);
     }

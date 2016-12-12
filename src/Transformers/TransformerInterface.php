@@ -2,9 +2,9 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 interface TransformerInterface
 {
-    public function transform(ColorInterface $color) : ColorInterface;
+    public function transform(Color $color) : Color;
 }

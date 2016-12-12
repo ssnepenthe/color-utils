@@ -2,7 +2,7 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\ColorInterface;
+use SSNepenthe\ColorUtils\Color;
 
 class ChangeColor implements TransformerInterface
 {
@@ -13,7 +13,7 @@ class ChangeColor implements TransformerInterface
         $this->attrs = $attrs;
     }
 
-    public function transform(ColorInterface $color) : ColorInterface
+    public function transform(Color $color) : Color
     {
         $adjustments = [];
 
