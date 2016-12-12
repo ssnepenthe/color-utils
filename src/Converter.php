@@ -90,7 +90,7 @@ class Converter
 
         // 4) Equal colors mean this is a shade of gray.
         if ($max === $min) {
-            $colors = [0, 0, intval(round($lightness))];
+            $colors = [0, 0, intval(round($lightness * 100))];
 
             if ($rgb->hasAlpha()) {
                 $colors[] = $rgb->getAlpha();

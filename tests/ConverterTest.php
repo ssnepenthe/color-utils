@@ -155,6 +155,16 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(50, $hsl->getLightness());
     }
 
+    public function test_it_can_convert_rgb_shades_of_gray()
+    {
+        $rgb = new Rgb(100, 100, 100);
+        $hsl = $this->converter->rgbToHsl($rgb);
+
+        $this->assertEquals(0, $hsl->getHue());
+        $this->assertEquals(0, $hsl->getSaturation());
+        $this->assertEquals(39, $hsl->getLightness());
+    }
+
     /**
      * Test step 5.
      */
