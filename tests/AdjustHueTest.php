@@ -19,7 +19,7 @@ class AdjustHueTest extends TransformerTestCase
 
     public function test_it_can_positively_adjust_hue_from_hex()
     {
-        $color = Color::fromHex('#811');
+        $color = Color::fromString('#811');
 
         $tests = [
             // assert_equal("#886a11", evaluate("adjust-hue(#811, 45deg)"))
@@ -55,7 +55,7 @@ class AdjustHueTest extends TransformerTestCase
 
     public function test_it_cant_adjust_shades_of_gray()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("adjust-hue(#000, 45deg)"))
@@ -64,7 +64,7 @@ class AdjustHueTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // assert_equal("white", evaluate("adjust-hue(#fff, 45deg)"))
@@ -76,7 +76,7 @@ class AdjustHueTest extends TransformerTestCase
 
     public function test_adjustments_of_0_or_360_dont_change_a_color()
     {
-        $color = Color::fromHex('#8a8');
+        $color = Color::fromString('#8a8');
 
         $tests = [
             // assert_equal("#88aa88", evaluate("adjust-hue(#8a8, 360deg)"))

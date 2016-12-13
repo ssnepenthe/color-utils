@@ -7,7 +7,7 @@ class GrayScaleTest extends TransformerTestCase
 {
     public function test_it_can_convert_hex_colors_to_grayscale()
     {
-        $color = Color::fromHex('#abc');
+        $color = Color::fromString('#abc');
 
         $tests = [
             // @todo Off by one from SASS.
@@ -42,7 +42,7 @@ class GrayScaleTest extends TransformerTestCase
 
     public function test_it_doesnt_change_shades_of_gray()
     {
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // assert_equal("white", evaluate("grayscale(white)"))
@@ -51,7 +51,7 @@ class GrayScaleTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("grayscale(black)"))
@@ -63,7 +63,7 @@ class GrayScaleTest extends TransformerTestCase
 
     public function test_it_converts_primary_colors_straight_to_gray()
     {
-        $color = Color::fromHex('#f00');
+        $color = Color::fromString('#f00');
 
         $tests = [
             // assert_equal("gray", evaluate("grayscale(#f00)"))
@@ -72,7 +72,7 @@ class GrayScaleTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#00f');
+        $color = Color::fromString('#00f');
 
         $tests = [
             // assert_equal("gray", evaluate("grayscale(#00f)"))

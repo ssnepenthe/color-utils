@@ -7,7 +7,7 @@ class TintTest extends TransformerTestCase
 {
     public function test_tinting_white_just_gives_white()
     {
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // .tint-white {
@@ -21,7 +21,7 @@ class TintTest extends TransformerTestCase
 
     public function test_tinting_black_gives_gray()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // .tint-black {
@@ -37,7 +37,7 @@ class TintTest extends TransformerTestCase
 
     public function test_it_can_tint_red()
     {
-        $color = Color::fromHex('#f00');
+        $color = Color::fromString('#f00');
 
         $tests = [
             // .tint-red {
@@ -51,7 +51,7 @@ class TintTest extends TransformerTestCase
 
     public function test_it_can_tint_grays()
     {
-        $color = Color::fromHex('#aaa');
+        $color = Color::fromString('#aaa');
 
         $tests = [
             // .tint-gray {

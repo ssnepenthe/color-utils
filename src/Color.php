@@ -2,6 +2,9 @@
 
 namespace SSNepenthe\ColorUtils;
 
+/**
+ * @todo ConverterInterface
+ */
 class Color implements ColorInterface
 {
     protected $hsl;
@@ -12,19 +15,19 @@ class Color implements ColorInterface
         ColorInterface $color,
         Converter $converter = null
     ) {
-        $initialProp = $this->type = strtolower(
+        $this->type = strtolower(
             (new \ReflectionClass($color))->getShortName()
         );
 
-        $props = array_diff(['hsl', 'rgb'], [$initialProp]);
+        $props = array_diff(['hsl', 'rgb'], [$this->type]);
+        $prop = reset($props);
 
-        $this->{$initialProp} = $color;
+        $this->{$this->type} = $color;
         $this->converter = is_null($converter) ? new Converter : $converter;
 
-        $prop = reset($props);
         // I.e. hslToRgb.
-        $converterMethod = sprintf('%sTo%s', $initialProp, ucfirst($prop));
-        $this->{$prop} = $this->converter->{$converterMethod}($this->{$initialProp});
+        $converterMethod = sprintf('%sTo%s', $this->type, ucfirst($prop));
+        $this->{$prop} = $this->converter->{$converterMethod}($this->{$this->type});
     }
 
     public function __toString() : string
@@ -32,32 +35,23 @@ class Color implements ColorInterface
         return (string) $this->{$this->type};
     }
 
-    public static function fromHex(string $hex) : self
+    public static function fromHsl(...$args) : ColorInterface
     {
-        return new static(Rgb::fromHexString($hex));
-    }
-
-    public static function fromHsl(...$args) : self
-    {
-        if (1 === count($args)) {
-            return new static(Hsl::fromHslString(...$args));
-        }
-
         return new static(new Hsl(...$args));
     }
 
-    public static function fromKeyword(string $keyword) : self
+    public static function fromRgb(...$args) : ColorInterface
     {
-        return new static(Rgb::fromKeyword($keyword));
+        return new static(new Rgb(...$args));
     }
 
-    public static function fromRgb(...$args) : self
+    public static function fromString(string $color) : ColorInterface
     {
-        if (1 === count($args)) {
-            return new static(Rgb::fromRgbString(...$args));
+        if ('hsl' === substr($color, 0, 3)) {
+            return new static(Hsl::fromString($color));
         }
 
-        return new static(new Rgb(...$args));
+        return new static(Rgb::fromString($color));
     }
 
     public function getAlpha() : float
@@ -175,7 +169,6 @@ class Color implements ColorInterface
     {
         $props = array_keys($attrs);
 
-        $withAlpha = isset($attrs['alpha']);
         $withHsl = ! empty(array_intersect(
             ['hue', 'saturation', 'lightness'],
             $props
@@ -204,7 +197,7 @@ class Color implements ColorInterface
             return $color;
         }
 
-        if ($withAlpha) {
+        if (isset($attrs['alpha'])) {
             return new Color($this->{$this->type}->with($attrs));
         }
 

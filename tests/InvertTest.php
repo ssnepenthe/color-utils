@@ -7,7 +7,7 @@ class InvertTest extends TransformerTestCase
 {
     public function test_it_can_invert_hex_colors()
     {
-        $color = Color::fromHex('#edc');
+        $color = Color::fromString('#edc');
 
         $tests = [
             // assert_equal("#112233", evaluate("invert(#edc)"))

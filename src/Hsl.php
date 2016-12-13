@@ -11,14 +11,21 @@ class Hsl implements ColorInterface
     protected $lightness;
     protected $saturation;
 
-    protected $withAlpha = false;
+    protected $hasAlpha = false;
 
     public function __construct(...$args)
     {
+        array_walk($args, function($arg) {
+            if (! is_numeric($arg)) {
+                // @todo
+                throw new \InvalidArgumentException;
+            }
+        });
+
         $alpha = 1.0;
 
         if (4 === count($args)) {
-            $this->withAlpha = true;
+            $this->hasAlpha = true;
             $alpha = array_pop($args);
         }
 
@@ -27,15 +34,10 @@ class Hsl implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        if (! is_numeric($alpha)) {
-            // @todo
-            throw new \InvalidArgumentException;
-        }
+        $hue = $this->shiftIntoRange(floatval($args[0]), 0.0, 360.0);
 
-        $hue = $this->shiftIntoRange(intval(round(floatval($args[0]))), 0, 360);
-
-        list($saturation, $lightness) = array_map(function ($val) : int {
-            return $this->forceIntoRange(intval(round(floatval($val))), 0, 100);
+        list($saturation, $lightness) = array_map(function ($val) : float {
+            return $this->forceIntoRange(floatval($val), 0.0, 100.0);
         }, [$args[1], $args[2]]);
 
         $alpha = $this->forceIntoRange(floatval($alpha), 0.0, 1.0);
@@ -49,22 +51,20 @@ class Hsl implements ColorInterface
     public function __toString() : string
     {
         $type = 'hsl';
+        $values = $this->toArray();
 
-        $values = [
-            (string) $this->hue,
-            (string) $this->saturation . '%',
-            (string) $this->lightness . '%',
-        ];
+        $values[1] = (string) $values[1] . '%';
+        $values[2] = (string) $values[2] . '%';
 
-        if ($this->withAlpha) {
+        if ($this->hasAlpha) {
             $type .= 'a';
-            $values[] = (string) $this->alpha;
+            $values[3] = rtrim(number_format($values[3], 2), '0');
         }
 
         return sprintf('%s(%s)', $type, implode(', ', $values));
     }
 
-    public static function fromHslString(string $hsl) : self
+    public static function fromString(string $hsl) : ColorInterface
     {
         $hsl = str_replace(' ', '', $hsl);
 
@@ -85,9 +85,7 @@ class Hsl implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        $hue = $hsl[0];
-        $saturation = $hsl[1];
-        $lightness = $hsl[2];
+        list($hue, $saturation, $lightness) = array_slice($hsl, 0, 3);
         $alpha = $hsl[3] ?? false;
 
         if (static::isPercentageString($hue)) {
@@ -102,12 +100,12 @@ class Hsl implements ColorInterface
             throw new \InvalidArgumentException;
         }
 
-        $hsl = array_map(function (string $val) : int {
-            return intval(trim($val, '%'));
+        $hsl = array_map(function (string $val) : float {
+            return floatval(trim($val, '%'));
         }, [$hue, $saturation, $lightness]);
 
         if (static::isPercentageString($alpha)) {
-            $hsl[] = floatval(trim($alpha, '%')) / 100;
+            $hsl[] = floatval(trim($alpha, '%')) / 100.0;
         } elseif (is_string($alpha)) {
             $hsl[] = floatval($alpha);
         }
@@ -122,30 +120,30 @@ class Hsl implements ColorInterface
 
     public function getHue() : int
     {
-        return $this->hue;
+        return intval(round($this->hue));
     }
 
     public function getLightness() : int
     {
-        return $this->lightness;
+        return intval(round($this->lightness));
     }
 
     public function getSaturation() : int
     {
-        return $this->saturation;
+        return intval(round($this->saturation));
     }
 
     public function hasAlpha() : bool
     {
-        return $this->withAlpha;
+        return $this->hasAlpha;
     }
 
     public function toArray() : array
     {
-        $values = [$this->hue, $this->saturation, $this->lightness];
+        $values = [$this->getHue(), $this->getSaturation(), $this->getLightness()];
 
-        if ($this->withAlpha) {
-            $values[] = $this->alpha;
+        if ($this->hasAlpha()) {
+            $values[] = $this->getAlpha();
         }
 
         return $values;
@@ -174,7 +172,7 @@ class Hsl implements ColorInterface
             'lightness' => $this->lightness,
         ];
 
-        if ($this->withAlpha) {
+        if ($this->hasAlpha()) {
             $defaults['alpha'] = $this->alpha;
         }
 
@@ -189,8 +187,8 @@ class Hsl implements ColorInterface
         return new Hsl(...$args);
     }
 
-    protected static function isPercentageString(string $string) : bool
+    protected static function isPercentageString($string) : bool
     {
-        return false !== strpos($string, '%');
+        return is_string($string) && false !== strpos($string, '%');
     }
 }

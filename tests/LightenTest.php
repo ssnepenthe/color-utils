@@ -7,7 +7,7 @@ class LightenTest extends TransformerTestCase
 {
     public function test_it_can_lighten_hex_colors()
     {
-        $color = Color::fromHex('#800');
+        $color = Color::fromString('#800');
 
         $tests = [
             // @todo
@@ -50,7 +50,7 @@ class LightenTest extends TransformerTestCase
 
     public function test_it_can_only_go_as_light_as_white()
     {
-        $color = Color::fromKeyword('white');
+        $color = Color::fromString('white');
 
         $tests = [
             // assert_equal("white", evaluate("lighten(#fff, 20%)"))

@@ -19,7 +19,7 @@ class DesaturateTest extends TransformerTestCase
 
     public function test_it_can_desaturate_hex_colors()
     {
-        $color = Color::fromHex('#855');
+        $color = Color::fromString('#855');
 
         $tests = [
             // @todo Off by one from SASS.
@@ -45,7 +45,7 @@ class DesaturateTest extends TransformerTestCase
 
     public function it_cant_desaturate_shades_of_gray()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("desaturate(#000, 20%)"))
@@ -54,7 +54,7 @@ class DesaturateTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // assert_equal("white", evaluate("desaturate(#fff, 20%)"))
@@ -66,7 +66,7 @@ class DesaturateTest extends TransformerTestCase
 
     public function test_it_handles_the_extremes()
     {
-        $color = Color::fromHex('#8a8');
+        $color = Color::fromString('#8a8');
 
         $tests = [
             // assert_equal("#999999", evaluate("desaturate(#8a8, 100%)"))

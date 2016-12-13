@@ -7,7 +7,7 @@ class ShadeTest extends TransformerTestCase
 {
     public function test_shading_white_gives_gray()
     {
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // .shade-white {
@@ -21,7 +21,7 @@ class ShadeTest extends TransformerTestCase
 
     public function test_shading_black_just_gives_black()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // .shade-black {
@@ -37,7 +37,7 @@ class ShadeTest extends TransformerTestCase
 
     public function test_it_can_shade_red()
     {
-        $color = Color::fromHex('#f00');
+        $color = Color::fromString('#f00');
 
         $tests = [
             // .shade-red {
@@ -51,7 +51,7 @@ class ShadeTest extends TransformerTestCase
 
     public function test_it_can_shade_grays()
     {
-        $color = Color::fromHex('#222');
+        $color = Color::fromString('#222');
 
         $tests = [
             // .shade-gray {

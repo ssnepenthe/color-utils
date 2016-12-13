@@ -19,7 +19,7 @@ class DarkenTest extends TransformerTestCase
 
     public function test_it_can_darken_hex_colors()
     {
-        $color = Color::fromHex('#800');
+        $color = Color::fromString('#800');
 
         $tests = [
             // @todo
@@ -45,7 +45,7 @@ class DarkenTest extends TransformerTestCase
 
     public function test_it_can_only_go_as_dark_as_black()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("darken(#000, 20%)"))
@@ -54,7 +54,7 @@ class DarkenTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#800');
+        $color = Color::fromString('#800');
 
         $tests = [
             // assert_equal("black", evaluate("darken(#800, 100%)"))
@@ -66,7 +66,7 @@ class DarkenTest extends TransformerTestCase
 
     public function test_darkening_by_0_does_not_change_color()
     {
-        $color = Color::fromHex('#800');
+        $color = Color::fromString('#800');
 
         $tests = [
             // @todo

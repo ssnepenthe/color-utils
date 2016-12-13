@@ -11,24 +11,32 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ColorInterface::class, $rgb);
     }
 
+    public function test_all_object_properties_are_stored_as_correct_type()
+    {
+        $colors = [
+            new Rgb(255, 0, 51),
+            new Rgb(255, 0, 51, 1),
+        ];
+
+        foreach ($colors as $color) {
+            $this->assertAttributeInternalType('float', 'red', $color);
+            $this->assertAttributeInternalType('float', 'green', $color);
+            $this->assertAttributeInternalType('float', 'blue', $color);
+            $this->assertAttributeInternalType('float', 'alpha', $color);
+        }
+    }
+
     public function test_it_is_instantiable()
     {
         $rgb = new Rgb(255, 0, 51);
 
         $this->assertInstanceOf(Rgb::class, $rgb);
+        $this->assertEquals([255, 0, 51], $rgb->toArray());
 
-        $this->assertEquals(255, $rgb->getRed());
-        $this->assertEquals(0, $rgb->getGreen());
-        $this->assertEquals(51, $rgb->getBlue());
+        $rgba = new Rgb(255, 0, 51, 0.7);
 
-        $rgb = new Rgb(255, 0, 51, 0.7);
-
-        $this->assertInstanceOf(Rgb::class, $rgb);
-
-        $this->assertEquals(255, $rgb->getRed());
-        $this->assertEquals(0, $rgb->getGreen());
-        $this->assertEquals(51, $rgb->getBlue());
-        $this->assertEquals(0.7, $rgb->getAlpha());
+        $this->assertInstanceOf(Rgb::class, $rgba);
+        $this->assertEquals([255, 0, 51, 0.7], $rgba->toArray());
     }
 
     public function test_it_can_be_cast_to_a_string()
@@ -37,9 +45,9 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('rgb(255, 0, 51)', (string) $rgb);
 
-        $rgb = new Rgb(255, 0, 51, 0.7);
+        $rgba = new Rgb(255, 0, 51, 0.7);
 
-        $this->assertEquals('rgba(255, 0, 51, 0.7)', (string) $rgb);
+        $this->assertEquals('rgba(255, 0, 51, 0.7)', (string) $rgba);
     }
 
     public function test_it_gives_the_correct_alpha_value()
@@ -75,15 +83,15 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
     public function test_it_gives_the_correct_name_value()
     {
-        $rgb = Rgb::fromHexString('#ff0033');
+        $rgb = Rgb::fromString('#ff0033');
 
         $this->assertEquals('', $rgb->getName());
 
-        $rgb = Rgb::fromHexString('#7fffd4');
+        $rgb = Rgb::fromString('#7fffd4');
 
         $this->assertEquals('aquamarine', $rgb->getName());
 
-        $rgb = Rgb::fromHexString('#b22222');
+        $rgb = Rgb::fromString('#b22222');
 
         $this->assertEquals('firebrick', $rgb->getName());
     }
@@ -115,6 +123,10 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(255, 0, 51);
 
         $this->assertEquals('#ff0033', $rgb->toHexString());
+
+        $rgba = new Rgb(255, 0, 51, 1.0);
+
+        $this->assertEquals('#ff0033ff', $rgba->toHexString());
     }
 
     public function test_it_correct_pads_hex_bytes()
@@ -132,24 +144,20 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('rgb(255, 0, 51)', $rgb->toString());
 
-        $rgb = new Rgb(255, 0, 51, 0.7);
+        $rgba = new Rgb(255, 0, 51, 0.7);
 
-        $this->assertEquals('rgba(255, 0, 51, 0.7)', $rgb->toString());
+        $this->assertEquals('rgba(255, 0, 51, 0.7)', $rgba->toString());
     }
 
     public function test_it_forces_a_0_to_255_range_for_colors()
     {
         $rgb = new Rgb(-1, -50, -100);
 
-        $this->assertEquals(0, $rgb->getRed());
-        $this->assertEquals(0, $rgb->getGreen());
-        $this->assertEquals(0, $rgb->getBlue());
+        $this->assertEquals([0, 0, 0,], $rgb->toArray());
 
         $rgb = new Rgb(256, 300, 350);
 
-        $this->assertEquals(255, $rgb->getRed());
-        $this->assertEquals(255, $rgb->getGreen());
-        $this->assertEquals(255, $rgb->getBlue());
+        $this->assertEquals([255, 255, 255], $rgb->toArray());
     }
 
     public function test_it_forces_a_0_to_1_range_for_alpha()
@@ -165,127 +173,87 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
     public function test_it_is_instantiable_using_color_keywords()
     {
-        $rgb = Rgb::fromKeyword('black');
+        $rgb = Rgb::fromString('black');
 
-        $this->assertEquals(0, $rgb->getRed());
-        $this->assertEquals(0, $rgb->getGreen());
-        $this->assertEquals(0, $rgb->getBlue());
+        $this->assertEquals([0, 0, 0], $rgb->toArray());
 
-        $rgb = Rgb::fromKeyword('transparent');
+        $rgb = Rgb::fromString('transparent');
 
-        $this->assertEquals(0, $rgb->getRed());
-        $this->assertEquals(0, $rgb->getGreen());
-        $this->assertEquals(0, $rgb->getBlue());
-        $this->assertEquals(0.0, $rgb->getAlpha());
+        $this->assertEquals([0, 0, 0, 0], $rgb->toArray());
     }
 
     public function test_it_is_instantiable_using_hex_notation()
     {
         $colors = [
-            Rgb::fromHexString('#f03'),
-            Rgb::fromHexString('#F03'),
-            Rgb::fromHexString('#ff0033'),
-            Rgb::fromHexString('#FF0033'),
+            Rgb::fromString('#f03'),
+            Rgb::fromString('#F03'),
+            Rgb::fromString('#ff0033'),
+            Rgb::fromString('#FF0033'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
+            $this->assertEquals([255, 0, 51], $color->toArray());
         }
 
         $colors = [
-            Rgb::fromHexString('#f038'),
-            Rgb::fromHexString('#F038'),
-            Rgb::fromHexString('#ff003388'),
-            Rgb::fromHexString('#FF003388'),
+            Rgb::fromString('#f038'),
+            Rgb::fromString('#F038'),
+            Rgb::fromString('#ff003388'),
+            Rgb::fromString('#FF003388'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(136 / 255, $color->getAlpha());
+            $this->assertEquals([255, 0, 51, 136 / 255], $color->toArray());
         }
     }
 
     public function test_it_is_instantiable_using_functional_notation()
     {
         $colors = [
-            Rgb::fromRgbString('rgb(255,0,51)'),
-            Rgb::fromRgbString('rgb(100%,0%,20%)'),
+            Rgb::fromString('rgb(255,0,51)'),
+            Rgb::fromString('rgb(100%,0%,20%)'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
+            $this->assertEquals([255, 0, 51], $color->toArray());
         }
 
         $colors = [
-            Rgb::fromRgbString('rgba(255,0,51,0.7)'),
-            Rgb::fromRgbString('rgba(255,0,51,.7)'),
-            Rgb::fromRgbString('rgba(255,0,51,70%)'),
+            Rgb::fromString('rgba(255,0,51,0.7)'),
+            Rgb::fromString('rgba(255,0,51,.7)'),
+            Rgb::fromString('rgba(255,0,51,70%)'),
+            Rgb::fromString('rgba(100%,0%,20%,0.7)'),
+            Rgb::fromString('rgba(100%,0%,20%,.7)'),
+            Rgb::fromString('rgba(100%,0%,20%,70%)'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(0.7, $color->getAlpha());
-        }
-
-        $colors = [
-            Rgb::fromRgbString('rgba(100%,0%,20%,0.7)'),
-            Rgb::fromRgbString('rgba(100%,0%,20%,.7)'),
-            Rgb::fromRgbString('rgba(100%,0%,20%,70%)'),
-        ];
-
-        foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(0.7, $color->getAlpha());
+            $this->assertEquals([255, 0, 51, 0.7], $color->toArray());
         }
     }
 
     public function test_functional_notation_also_works_with_spacing()
     {
         $colors = [
-            Rgb::fromRgbString('rgb(255, 0, 51)'),
-            Rgb::fromRgbString('rgb(100%, 0%, 20%)'),
+            Rgb::fromString('rgb(255, 0, 51)'),
+            Rgb::fromString('rgb(100%, 0%, 20%)'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
+            $this->assertEquals([255, 0, 51], $color->toArray());
         }
 
         $colors = [
-            Rgb::fromRgbString('rgba(255, 0, 51, 0.7)'),
-            Rgb::fromRgbString('rgba(255, 0, 51, .7)'),
-            Rgb::fromRgbString('rgba(255, 0, 51, 70%)'),
+            Rgb::fromString('rgba(255, 0, 51, 0.7)'),
+            Rgb::fromString('rgba(255, 0, 51, .7)'),
+            Rgb::fromString('rgba(255, 0, 51, 70%)'),
+            Rgb::fromString('rgba(100%, 0%, 20%, 0.7)'),
+            Rgb::fromString('rgba(100%, 0%, 20%, .7)'),
+            Rgb::fromString('rgba(100%, 0%, 20%, 70%)'),
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(0.7, $color->getAlpha());
-        }
-
-        $colors = [
-            Rgb::fromRgbString('rgba(100%, 0%, 20%, 0.7)'),
-            Rgb::fromRgbString('rgba(100%, 0%, 20%, .7)'),
-            Rgb::fromRgbString('rgba(100%, 0%, 20%, 70%)'),
-        ];
-
-        foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(0.7, $color->getAlpha());
+            $this->assertEquals([255, 0, 51, 0.7], $color->toArray());
         }
     }
 
@@ -294,32 +262,22 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(255, 0, 51);
         $rgbTwo = $rgb->with(['blue' => 0]);
 
-        $this->assertEquals(255, $rgbTwo->getRed());
-        $this->assertEquals(0, $rgbTwo->getGreen());
-        $this->assertEquals(0, $rgbTwo->getBlue());
+        $this->assertEquals([255, 0, 0], $rgbTwo->toArray());
 
         $rgb = new Rgb(255, 0, 51);
         $rgbTwo = $rgb->with(['red' => 0, 'blue' => 0]);
 
-        $this->assertEquals(0, $rgbTwo->getRed());
-        $this->assertEquals(0, $rgbTwo->getGreen());
-        $this->assertEquals(0, $rgbTwo->getBlue());
+        $this->assertEquals([0, 0, 0], $rgbTwo->toArray());
 
         $rgb = new Rgb(255, 0, 51);
         $rgbTwo = $rgb->with(['red' => 0, 'blue' => 0, 'alpha' => 0.7]);
 
-        $this->assertEquals(0, $rgbTwo->getRed());
-        $this->assertEquals(0, $rgbTwo->getGreen());
-        $this->assertEquals(0, $rgbTwo->getBlue());
-        $this->assertEquals(0.7, $rgbTwo->getAlpha());
+        $this->assertEquals([0, 0, 0, 0.7], $rgbTwo->toArray());
 
         $rgb = new Rgb(255, 0, 51, 0.7);
         $rgbTwo = $rgb->with(['red' => 0, 'blue' => 0, 'alpha' => 0]);
 
-        $this->assertEquals(0, $rgbTwo->getRed());
-        $this->assertEquals(0, $rgbTwo->getGreen());
-        $this->assertEquals(0, $rgbTwo->getBlue());
-        $this->assertEquals(0, $rgbTwo->getAlpha());
+        $this->assertEquals([0, 0, 0, 0], $rgbTwo->toArray());
     }
 
     public function test_it_cant_be_instantiated_unless_given_3_or_4_args()
@@ -329,7 +287,7 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(1, 2);
     }
 
-    public function test_it_cant_be_instantiated_with_a_non_numeric_alpha()
+    public function test_it_cant_be_instantiated_with_non_numeric_values()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -340,62 +298,62 @@ class RgbTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromKeyword('fakecolor');
+        $rgb = Rgb::fromString('fakecolor');
     }
 
     public function test_it_cant_be_instantiated_from_hex_without_hash()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromHexString('f03');
+        $rgb = Rgb::fromString('f03');
     }
 
     public function test_it_cant_be_instantiated_from_hex_with_bad_characters()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromHexString('#gghhii');
+        $rgb = Rgb::fromString('#gghhii');
     }
 
     public function test_it_cant_be_instantiated_from_hex_with_bad_length()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromHexString('#af');
+        $rgb = Rgb::fromString('#af');
     }
 
     public function test_it_cant_be_instantiated_from_rgb_with_fractional_colors()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromRgbString('rgb(255, 0, 51.2)');
+        $rgb = Rgb::fromString('rgb(255, 0, 51.2)');
     }
 
     public function test_it_cant_be_instantiated_from_rgb_with_mixed_int_and_percentage_colors()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromRgbString('rgb(100%, 0, 20%)');
+        $rgb = Rgb::fromString('rgb(100%, 0, 20%)');
     }
 
     public function test_it_cant_be_instantiated_from_rgb_with_unrecognized_string_format()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromRgbString('hsl(240, 75%, 20%)');
+        $rgb = Rgb::fromString('hsl(240, 75%, 20%)');
     }
 
     public function test_it_cant_be_instantiated_from_rgb_unless_given_3_or_4_args()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromRgbString('rgb(240, 75%)');
+        $rgb = Rgb::fromString('rgb(240, 75%)');
     }
 
     public function test_it_cant_create_a_new_instance_without_valid_attrs()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $rgb = Rgb::fromRgbString('rgb(1,2,3)')->with(['hue' => 120]);
+        $rgb = Rgb::fromString('rgb(1,2,3)')->with(['hue' => 120]);
     }
 }

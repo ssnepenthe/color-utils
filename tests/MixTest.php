@@ -21,32 +21,32 @@ class MixTest extends TransformerTestCase
      */
     public function test_it_can_mix_red_with_other_colors()
     {
-        $color = Color::fromHex('#f00');
+        $color = Color::fromString('#f00');
 
         $tests = [
             // assert_equal("purple", evaluate("mix(#f00, #00f)"))
             [
-                'transformer' => new Mix(Color::fromHex('#00f')),
+                'transformer' => new Mix(Color::fromString('#00f')),
                 'result' => [128, 0, 128]
             ],
             // assert_equal("gray", evaluate("mix(#f00, #0ff)"))
             [
-                'transformer' => new Mix(Color::fromHex('#0ff')),
+                'transformer' => new Mix(Color::fromString('#0ff')),
                 'result' => [128, 128, 128]
             ],
             // assert_equal("#4000bf", evaluate("mix(#f00, #00f, 25%)"))
             [
-                'transformer' => new Mix(Color::fromHex('#00f'), 75),
+                'transformer' => new Mix(Color::fromString('#00f'), 75),
                 'result' => [64, 0, 191]
             ],
             // assert_equal("red", evaluate("mix(#f00, #00f, 100%)"))
             [
-                'transformer' => new Mix(Color::fromHex('#00f'), 0),
+                'transformer' => new Mix(Color::fromString('#00f'), 0),
                 'result' => [255, 0, 0]
             ],
             // assert_equal("blue", evaluate("mix(#f00, #00f, 0%)"))
             [
-                'transformer' => new Mix(Color::fromHex('#00f'), 100),
+                'transformer' => new Mix(Color::fromString('#00f'), 100),
                 'result' => [0, 0, 255]
             ],
         ];
@@ -58,11 +58,11 @@ class MixTest extends TransformerTestCase
     public function test_it_can_mix_random_blue_with_other_colors()
     {
         // assert_equal("#809155", evaluate("mix(#f70, #0aa)"))
-        $transformer = new Mix(Color::fromHex('#f70'));
+        $transformer = new Mix(Color::fromString('#f70'));
 
         $this->assertEquals(
             [128, 145, 85],
-            $transformer->transform(Color::fromHex('#0aa'))->toArray()
+            $transformer->transform(Color::fromString('#0aa'))->toArray()
         );
     }
 
@@ -73,7 +73,7 @@ class MixTest extends TransformerTestCase
 
         $this->assertEquals(
             [64, 0, 191, 0.75],
-            $transformer->transform(Color::fromHex('#00f'))->toArray()
+            $transformer->transform(Color::fromString('#00f'))->toArray()
         );
     }
 }

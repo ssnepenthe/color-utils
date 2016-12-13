@@ -19,7 +19,7 @@ class SaturateTest extends TransformerTestCase
 
     public function test_it_can_saturate_hex_colors()
     {
-        $color = Color::fromHex('#855');
+        $color = Color::fromString('#855');
 
         $tests = [
             // @todo Hue off by one from SASS.
@@ -32,7 +32,7 @@ class SaturateTest extends TransformerTestCase
 
     public function test_saturating_shades_of_gray_doesnt_change_the_color()
     {
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("saturate(#000, 20%)"))
@@ -41,7 +41,7 @@ class SaturateTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // assert_equal("white", evaluate("saturate(#fff, 20%)"))
@@ -53,7 +53,7 @@ class SaturateTest extends TransformerTestCase
 
     public function test_it_honors_hsl_ranges_when_saturating_colors()
     {
-        $color = Color::fromHex('#8a8');
+        $color = Color::fromString('#8a8');
 
         $tests = [
             // assert_equal("#33ff33", evaluate("saturate(#8a8, 100%)"))
@@ -65,7 +65,7 @@ class SaturateTest extends TransformerTestCase
 
     public function test_it_doesnt_change_the_color_when_given_a_zero_amount()
     {
-        $color = Color::fromHex('#8a8');
+        $color = Color::fromString('#8a8');
 
         $tests = [
             // assert_equal("#88aa88", evaluate("saturate(#8a8, 0%)"))

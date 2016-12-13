@@ -32,7 +32,7 @@ class ColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_be_instantiated_from_hex()
     {
-        $color = Color::fromHex('#ff0033');
+        $color = Color::fromString('#ff0033');
 
         $this->assertInstanceOf(Color::class, $color);
     }
@@ -40,35 +40,36 @@ class ColorTest extends PHPUnit_Framework_TestCase
     public function test_it_can_be_instantiated_from_hsl()
     {
         $tests = [
+            new Color(new Hsl(348, 100, 50)),
             Color::fromHsl(348, 100, 50),
-            Color::fromHsl(348, 100, 50, 0.7),
-            Color::fromHsl('hsl(348, 100%, 50%)'),
-            Color::fromHsl('hsl(348, 100%, 50%, 0.7)'),
+            Color::fromString('hsl(348, 100%, 50%)'),
         ];
 
         foreach ($tests as $test) {
             $this->assertInstanceOf(Color::class, $test);
+            $this->assertEquals([348, 100, 50], $test->toArray());
         }
     }
 
     public function test_it_can_be_instantiated_from_keyword()
     {
-        $color = Color::fromKeyword('goldenrod');
+        $color = Color::fromString('goldenrod');
 
         $this->assertInstanceOf(Color::class, $color);
+        $this->assertEquals([218, 165, 32], $color->toArray());
     }
 
     public function test_it_can_be_instantiated_from_rgb()
     {
         $tests = [
+            new Color(new Rgb(255, 0, 51)),
             Color::fromRgb(255, 0, 51),
-            Color::fromRgb(255, 0, 51, 0.7),
-            Color::fromRgb('rgb(255, 0, 51)'),
-            Color::fromRgb('rgb(255, 0, 51, 0.7)'),
+            Color::fromString('rgb(255, 0, 51)'),
         ];
 
         foreach ($tests as $test) {
             $this->assertInstanceOf(Color::class, $test);
+            $this->assertEquals([255, 0, 51], $test->toArray());
         }
     }
 
@@ -81,24 +82,17 @@ class ColorTest extends PHPUnit_Framework_TestCase
     {
         $color = Color::fromRgb(255, 0, 51);
 
-        $this->assertEquals(255, $color->getRed());
-        $this->assertEquals(0, $color->getGreen());
-        $this->assertEquals(51, $color->getBlue());
+        $this->assertEquals([255, 0, 51], $color->toArray());
 
         $this->assertFalse($color->hasAlpha());
-        $this->assertEquals(1, $color->getAlpha());
-
+        $this->assertEquals(1.0, $color->getAlpha());
         $this->assertEquals('', $color->getName());
 
         $color = Color::fromRgb(255, 0, 51, 0.7);
 
-        $this->assertEquals(255, $color->getRed());
-        $this->assertEquals(0, $color->getGreen());
-        $this->assertEquals(51, $color->getBlue());
+        $this->assertEquals([255, 0, 51, 0.7], $color->toArray());
 
         $this->assertTrue($color->hasAlpha());
-        $this->assertEquals(0.7, $color->getAlpha());
-
         $this->assertEquals('', $color->getName());
     }
 
@@ -111,18 +105,14 @@ class ColorTest extends PHPUnit_Framework_TestCase
     {
         $color = Color::fromHsl(348, 100, 50);
 
-        $this->assertEquals(348, $color->getHue());
-        $this->assertEquals(100, $color->getSaturation());
-        $this->assertEquals(50, $color->getLightness());
+        $this->assertEquals([348, 100, 50], $color->toArray());
 
         $this->assertFalse($color->hasAlpha());
         $this->assertEquals(1.0, $color->getAlpha());
 
         $color = Color::fromHsl(348, 100, 50, 0.7);
 
-        $this->assertEquals(348, $color->getHue());
-        $this->assertEquals(100, $color->getSaturation());
-        $this->assertEquals(50, $color->getLightness());
+        $this->assertEquals([348, 100, 50, 0.7], $color->toArray());
 
         $this->assertTrue($color->hasAlpha());
         $this->assertEquals(0.7, $color->getAlpha());
@@ -130,47 +120,25 @@ class ColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_calculate_perceived_brightness()
     {
-        $this->assertEquals(
-            0,
-            Color::fromKeyword('black')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            50,
-            Color::fromKeyword('gray')->getPerceivedBrightness()
-        );
-        // Formula gives 99, but should this technically be 100?
-        $this->assertEquals(
-            99,
-            Color::fromKeyword('white')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            54,
-            Color::fromKeyword('red')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            73,
-            Color::fromKeyword('orange')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            94,
-            Color::fromKeyword('yellow')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            38,
-            Color::fromKeyword('green')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            33,
-            Color::fromKeyword('blue')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            23,
-            Color::fromKeyword('indigo')->getPerceivedBrightness()
-        );
-        $this->assertEquals(
-            71,
-            Color::fromKeyword('violet')->getPerceivedBrightness()
-        );
+        $tests = [
+            'black'  => 0,
+            'gray'   => 50,
+            'white'  => 99, // Formula gives 99, should it be 100?
+            'red'    => 54,
+            'orange' => 73,
+            'yellow' => 94,
+            'green'  => 38,
+            'blue'   => 33,
+            'indigo' => 23,
+            'violet' => 71,
+        ];
+
+        foreach ($tests as $keyword => $brightness) {
+            $this->assertEquals(
+                $brightness,
+                Color::fromString($keyword)->getPerceivedBrightness()
+            );
+        }
     }
 
     public function test_it_gives_the_correct_type_value()
@@ -181,38 +149,38 @@ class ColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_tell_lightness()
     {
-        $this->assertTrue(Color::fromKeyword('orange')->isLight());
-        $this->assertFalse(Color::fromKeyword('indigo')->isLight());
+        $this->assertTrue(Color::fromString('orange')->isLight());
+        $this->assertFalse(Color::fromString('indigo')->isLight());
 
-        $this->assertTrue(Color::fromKeyword('green')->isDark());
-        $this->assertFalse(Color::fromKeyword('red')->isDark());
+        $this->assertTrue(Color::fromString('green')->isDark());
+        $this->assertFalse(Color::fromString('red')->isDark());
     }
 
     public function test_it_can_tell_lightness_with_custom_threshold()
     {
-        $this->assertTrue(Color::fromKeyword('yellow')->isLight(35));
-        $this->assertFalse(Color::fromKeyword('green')->isLight(35));
+        $this->assertTrue(Color::fromString('yellow')->isLight(35));
+        $this->assertFalse(Color::fromString('green')->isLight(35));
 
-        $this->assertTrue(Color::fromKeyword('indigo')->isDark(35));
-        $this->assertFalse(Color::fromKeyword('violet')->isDark(35));
+        $this->assertTrue(Color::fromString('indigo')->isDark(35));
+        $this->assertFalse(Color::fromString('violet')->isDark(35));
     }
 
     public function test_it_can_tell_perceived_brightness()
     {
-        $this->assertTrue(Color::fromKeyword('orange')->looksLight());
-        $this->assertFalse(Color::fromKeyword('blue')->looksLight());
+        $this->assertTrue(Color::fromString('orange')->looksLight());
+        $this->assertFalse(Color::fromString('blue')->looksLight());
 
-        $this->assertTrue(Color::fromKeyword('green')->looksDark());
-        $this->assertFalse(Color::fromKeyword('red')->looksDark());
+        $this->assertTrue(Color::fromString('green')->looksDark());
+        $this->assertFalse(Color::fromString('red')->looksDark());
     }
 
     public function test_it_can_tell_perceived_brightness_with_custom_threshold()
     {
-        $this->assertTrue(Color::fromKeyword('yellow')->looksLight(35));
-        $this->assertFalse(Color::fromKeyword('blue')->looksLight(35));
+        $this->assertTrue(Color::fromString('yellow')->looksLight(35));
+        $this->assertFalse(Color::fromString('blue')->looksLight(35));
 
-        $this->assertTrue(Color::fromKeyword('indigo')->looksDark(35));
-        $this->assertFalse(Color::fromKeyword('violet')->looksDark(35));
+        $this->assertTrue(Color::fromString('indigo')->looksDark(35));
+        $this->assertFalse(Color::fromString('violet')->looksDark(35));
     }
 
     public function test_it_can_set_type()
@@ -253,72 +221,55 @@ class ColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_create_a_modified_version_of_itself()
     {
-        $white = Color::fromKeyword('yellow')->with(['blue' => 255]);
+        $white = Color::fromString('yellow')->with(['blue' => 255]);
 
-        $this->assertEquals(255, $white->getRed());
-        $this->assertEquals(255, $white->getGreen());
-        $this->assertEquals(255, $white->getBlue());
+        $this->assertEquals([255, 255, 255], $white->toArray());
     }
 
     public function test_it_can_modify_hsl_to_create_a_new_color()
     {
         $blue = Color::fromHsl(348, 100, 50)->with(['hue' => 240]);
 
-        $this->assertEquals(240, $blue->getHue());
-        $this->assertEquals(100, $blue->getSaturation());
-        $this->assertEquals(50, $blue->getLightness());
+        $this->assertEquals([240, 100, 50], $blue->toArray());
     }
 
     public function test_it_can_modify_rgb_to_create_a_new_color()
     {
-        $orange = Color::fromKeyword('yellow')->with(['green' => 165]);
+        $orange = Color::fromString('yellow')->with(['green' => 165]);
 
-        $this->assertEquals(255, $orange->getRed());
-        $this->assertEquals(165, $orange->getGreen());
-        $this->assertEquals(0, $orange->getBlue());
+        $this->assertEquals([255, 165, 0], $orange->toArray());
     }
 
     public function test_it_can_modify_alpha_to_create_a_new_color()
     {
-        $transparent = Color::fromKeyword('red')->with(['alpha' => 0]);
+        $transparent = Color::fromString('red')->with(['alpha' => 0]);
 
-        $this->assertEquals(255, $transparent->getRed());
-        $this->assertEquals(0, $transparent->getGreen());
-        $this->assertEquals(0, $transparent->getBlue());
-        $this->assertEquals(0, $transparent->getAlpha());
+        $this->assertEquals([255, 0, 0, 0], $transparent->toArray());
     }
 
     public function test_it_can_modify_alpha_and_other_values_at_once()
     {
-        $transparent = Color::fromKeyword('red')->with([
+        $transparent = Color::fromString('red')->with([
             'alpha' => 0.5,
             'blue' => 255
         ]);
 
-        $this->assertEquals(255, $transparent->getRed());
-        $this->assertEquals(0, $transparent->getGreen());
-        $this->assertEquals(255, $transparent->getBlue());
-        $this->assertEquals(0.5, $transparent->getAlpha());
+        $this->assertEquals([255, 0, 255, 0.5], $transparent->toArray());
 
         $transparent = Color::fromHsl(348, 100, 50)->with([
             'alpha' => 0.5,
             'hue' => 270
         ]);
 
-        $this->assertEquals(270, $transparent->getHue());
-        $this->assertEquals(100, $transparent->getSaturation());
-        $this->assertEquals(50, $transparent->getLightness());
-        $this->assertEquals(0.5, $transparent->getAlpha());
+        $this->assertEquals([270, 100, 50, 0.5], $transparent->toArray());
     }
 
     public function test_it_can_modify_multiple_rgb_attributes_at_once()
     {
-        $white = Color::fromKeyword('black')
+        $white = Color::fromString('black')
             ->with(['red' => 255, 'green' => 255, 'blue' => 255]);
 
-        $this->assertEquals(255, $white->getRed());
-        $this->assertEquals(255, $white->getGreen());
-        $this->assertEquals(255, $white->getBlue());
+        $this->assertEquals([255, 255, 255], $white->toArray());
     }
 
     public function test_it_can_modify_multiple_hsl_attributes_at_once()
@@ -326,9 +277,7 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $white = Color::fromHsl(0, 0, 0)
             ->with(['hue' => 0, 'saturation' => 0, 'lightness' => 100]);
 
-        $this->assertEquals(0, $white->getHue());
-        $this->assertEquals(0, $white->getSaturation());
-        $this->assertEquals(100, $white->getLightness());
+        $this->assertEquals([0, 0, 100], $white->toArray());
     }
 
     public function test_it_creates_a_new_color_with_the_same_type_as_original()
@@ -347,13 +296,13 @@ class ColorTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Color::fromKeyword('yellow')->with(['blue' => 255, 'hue' => 360]);
+        Color::fromString('yellow')->with(['blue' => 255, 'hue' => 360]);
     }
 
     public function test_it_cant_create_a_new_color_without_any_changes()
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Color::fromKeyword('yellow')->with(['not' => 'real']);
+        Color::fromString('yellow')->with(['not' => 'real']);
     }
 }

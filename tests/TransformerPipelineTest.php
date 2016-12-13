@@ -38,7 +38,7 @@ class TransformerPipelineTest extends PHPUnit_Framework_TestCase
     public function test_it_can_transform_a_color()
     {
         $pipeline = new TransformerPipeline([new Lighten(30)]);
-        $color = $pipeline->transform(Color::fromKeyword('green'));
+        $color = $pipeline->transform(Color::fromString('green'));
 
         // Untransformed green would be [0, 128, 0].
         $this->assertEquals([26, 255, 26], $color->toArray());
@@ -48,7 +48,7 @@ class TransformerPipelineTest extends PHPUnit_Framework_TestCase
     {
         $invert = new Invert;
         $shade25 = new Shade(25);
-        $color = Color::fromKeyword('green');
+        $color = Color::fromString('green');
 
         $pipeline = new TransformerPipeline;
         $pipeline->add($invert); // from [0, 128, 0] to [255, 127, 255].

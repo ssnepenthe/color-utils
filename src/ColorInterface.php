@@ -4,6 +4,8 @@ namespace SSNepenthe\ColorUtils;
 
 interface ColorInterface
 {
+    public static function fromString(string $color) : ColorInterface;
+    public function getAlpha() : float;
     public function hasAlpha() : bool;
     public function toArray() : array;
     public function toString() : string;

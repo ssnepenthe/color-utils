@@ -7,7 +7,7 @@ class ComplementTest extends TransformerTestCase
 {
     public function test_it_can_create_complement_from_hex()
     {
-        $color = Color::fromHex('#abc');
+        $color = Color::fromString('#abc');
 
         $tests = [
             // @todo Conversion is off by one from SASS for each value.
@@ -20,7 +20,7 @@ class ComplementTest extends TransformerTestCase
 
     public function test_it_can_create_complement_from_keywords()
     {
-        $color = Color::fromHex('#f00');
+        $color = Color::fromString('#f00');
 
         $tests = [
             // assert_equal("cyan", evaluate("complement(red)"))
@@ -29,7 +29,7 @@ class ComplementTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#0ff');
+        $color = Color::fromString('#0ff');
 
         $tests = [
             // assert_equal("red", evaluate("complement(cyan)"))
@@ -41,7 +41,7 @@ class ComplementTest extends TransformerTestCase
 
     public function test_it_cant_adjust_shades_of_gray()
     {
-        $color = Color::fromHex('#fff');
+        $color = Color::fromString('#fff');
 
         $tests = [
             // assert_equal("white", evaluate("complement(white)"))
@@ -50,7 +50,7 @@ class ComplementTest extends TransformerTestCase
 
         $this->runTransformerTests($color, $tests);
 
-        $color = Color::fromHex('#000');
+        $color = Color::fromString('#000');
 
         $tests = [
             // assert_equal("black", evaluate("complement(black)"))
