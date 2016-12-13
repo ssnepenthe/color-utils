@@ -29,31 +29,33 @@ class ScaleColor implements TransformerInterface
     public function transform(Color $color) : Color
     {
         $whitelist = [
-            'red' => [0, 255],
-            'green' => [0, 255],
-            'blue' => [0, 255],
-            'hue' => [0, 360],
+            'alpha'      => [0,   1],
+            'blue'       => [0, 255],
+            'green'      => [0, 255],
+            'hue'        => [0, 360],
+            'lightness'  => [0, 100],
+            'red'        => [0, 255],
             'saturation' => [0, 100],
-            'lightness' => [0, 100],
-            'alpha' => [0, 1],
         ];
 
         $adjustments = [];
 
         foreach ($this->attrs as $attr => $adjustment) {
-            if (in_array($attr, array_keys($whitelist))) {
-                $getter = 'get' . ucfirst($attr);
-
-                if (0 > $adjustment) {
-                    $maxAdjustment = $color->{$getter}() - $whitelist[$attr][0];
-                } else {
-                    $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
-                }
-
-                $scaleAdjustment = $adjustment * $maxAdjustment;
-
-                $adjustments[$attr] = $color->{$getter}() + $scaleAdjustment;
+            if (! in_array($attr, array_keys($whitelist))) {
+                continue;
             }
+
+            $getter = 'get' . ucfirst($attr);
+
+            if (0 > $adjustment) {
+                $maxAdjustment = $color->{$getter}() - $whitelist[$attr][0];
+            } else {
+                $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
+            }
+
+            $scaleAdjustment = $adjustment * $maxAdjustment;
+
+            $adjustments[$attr] = $color->{$getter}() + $scaleAdjustment;
         }
 
         return $color->with($adjustments);

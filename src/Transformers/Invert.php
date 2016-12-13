@@ -9,9 +9,9 @@ class Invert implements TransformerInterface
     public function transform(Color $color) : Color
     {
         return $color->with([
-            'red' => 255 - $color->getRed(),
+            'blue' => 255 - $color->getBlue(),
             'green' => 255 - $color->getGreen(),
-            'blue' => 255 - $color->getBlue()
+            'red' => 255 - $color->getRed(),
         ]);
     }
 }

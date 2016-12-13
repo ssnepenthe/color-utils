@@ -20,22 +20,24 @@ class AdjustColor implements TransformerInterface
     public function transform(Color $color) : Color
     {
         $whitelist = [
-            'red',
-            'green',
-            'blue',
-            'hue',
-            'saturation',
-            'lightness',
             'alpha',
+            'blue',
+            'green',
+            'hue',
+            'lightness',
+            'red',
+            'saturation',
         ];
 
         $adjustments = [];
 
         foreach ($this->attrs as $attr => $adjustment) {
-            if (in_array($attr, $whitelist)) {
-                $method = 'get' . ucfirst($attr);
-                $adjustments[$attr] = $color->{$method}() + $adjustment;
+            if (! in_array($attr, $whitelist)) {
+                continue;
             }
+
+            $method = 'get' . ucfirst($attr);
+            $adjustments[$attr] = $color->{$method}() + $adjustment;
         }
 
         return $color->with($adjustments);

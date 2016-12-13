@@ -16,21 +16,23 @@ class ChangeColor implements TransformerInterface
     public function transform(Color $color) : Color
     {
         $whitelist = [
-            'red',
-            'green',
-            'blue',
-            'hue',
-            'saturation',
-            'lightness',
             'alpha',
+            'blue',
+            'green',
+            'hue',
+            'lightness',
+            'red',
+            'saturation',
         ];
 
         $adjustments = [];
 
         foreach ($this->attrs as $attr => $adjustment) {
-            if (in_array($attr, $whitelist)) {
-                $adjustments[$attr] = $adjustment;
+            if (! in_array($attr, $whitelist)) {
+                continue;
             }
+
+            $adjustments[$attr] = $adjustment;
         }
 
         return $color->with($adjustments);
