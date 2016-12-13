@@ -4,14 +4,6 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 
-/**
- * Not exactly in-line with the SASS function. SASS uses the user supplied weight
- * along with the alpha value of each color to determine the actual weight each color
- * should be given.
- *
- * Since this package does not yet support alpha, it is assumed that the alpha value
- * is always 1 and therefore the user supplied weight is not adjusted.
- */
 class Mix implements TransformerInterface
 {
     protected $color;
