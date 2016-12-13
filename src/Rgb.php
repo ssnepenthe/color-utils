@@ -85,13 +85,6 @@ class Rgb implements ColorInterface
         return new static(...$rgb);
     }
 
-    public static function fromInt(int $int) : self
-    {
-        $hex = '#' . dechex($int);
-
-        return static::fromHexString($hex);
-    }
-
     public static function fromKeyword(string $keyword) : self
     {
         if (! array_key_exists($keyword, ColorKeywords::MAP)) {

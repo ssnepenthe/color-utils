@@ -209,32 +209,6 @@ class RgbTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function test_it_is_instantiable_using_int_hex_representation()
-    {
-        $colors = [
-            Rgb::fromInt(0xff0033),
-            Rgb::fromInt(16711731),
-        ];
-
-        foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-        }
-
-        $colors = [
-            Rgb::fromInt(0xff003388),
-            Rgb::fromInt(4278203272),
-        ];
-
-        foreach ($colors as $color) {
-            $this->assertEquals(255, $color->getRed());
-            $this->assertEquals(0, $color->getGreen());
-            $this->assertEquals(51, $color->getBlue());
-            $this->assertEquals(136 / 255, $color->getAlpha());
-        }
-    }
-
     public function test_it_is_instantiable_using_functional_notation()
     {
         $colors = [
