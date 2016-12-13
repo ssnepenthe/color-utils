@@ -28,24 +28,23 @@ class ScaleColor implements TransformerInterface
 
     public function transform(Color $color) : Color
     {
+        $whitelist = [
+            'red' => [0, 255],
+            'green' => [0, 255],
+            'blue' => [0, 255],
+            'hue' => [0, 360],
+            'saturation' => [0, 100],
+            'lightness' => [0, 100],
+            'alpha' => [0, 1],
+        ];
+
         $adjustments = [];
 
         foreach ($this->attrs as $attr => $adjustment) {
-            $whitelist = [
-                'red' => [0, 255],
-                'green' => [0, 255],
-                'blue' => [0, 255],
-                'hue' => [0, 360],
-                'saturation' => [0, 100],
-                'lightness' => [0, 100],
-                'alpha' => [0, 1],
-            ];
-
             if (in_array($attr, array_keys($whitelist))) {
                 $getter = 'get' . ucfirst($attr);
-                $isNegative = 0 > $adjustment;
 
-                if ($isNegative) {
+                if (0 > $adjustment) {
                     $maxAdjustment = $color->{$getter}() - $whitelist[$attr][0];
                 } else {
                     $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
