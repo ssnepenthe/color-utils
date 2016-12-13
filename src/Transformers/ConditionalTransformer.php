@@ -7,14 +7,27 @@ use SSNepenthe\ColorUtils\Color;
 class ConditionalTransformer implements TransformerInterface
 {
     protected $callback;
-    protected $transformer;
+    protected $else;
+    protected $if;
 
     public function __construct(
         callable $callback,
-        TransformerInterface $transformer
+        TransformerInterface $if,
+        TransformerInterface $else = null
     ) {
         $this->callback = $callback;
-        $this->transformer = $transformer;
+        $this->if($if);
+        $this->else($else);
+    }
+
+    public function else(TransformerInterface $else = null)
+    {
+        $this->else = $else;
+    }
+
+    public function if(TransformerInterface $if)
+    {
+        $this->if = $if;
     }
 
     /**
@@ -24,7 +37,11 @@ class ConditionalTransformer implements TransformerInterface
     public function transform(Color $color) : Color
     {
         if (call_user_func($this->callback, $color)) {
-            return $this->transformer->transform($color);
+            return $this->if->transform($color);
+        }
+
+        if (! is_null($this->else)) {
+            return $this->else->transform($color);
         }
 
         return $color;
