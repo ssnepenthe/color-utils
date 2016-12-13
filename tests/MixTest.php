@@ -1,5 +1,7 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Mix;
 
@@ -75,5 +77,29 @@ class MixTest extends TransformerTestCase
             [64, 0, 191, 0.75],
             $transformer->transform(Color::fromString('#00f'))->toArray()
         );
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('black'),
+            Rgb::fromString('black'),
+            Hsl::fromString('hsl(0, 0%, 0%)'),
+        ];
+
+        $transformers = [
+            new Mix(Color::fromString('white')),
+            new Mix(Rgb::fromString('white')),
+            new Mix(Hsl::fromString('hsl(0, 0%, 100%)')),
+        ];
+
+        foreach ($colors as $color) {
+            foreach ($transformers as $transformer) {
+                $this->assertEquals(
+                    [128, 128, 128],
+                    $transformer->transform($color)->getRgb()->toArray()
+                );
+            }
+        }
     }
 }

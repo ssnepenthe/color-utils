@@ -1,5 +1,7 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\GrayScale;
 
@@ -80,5 +82,23 @@ class GrayScaleTest extends TransformerTestCase
         ];
 
         $this->runTransformerTests($color, $tests);
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('red'),
+            Rgb::fromString('red'),
+            Hsl::fromString('hsl(0, 100%, 50%)'),
+        ];
+
+        $transformer = new GrayScale;
+
+        foreach ($colors as $color) {
+            $this->assertEquals(
+                [0, 0, 50],
+                $transformer->transform($color)->getHsl()->toArray()
+            );
+        }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Desaturate;
 
@@ -76,5 +78,23 @@ class DesaturateTest extends TransformerTestCase
         ];
 
         $this->runTransformerTests($color, $tests);
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('#8a8'),
+            new Rgb(136, 170, 136),
+            Hsl::fromString('hsl(120, 17%, 60%)'),
+        ];
+
+        $transformer = new Desaturate(5);
+
+        foreach ($colors as $color) {
+            $this->assertEquals(
+                [120, 12, 60],
+                $transformer->transform($color)->getHsl()->toArray()
+            );
+        }
     }
 }

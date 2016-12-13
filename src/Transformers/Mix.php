@@ -3,15 +3,16 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\ColorInterface;
 
 class Mix implements TransformerInterface
 {
     protected $color;
     protected $weight;
 
-    public function __construct(Color $color, int $weight = 50)
+    public function __construct(ColorInterface $color, int $weight = 50)
     {
-        $this->color = $color;
+        $this->color = $color->toColor();
 
         if (0 > $weight) {
             $weight = 0;
@@ -24,8 +25,10 @@ class Mix implements TransformerInterface
         $this->weight = $weight;
     }
 
-    public function transform(Color $color) : Color
+    public function transform(ColorInterface $color) : Color
     {
+        $color = $color->toColor();
+
         $p = floatval($this->weight / 100.0);
         $w = $p * 2 - 1;
         $a = $this->color->getAlpha() - $color->getAlpha();

@@ -3,6 +3,7 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\ColorInterface;
 
 class TransformerPipeline implements TransformerInterface
 {
@@ -20,7 +21,7 @@ class TransformerPipeline implements TransformerInterface
         $this->transformers[] = $transformer;
     }
 
-    public function transform(Color $color) : Color
+    public function transform(ColorInterface $color) : Color
     {
         foreach ($this->transformers as $transformer) {
             $color = $transformer->transform($color);

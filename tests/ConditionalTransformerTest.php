@@ -1,5 +1,7 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Darken;
 use SSNepenthe\ColorUtils\Transformers\Lighten;
@@ -50,5 +52,25 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
         $newColor = $transformer->transform($color);
 
         $this->assertEquals([26, 255, 26], $newColor->toArray()); // Lightened.
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('black'),
+            Rgb::fromString('black'),
+            Hsl::fromString('hsl(0, 0%, 0%)'),
+        ];
+
+        $transformer = new ConditionalTransformer(function ($color) {
+            return $color->isDark();
+        }, new Lighten(30));
+
+        foreach ($colors as $color) {
+            $this->assertEquals(
+                [0, 0, 30],
+                $transformer->transform($color)->getHsl()->toArray()
+            );
+        }
     }
 }

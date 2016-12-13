@@ -1,5 +1,7 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Darken;
 
@@ -75,5 +77,23 @@ class DarkenTest extends TransformerTestCase
         ];
 
         $this->runTransformerTests($color, $tests);
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('white'),
+            Rgb::fromString('white'),
+            Hsl::fromString('hsl(0, 0%, 100%)'),
+        ];
+
+        $transformer = new Darken(30);
+
+        foreach ($colors as $color) {
+            $this->assertEquals(
+                [0, 0, 70],
+                $transformer->transform($color)->getHsl()->toArray()
+            );
+        }
     }
 }

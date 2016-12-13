@@ -1,6 +1,8 @@
 <?php
 
 
+use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Opacify;
 
@@ -30,5 +32,20 @@ class OpacifyTest extends TransformerTestCase
             [0, 0, 0, 0.75],
             $transformer->transform(Color::fromRgb(0, 0, 0, 0.5))->toArray()
         );
+    }
+
+    public function test_it_can_transform_any_instance_of_color_interface()
+    {
+        $colors = [
+            Color::fromString('transparent'),
+            Rgb::fromString('transparent'),
+            Hsl::fromString('hsl(0, 0%, 0%, 0.0)'),
+        ];
+
+        $transformer = new Opacify(0.5);
+
+        foreach ($colors as $color) {
+            $this->assertEquals(0.5, $transformer->transform($color)->getAlpha());
+        }
     }
 }

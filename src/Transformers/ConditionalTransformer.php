@@ -3,6 +3,7 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\ColorInterface;
 
 class ConditionalTransformer implements TransformerInterface
 {
@@ -34,8 +35,11 @@ class ConditionalTransformer implements TransformerInterface
      * @todo If callback returns false should the same color object be returned as it
      *       is now or should a clone of the color object be returned?
      */
-    public function transform(Color $color) : Color
+    public function transform(ColorInterface $color) : Color
     {
+        // Callback always gets a Color instance.
+        $color = $color->toColor();
+
         if (call_user_func($this->callback, $color)) {
             return $this->if->transform($color);
         }

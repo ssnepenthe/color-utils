@@ -3,6 +3,7 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\ColorInterface;
 
 class Transparentize implements TransformerInterface
 {
@@ -13,7 +14,7 @@ class Transparentize implements TransformerInterface
         $this->transformer = new AdjustColor(['alpha' => -1 * $amount]);
     }
 
-    public function transform(Color $color) : Color
+    public function transform(ColorInterface $color) : Color
     {
         return $this->transformer->transform($color);
     }
