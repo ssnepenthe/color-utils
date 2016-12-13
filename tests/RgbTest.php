@@ -1,6 +1,7 @@
 <?php
 
 use SSNepenthe\ColorUtils\Rgb;
+use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\ColorInterface;
 
 class RgbTest extends PHPUnit_Framework_TestCase
@@ -129,7 +130,7 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('#ff0033ff', $rgba->toHexString());
     }
 
-    public function test_it_correct_pads_hex_bytes()
+    public function test_it_correctly_pads_hex_bytes()
     {
         $rgb = new Rgb(10, 11, 12);
 
@@ -147,6 +148,11 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgba = new Rgb(255, 0, 51, 0.7);
 
         $this->assertEquals('rgba(255, 0, 51, 0.7)', $rgba->toString());
+    }
+
+    public function test_it_correctly_produces_color_instance()
+    {
+        $this->assertInstanceOf(Color::class, Rgb::fromString('#f03')->toColor());
     }
 
     public function test_it_forces_a_0_to_255_range_for_colors()

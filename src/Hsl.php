@@ -149,6 +149,11 @@ class Hsl implements ColorInterface
         return $values;
     }
 
+    public function toColor() : Color
+    {
+        return new Color($this);
+    }
+
     public function toString() : string
     {
         return $this->__toString();

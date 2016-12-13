@@ -1,6 +1,7 @@
 <?php
 
 use SSNepenthe\ColorUtils\Hsl;
+use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\ColorInterface;
 
 class HslTest extends PHPUnit_Framework_TestCase
@@ -104,6 +105,14 @@ class HslTest extends PHPUnit_Framework_TestCase
         $hsl = new Hsl(348, 100, 50, 0.7);
 
         $this->assertEquals('hsla(348, 100%, 50%, 0.7)', $hsl->toString());
+    }
+
+    public function test_it_correctly_produces_color_instance()
+    {
+        $this->assertInstanceOf(
+            Color::class,
+            Hsl::fromString('hsl(348, 100%, 50%)')->toColor()
+        );
     }
 
     public function test_it_forces_a_0_to_1_range_for_alpha()

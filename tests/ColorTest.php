@@ -219,6 +219,13 @@ class ColorTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function test_to_color_returns_same_instance()
+    {
+        $color = Color::fromString('white');
+
+        $this->assertSame($color, $color->toColor());
+    }
+
     public function test_it_can_create_a_modified_version_of_itself()
     {
         $white = Color::fromString('yellow')->with(['blue' => 255]);

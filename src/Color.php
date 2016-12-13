@@ -160,6 +160,14 @@ class Color implements ColorInterface
         return $this->{$this->type}->toArray();
     }
 
+    /**
+     * To clone or not to clone?
+     */
+    public function toColor() : Color
+    {
+        return $this;
+    }
+
     public function toString() : string
     {
         return $this->__toString();
