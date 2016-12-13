@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\saturate;
 use SSNepenthe\ColorUtils\Transformers\Saturate;
 
 class SaturateTest extends TransformerTestCase
@@ -105,5 +106,11 @@ class SaturateTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = saturate(Color::fromString('black'), 50);
+        $this->assertEquals([0, 50, 0], $color->getHsl()->toArray());
     }
 }

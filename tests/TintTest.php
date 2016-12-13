@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\tint;
 use SSNepenthe\ColorUtils\Transformers\Tint;
 
 class TintTest extends TransformerTestCase
@@ -81,5 +82,11 @@ class TintTest extends TransformerTestCase
                 $transformer->transform($color)->getRgb()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = tint(Color::fromString('black'));
+        $this->assertEquals([128, 128, 128], $color->getRgb()->toArray());
     }
 }

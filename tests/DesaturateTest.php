@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\desaturate;
 use SSNepenthe\ColorUtils\Transformers\Desaturate;
 
 class DesaturateTest extends TransformerTestCase
@@ -96,5 +97,11 @@ class DesaturateTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = desaturate(Color::fromString('#8a8'), 5);
+        $this->assertEquals([120, 12, 60], $color->getHsl()->toArray());
     }
 }

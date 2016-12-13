@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\mix;
 use SSNepenthe\ColorUtils\Transformers\Mix;
 
 /**
@@ -101,5 +102,12 @@ class MixTest extends TransformerTestCase
                 );
             }
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = mix(Color::fromString('#00f'), Color::fromString('#f00'));
+
+        $this->assertEquals([128, 0, 128], $color->getRgb()->toArray());
     }
 }

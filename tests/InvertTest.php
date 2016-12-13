@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\invert;
 use SSNepenthe\ColorUtils\Transformers\Invert;
 
 class InvertTest extends TransformerTestCase
@@ -47,5 +48,11 @@ class InvertTest extends TransformerTestCase
                 $transformer->transform($color)->getRgb()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = invert(Color::fromString('black'));
+        $this->assertEquals([255, 255, 255], $color->getRgb()->toArray());
     }
 }

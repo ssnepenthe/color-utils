@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\adjust_hue;
 use SSNepenthe\ColorUtils\Transformers\AdjustHue;
 
 class AdjustHueTest extends TransformerTestCase
@@ -106,5 +107,11 @@ class AdjustHueTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = adjust_hue(Color::fromString('black'), 180);
+        $this->assertEquals([180, 0, 0], $color->getHsl()->toArray());
     }
 }

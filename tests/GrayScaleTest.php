@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\grayscale;
 use SSNepenthe\ColorUtils\Transformers\GrayScale;
 
 class GrayScaleTest extends TransformerTestCase
@@ -100,5 +101,11 @@ class GrayScaleTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = grayscale(Color::fromString('red'));
+        $this->assertEquals([0, 0, 50], $color->getHsl()->toArray());
     }
 }

@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\shade;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 
 class ShadeTest extends TransformerTestCase
@@ -81,5 +82,11 @@ class ShadeTest extends TransformerTestCase
                 $transformer->transform($color)->getRgb()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = shade(Color::fromString('white'));
+        $this->assertEquals([128, 128, 128], $color->getRgb()->toArray());
     }
 }

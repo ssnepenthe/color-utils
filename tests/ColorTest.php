@@ -3,7 +3,16 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\hsl;
+use function SSNepenthe\ColorUtils\hue;
+use function SSNepenthe\ColorUtils\red;
+use function SSNepenthe\ColorUtils\rgb;
+use function SSNepenthe\ColorUtils\blue;
 use SSNepenthe\ColorUtils\ColorInterface;
+use function SSNepenthe\ColorUtils\alpha;
+use function SSNepenthe\ColorUtils\green;
+use function SSNepenthe\ColorUtils\lightness;
+use function SSNepenthe\ColorUtils\saturation;
 
 class ColorTest extends PHPUnit_Framework_TestCase
 {
@@ -43,6 +52,8 @@ class ColorTest extends PHPUnit_Framework_TestCase
             new Color(new Hsl(348, 100, 50)),
             Color::fromHsl(348, 100, 50),
             Color::fromString('hsl(348, 100%, 50%)'),
+            hsl(348, 100, 50),
+            hsl('hsl(348, 100%, 50%)'),
         ];
 
         foreach ($tests as $test) {
@@ -65,6 +76,8 @@ class ColorTest extends PHPUnit_Framework_TestCase
             new Color(new Rgb(255, 0, 51)),
             Color::fromRgb(255, 0, 51),
             Color::fromString('rgb(255, 0, 51)'),
+            rgb(255, 0, 51),
+            rgb('rgb(255, 0, 51)'),
         ];
 
         foreach ($tests as $test) {
@@ -83,9 +96,13 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $color = Color::fromRgb(255, 0, 51);
 
         $this->assertEquals([255, 0, 51], $color->toArray());
+        $this->assertEquals(255, red($color));
+        $this->assertEquals(0, green($color));
+        $this->assertEquals(51, blue($color));
 
         $this->assertFalse($color->hasAlpha());
         $this->assertEquals(1.0, $color->getAlpha());
+        $this->assertEquals(1.0, alpha($color));
         $this->assertEquals('', $color->getName());
 
         $color = Color::fromRgb(255, 0, 51, 0.7);
@@ -106,9 +123,13 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $color = Color::fromHsl(348, 100, 50);
 
         $this->assertEquals([348, 100, 50], $color->toArray());
+        $this->assertEquals(348, hue($color));
+        $this->assertEquals(100, saturation($color));
+        $this->assertEquals(50, lightness($color));
 
         $this->assertFalse($color->hasAlpha());
         $this->assertEquals(1.0, $color->getAlpha());
+        $this->assertEquals(1.0, alpha($color));
 
         $color = Color::fromHsl(348, 100, 50, 0.7);
 

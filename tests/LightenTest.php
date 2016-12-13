@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\lighten;
 use SSNepenthe\ColorUtils\Transformers\Lighten;
 
 class LightenTest extends TransformerTestCase
@@ -78,5 +79,11 @@ class LightenTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = lighten(Color::fromString('black'), 50);
+        $this->assertEquals([0, 0, 50], $color->getHsl()->toArray());
     }
 }

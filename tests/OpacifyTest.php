@@ -4,6 +4,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\opacify;
 use SSNepenthe\ColorUtils\Transformers\Opacify;
 
 class OpacifyTest extends TransformerTestCase
@@ -47,5 +48,11 @@ class OpacifyTest extends TransformerTestCase
         foreach ($colors as $color) {
             $this->assertEquals(0.5, $transformer->transform($color)->getAlpha());
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = opacify(Color::fromString('transparent'), 0.5);
+        $this->assertEquals(0.5, $color->getAlpha());
     }
 }

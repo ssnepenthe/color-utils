@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\complement;
 use SSNepenthe\ColorUtils\Transformers\Complement;
 
 class ComplementTest extends TransformerTestCase
@@ -78,5 +79,11 @@ class ComplementTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = complement(Color::fromString('black'));
+        $this->assertEquals([180, 0, 0], $color->getHsl()->toArray());
     }
 }

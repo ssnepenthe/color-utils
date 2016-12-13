@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\adjust_color;
 use SSNepenthe\ColorUtils\Transformers\AdjustColor;
 
 /**
@@ -272,5 +273,11 @@ class AdjustColorTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = adjust_color(Color::fromString('black'), ['lightness' => 50]);
+        $this->assertEquals([0, 0, 50], $color->getHsl()->toArray());
     }
 }

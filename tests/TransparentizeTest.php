@@ -3,6 +3,7 @@
 use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\transparentize;
 use SSNepenthe\ColorUtils\Transformers\Transparentize;
 
 class TransparentizeTest extends TransformerTestCase
@@ -64,5 +65,11 @@ class TransparentizeTest extends TransformerTestCase
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
+    }
+
+    public function test_functional_wrapper()
+    {
+        $color = transparentize(Color::fromString('black'), 0.5);
+        $this->assertEquals(0.5, $color->getAlpha());
     }
 }
