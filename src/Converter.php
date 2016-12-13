@@ -78,7 +78,7 @@ class Converter
     {
         // 1) Get RGB values in a range of 0-1.
         list($red, $green, $blue) = array_map(function (int $value) : float {
-            return $value / 255.0;
+            return floatval($value / 255.0);
         }, $rgb->toArray());
 
         // 2) Find the max and min values from $red, $green, $blue.
