@@ -2,6 +2,8 @@
 
 namespace SSNepenthe\ColorUtils;
 
+use InvalidArgumentException;
+
 class Hsl implements ColorInterface
 {
     use RangeableTrait;
@@ -17,8 +19,9 @@ class Hsl implements ColorInterface
     {
         array_walk($args, function ($arg) {
             if (! is_numeric($arg)) {
-                // @todo
-                throw new \InvalidArgumentException;
+                throw new InvalidArgumentException(
+                    'Hsl::__construct() must be called with numeric args'
+                );
             }
         });
 
@@ -30,8 +33,9 @@ class Hsl implements ColorInterface
         }
 
         if (3 !== count($args)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Hsl::__construct() must be called with 3 or 4 arguments'
+            );
         }
 
         $hue = $this->shiftIntoRange(floatval($args[0]), 0.0, 360.0);
@@ -69,8 +73,7 @@ class Hsl implements ColorInterface
         $hsl = str_replace(' ', '', $hsl);
 
         if (! preg_match('/^hsla?\(([\d,%\.]{5,})\)$/i', $hsl, $matches)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException('Invalid HSL string provided');
         }
 
         // Get matches and filter out empty strings.
@@ -81,23 +84,26 @@ class Hsl implements ColorInterface
         $count = count($hsl);
 
         if (3 !== $count && 4 !== $count) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Hsl::fromString() must be called with 3 or 4 arguments'
+            );
         }
 
         list($hue, $saturation, $lightness) = array_slice($hsl, 0, 3);
         $alpha = $hsl[3] ?? false;
 
         if (static::isPercentageString($hue)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Hue cannot be provided as a percentage'
+            );
         }
 
         if (! static::isPercentageString($saturation) ||
             ! static::isPercentageString($lightness)
         ) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Saturation and Lightness must be provided as percentages'
+            );
         }
 
         $hsl = array_map(function (string $val) : float {
@@ -163,11 +169,11 @@ class Hsl implements ColorInterface
     {
         $props = array_keys($attrs);
 
-        // You must provide at least one of hue, saturation or lightness.
         $allowed = ['hue', 'saturation', 'lightness', 'alpha'];
         if (empty(array_intersect($allowed, $props))) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'One of hue, saturation, lightness or alpha is required'
+            );
         }
 
         // Merge defaults.

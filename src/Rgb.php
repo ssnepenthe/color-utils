@@ -2,6 +2,8 @@
 
 namespace SSNepenthe\ColorUtils;
 
+use InvalidArgumentException;
+
 class Rgb implements ColorInterface
 {
     use RangeableTrait;
@@ -17,8 +19,9 @@ class Rgb implements ColorInterface
     {
         array_walk($args, function ($arg) {
             if (! is_numeric($arg)) {
-                // @todo
-                throw new \InvalidArgumentException;
+                throw new InvalidArgumentException(
+                    'Rgb::__construct() args must be numeric'
+                );
             }
         });
 
@@ -30,8 +33,9 @@ class Rgb implements ColorInterface
         }
 
         if (3 !== count($args)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Rgb::__construct() must be called with 3 or 4 args'
+            );
         }
 
         $args = array_map(function ($value) : float {
@@ -166,8 +170,9 @@ class Rgb implements ColorInterface
 
         // You must provide at least one of red, green, blue or alpha.
         if (empty(array_intersect(['red', 'green', 'blue', 'alpha'], $props))) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'One of red, green, blue or alpha is required'
+            );
         }
 
         // Merge defaults.
@@ -196,8 +201,7 @@ class Rgb implements ColorInterface
     protected static function fromHexString(string $hex) : ColorInterface
     {
         if (1 === preg_match('/[^a-f0-9#]/i', $hex) || '#' !== substr($hex, 0, 1)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException('Invalid hex string provided');
         }
 
         $hex = ltrim($hex, '#');
@@ -216,8 +220,9 @@ class Rgb implements ColorInterface
                 }, str_split($hex, 2)); // int.
                 break;
             default:
-                // @todo
-                throw new \InvalidArgumentException;
+                throw new InvalidArgumentException(
+                    'Hex string must be 3, 4, 6 or 8 characters in length'
+                );
         }
 
         if (4 === count($rgb)) {
@@ -231,8 +236,7 @@ class Rgb implements ColorInterface
     protected static function fromKeyword(string $keyword) : ColorInterface
     {
         if (! array_key_exists($keyword, ColorKeywords::MAP)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException('Invalid keyword provided');
         }
 
         return static::fromHexString(ColorKeywords::MAP[$keyword]);
@@ -245,8 +249,7 @@ class Rgb implements ColorInterface
 
         // {5,} quantifer is far from perfect but meant for 3 digits and 2 commas.
         if (! preg_match('/^rgba?\(([\d%,\.]{5,})\)$/i', $rgb, $matches)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException('Invalid RGB string provided');
         }
 
         // Get matches and filter out empty strings.
@@ -257,31 +260,32 @@ class Rgb implements ColorInterface
         $count = count($rgb);
 
         if (3 !== $count && 4 !== $count) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Rgb::fromRgbString() must be called with 3 or 4 args'
+            );
         }
 
         $colors = array_slice($rgb, 0, 3);
         $alpha = $rgb[3] ?? false;
 
-        // It is all or none when using percentages for red, green and blue.
         $colorAsPercentage = array_filter(array_map(function (string $value) : bool {
             return false !== strpos($value, '%');
         }, $colors));
 
         if (! empty($colorAsPercentage) && 3 !== count($colorAsPercentage)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Rgb::fromRgbString() must be called with all or none as percentages'
+            );
         }
 
-        // Fractions are not allowed for rgb color values.
         $colorAsFraction = array_filter(array_map(function (string $value) : bool {
             return false !== strpos($value, '.');
         }, $colors));
 
         if (! empty($colorAsFraction)) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'Fractions not allowed for RGB colors'
+            );
         }
 
         $colors = array_map(function (string $value) : float {

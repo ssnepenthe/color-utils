@@ -2,6 +2,8 @@
 
 namespace SSNepenthe\ColorUtils;
 
+use InvalidArgumentException;
+
 /**
  * @todo ConverterInterface
  */
@@ -187,8 +189,9 @@ class Color implements ColorInterface
         ));
 
         if ($withHsl && $withRgb) {
-            // @todo
-            throw new \InvalidArgumentException;
+            throw new InvalidArgumentException(
+                'You cannot modify HSL and RGB components in the same operation'
+            );
         }
 
         if ($withHsl) {
@@ -209,7 +212,6 @@ class Color implements ColorInterface
             return new Color($this->{$this->type}->with($attrs));
         }
 
-        // @todo
-        throw new \InvalidArgumentException;
+        throw new InvalidArgumentException('No valid components provided');
     }
 }
