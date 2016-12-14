@@ -12,7 +12,7 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_be_instantiated()
     {
-        $transformer = new ConditionalTransformer(function(Color $color) : bool {
+        $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return $color->looksDark();
         }, new Lighten(30));
 
@@ -22,7 +22,7 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_conditionally_transform_a_color()
     {
-        $transformer = new ConditionalTransformer(function(Color $color) : bool {
+        $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return $color->looksDark();
         }, new Lighten(30));
 
@@ -39,7 +39,7 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_apply_a_fallback_transformation()
     {
-        $transformer = new ConditionalTransformer(function(Color $color) : bool {
+        $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return $color->looksDark();
         }, new Lighten(30), new Darken(30));
 

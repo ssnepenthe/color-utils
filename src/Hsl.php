@@ -15,7 +15,7 @@ class Hsl implements ColorInterface
 
     public function __construct(...$args)
     {
-        array_walk($args, function($arg) {
+        array_walk($args, function ($arg) {
             if (! is_numeric($arg)) {
                 // @todo
                 throw new \InvalidArgumentException;
