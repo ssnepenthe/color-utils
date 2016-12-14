@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
+use function SSNepenthe\ColorUtils\name;
 use SSNepenthe\ColorUtils\ColorInterface;
 
 class RgbTest extends PHPUnit_Framework_TestCase
@@ -91,6 +92,7 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $rgb = Rgb::fromString('#7fffd4');
 
         $this->assertEquals('aquamarine', $rgb->getName());
+        $this->assertEquals('aquamarine', name($rgb));
 
         $rgb = Rgb::fromString('#b22222');
 

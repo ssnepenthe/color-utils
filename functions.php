@@ -187,3 +187,33 @@ function change_color(ColorInterface $color, array $components) : Color
     $tranformer = new Transformers\ChangeColor($components);
     return $tranformer->transform($color);
 }
+
+function name(ColorInterface $color) : string
+{
+    return $color->toColor()->getName();
+}
+
+function is_light(ColorInterface $color, int $threshold = 50) : bool
+{
+    return $color->toColor()->isLight($threshold);
+}
+
+function is_dark(ColorInterface $color, int $threshold = 50) : bool
+{
+    return $color->toColor()->isDark($threshold);
+}
+
+function looks_light(ColorInterface $color, int $threshold = 50) : bool
+{
+    return $color->toColor()->looksLight($threshold);
+}
+
+function looks_dark(ColorInterface $color, int $threshold = 50) : bool
+{
+    return $color->toColor()->looksDark($threshold);
+}
+
+function perceived_brightness(ColorInterface $color) : int
+{
+    return $color->toColor()->getPerceivedBrightness();
+}
