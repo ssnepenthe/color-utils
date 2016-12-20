@@ -8,7 +8,7 @@ PHP 7.0 or later.
 Although this package has no dependencies, it does rely on the Composer autoloader and should therefore be installed using Composer:
 
 ```
-composer require ssnepenthe\color-utils
+composer require ssnepenthe/color-utils
 ```
 
 ## Usage
