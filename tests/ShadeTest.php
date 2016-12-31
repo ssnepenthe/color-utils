@@ -6,64 +6,52 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\shade;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 
-class ShadeTest extends TransformerTestCase
+class ShadeTest extends PHPUnit_Framework_TestCase
 {
     public function test_shading_white_gives_gray()
     {
-        $color = Color::fromString('#fff');
+        $c = Color::fromString('#fff');
 
-        $tests = [
-            // .shade-white {
-            //   color: shade(#fff, 75%); // #404040
-            // }
-            ['transformer' => new Shade(75), 'result' => [64, 64, 64]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .shade-white {
+        //   color: shade(#fff, 75%); // #404040
+        // }
+        $t = new Shade(75);
+        $this->assertEquals('#404040', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_shading_black_just_gives_black()
     {
-        $color = Color::fromString('#000');
+        $c = Color::fromString('#000');
 
-        $tests = [
-            // .shade-black {
-            //   color: shade(#000, 50%); // black
-            // }
-            ['transformer' => new Shade(50), 'result' => [0, 0, 0]],
-            // Test that 50 is default Shade amount.
-            ['transformer' => new Shade, 'result' => [0, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .shade-black {
+        //   color: shade(#000, 50%); // black
+        // }
+        // Also tests that 50 is default amount.
+        foreach ([new Shade(50), new Shade] as $t) {
+            $this->assertEquals('black', $t->transform($c)->getName());
+        }
     }
 
     public function test_it_can_shade_red()
     {
-        $color = Color::fromString('#f00');
+        $c = Color::fromString('#f00');
 
-        $tests = [
-            // .shade-red {
-            //   color: shade(#f00, 25%); // #bf0000
-            // }
-            ['transformer' => new Shade(25), 'result' => [191, 0, 0]],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .shade-red {
+        //   color: shade(#f00, 25%); // #bf0000
+        // }
+        $t = new Shade(25);
+        $this->assertEquals('#bf0000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_shade_grays()
     {
-        $color = Color::fromString('#222');
+        $c = Color::fromString('#222');
 
-        $tests = [
-            // .shade-gray {
-            //   color: shade(#222, 33%); // #171717
-            // }
-            ['transformer' => new Shade(33), 'result' => [23, 23, 23]],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .shade-gray {
+        //   color: shade(#222, 33%); // #171717
+        // }
+        $t = new Shade(33);
+        $this->assertEquals('#171717', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
@@ -71,7 +59,7 @@ class ShadeTest extends TransformerTestCase
         $colors = [
             Color::fromString('white'),
             Rgb::fromString('white'),
-            Hsl::fromString('hsl(0, 0%, 1000%)'),
+            Hsl::fromString('hsl(0, 0%, 100%)'),
         ];
 
         $transformer = new Shade;

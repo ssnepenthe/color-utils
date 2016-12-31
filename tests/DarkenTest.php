@@ -6,78 +6,60 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\darken;
 use SSNepenthe\ColorUtils\Transformers\Darken;
 
-class DarkenTest extends TransformerTestCase
+class DarkenTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_darken_hsl_colors()
     {
-        $color = Color::fromHsl(25, 100, 80);
+        $c = Color::fromHsl(25, 100, 80);
 
-        $tests = [
-            // assert_equal("#ff6a00", evaluate("darken(hsl(25, 100, 80), 30%)"))
-            ['transformer' => new Darken(30), 'result' => [25, 100, 50]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("#ff6a00", evaluate("darken(hsl(25, 100, 80), 30%)"))
+        $t = new Darken(30);
+        $this->assertEquals('#ff6a00', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_darken_hex_colors()
     {
-        $color = Color::fromString('#800');
+        $c = Color::fromString('#800');
 
-        $tests = [
-            // @todo
-            // assert_equal("#220000", evaluate("darken(#800, 20%)"))
-            ['transformer' => new Darken(20), 'result' => [36, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo Off from SASS, matches rgb.to.
+        // assert_equal("#220000", evaluate("darken(#800, 20%)"))
+        $t = new Darken(20);
+        $this->assertEquals('#240000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_darken_rgb_colors()
     {
-        $color = Color::fromRgb(136, 0, 0, 0.5);
+        $c = Color::fromRgb(136, 0, 0, 0.5);
 
-        $tests = [
-            // @todo
-            // assert_equal("rgba(34, 0, 0, 0.5)", evaluate("darken(rgba(136, 0, 0, 0.5), 20%)"))
-            ['transformer' => new Darken(20), 'result' => [36, 0, 0, 0.5]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo Off from SASS, matches rgb.to.
+        // assert_equal("rgba(34, 0, 0, 0.5)", evaluate("darken(rgba(136, 0, 0, 0.5), 20%)"))
+        $t = new Darken(20);
+        $this->assertEquals('rgba(36, 0, 0, 0.5)', $t->transform($c));
     }
 
     public function test_it_can_only_go_as_dark_as_black()
     {
-        $color = Color::fromString('#000');
+        $c = Color::fromString('#000');
 
-        $tests = [
-            // assert_equal("black", evaluate("darken(#000, 20%)"))
-            ['transformer' => new Darken(20), 'result' => [0, 0, 0]]
-        ];
+        // assert_equal("black", evaluate("darken(#000, 20%)"))
+        $t = new Darken(20);
+        $this->assertEquals('black', $t->transform($c)->getName());
 
-        $this->runTransformerTests($color, $tests);
+        $c = Color::fromString('#800');
 
-        $color = Color::fromString('#800');
-
-        $tests = [
-            // assert_equal("black", evaluate("darken(#800, 100%)"))
-            ['transformer' => new Darken(100), 'result' => [0, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("black", evaluate("darken(#800, 100%)"))
+        $t = new Darken(100);
+        $this->assertEquals('black', $t->transform($c)->getName());
     }
 
     public function test_darkening_by_0_does_not_change_color()
     {
-        $color = Color::fromString('#800');
+        $c = Color::fromString('#800');
 
-        $tests = [
-            // @todo
-            // assert_equal("#880000", evaluate("darken(#800, 0%)"))
-            ['transformer' => new Darken(0), 'result' => [138, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo This is a weird one... Matches rgb.to though.
+        // assert_equal("#880000", evaluate("darken(#800, 0%)"))
+        $t = new Darken(0);
+        $this->assertEquals('#8a0000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
@@ -100,7 +82,9 @@ class DarkenTest extends TransformerTestCase
 
     public function test_functional_wrapper()
     {
-        $color = darken(Color::fromString('white'), 30);
-        $this->assertEquals([0, 0, 70], $color->getHsl()->toArray());
+        $this->assertEquals(
+            [0, 0, 70],
+            darken(Color::fromString('white'), 30)->getHsl()->toArray()
+        );
     }
 }

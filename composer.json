@@ -36,8 +36,5 @@
     "autoload": {
         "files": ["functions.php"],
         "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
-    },
-    "autoload-dev": {
-        "classmap": [ "tests/TransformerTestCase.php" ]
     }
 }

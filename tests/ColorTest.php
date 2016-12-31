@@ -21,17 +21,11 @@ use function SSNepenthe\ColorUtils\perceived_brightness;
 
 class ColorTest extends PHPUnit_Framework_TestCase
 {
-    public function test_it_implements_color_interface()
-    {
-        $color = new Color(new Rgb(255, 0, 51));
-
-        $this->assertInstanceOf(ColorInterface::class, $color);
-    }
-
     public function test_it_is_instantiable()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
+        $this->assertInstanceOf(ColorInterface::class, $color);
         $this->assertInstanceOf(Color::class, $color);
     }
 

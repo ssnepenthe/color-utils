@@ -6,89 +6,63 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\adjust_hue;
 use SSNepenthe\ColorUtils\Transformers\AdjustHue;
 
-class AdjustHueTest extends TransformerTestCase
+class AdjustHueTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_positively_adjust_hue_from_hsl()
     {
-        $color = Color::fromHsl(120, 30, 90);
-
-        $tests = [
-            // assert_equal("#deeded", evaluate("adjust-hue(hsl(120, 30, 90), 60deg)"))
-            ['transformer' => new AdjustHue(60), 'result' => [180, 30, 90]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("#deeded", evaluate("adjust-hue(hsl(120, 30, 90), 60deg)"))
+        $c = Color::fromHsl(120, 30, 90);
+        $t = new AdjustHue(60);
+        $this->assertEquals('#deeded', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_positively_adjust_hue_from_hex()
     {
-        $color = Color::fromString('#811');
-
-        $tests = [
-            // assert_equal("#886a11", evaluate("adjust-hue(#811, 45deg)"))
-            ['transformer' => new AdjustHue(45), 'result' => [136, 106, 17]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("#886a11", evaluate("adjust-hue(#811, 45deg)"))
+        $c = Color::fromString('#811');
+        $t = new AdjustHue(45);
+        $this->assertEquals('#886a11', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_positively_adjust_hue_from_rgb()
     {
-        $color = Color::fromRgb(136, 17, 17, 0.5);
-
-        $tests = [
-            // assert_equal("rgba(136, 106, 17, 0.5)", evaluate("adjust-hue(rgba(136, 17, 17, 0.5), 45deg)"))
-            ['transformer' => new AdjustHue(45), 'result' => [136, 106, 17, 0.5]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("rgba(136, 106, 17, 0.5)", evaluate("adjust-hue(rgba(136, 17, 17, 0.5), 45deg)"))
+        $c = Color::fromRgb(136, 17, 17, 0.5);
+        $t = new AdjustHue(45);
+        $this->assertEquals('rgba(136, 106, 17, 0.5)', (string) $t->transform($c));
     }
 
     public function test_it_can_negatively_adjust_hue()
     {
-        $color = Color::fromHsl(120, 30, 90);
-
-        $tests = [
-            // assert_equal("#ededde", evaluate("adjust-hue(hsl(120, 30, 90), -60deg)"))
-            ['transformer' => new AdjustHue(-60), 'result' => [60, 30, 90]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("#ededde", evaluate("adjust-hue(hsl(120, 30, 90), -60deg)"))
+        $c = Color::fromHsl(120, 30, 90);
+        $t = new AdjustHue(-60);
+        $this->assertEquals('#ededde', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_cant_adjust_shades_of_gray()
     {
-        $color = Color::fromString('#000');
+        // assert_equal("black", evaluate("adjust-hue(#000, 45deg)"))
+        $c = Color::fromString('#000');
+        $t = new AdjustHue(45);
+        $this->assertEquals('black', $t->transform($c)->getRgb()->getName());
 
-        $tests = [
-            // assert_equal("black", evaluate("adjust-hue(#000, 45deg)"))
-            ['transformer' => new AdjustHue(45), 'result' => [0, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
-
-        $color = Color::fromString('#fff');
-
-        $tests = [
-            // assert_equal("white", evaluate("adjust-hue(#fff, 45deg)"))
-            ['transformer' => new AdjustHue(45), 'result' => [255, 255, 255]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("white", evaluate("adjust-hue(#fff, 45deg)"))
+        $c = Color::fromString('#fff');
+        $t = new AdjustHue(45);
+        $this->assertEquals('white', $t->transform($c)->getRgb()->getName());
     }
 
     public function test_adjustments_of_0_or_360_dont_change_a_color()
     {
-        $color = Color::fromString('#8a8');
+        $c = Color::fromString('#8a8');
 
-        $tests = [
-            // assert_equal("#88aa88", evaluate("adjust-hue(#8a8, 360deg)"))
-            ['transformer' => new AdjustHue(360), 'result' => [136, 170, 136]],
-            // assert_equal("#88aa88", evaluate("adjust-hue(#8a8, 0deg)"))
-            ['transformer' => new AdjustHue(0), 'result' => [136, 170, 136]],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        foreach ([new AdjustHue(360), new AdjustHue(0)] as $t) {
+            $this->assertEquals(
+                '#88aa88',
+                $t->transform($c)->getRgb()->toHexString()
+            );
+        }
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()

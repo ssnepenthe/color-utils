@@ -6,64 +6,51 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\tint;
 use SSNepenthe\ColorUtils\Transformers\Tint;
 
-class TintTest extends TransformerTestCase
+class TintTest extends PHPUnit_Framework_TestCase
 {
     public function test_tinting_white_just_gives_white()
     {
-        $color = Color::fromString('#fff');
+        $c = Color::fromString('#fff');
 
-        $tests = [
-            // .tint-white {
-            //   color: tint(#fff, 75%); // white
-            // }
-            ['transformer' => new Tint(75), 'result' => [255, 255, 255]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .tint-white {
+        //   color: tint(#fff, 75%); // white
+        // }
+        $t = new Tint(75);
+        $this->assertEquals('white', $t->transform($c)->getName());
     }
 
     public function test_tinting_black_gives_gray()
     {
-        $color = Color::fromString('#000');
+        $c = Color::fromString('#000');
 
-        $tests = [
-            // .tint-black {
-            //   color: tint(#000, 50%); // gray
-            // }
-            ['transformer' => new Tint(50), 'result' => [128, 128, 128]],
-            // Test that 50 is default Tint amount.
-            ['transformer' => new Tint, 'result' => [128, 128, 128]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .tint-black {
+        //   color: tint(#000, 50%); // gray
+        // }
+        foreach ([new Tint(50), new Tint] as $t) {
+            $this->assertEquals('gray', $t->transform($c)->getName());
+        }
     }
 
     public function test_it_can_tint_red()
     {
-        $color = Color::fromString('#f00');
+        $c = Color::fromString('#f00');
 
-        $tests = [
-            // .tint-red {
-            //   color: tint(#f00, 25%); // #ff4040
-            // }
-            ['transformer' => new Tint(25), 'result' => [255, 64, 64]],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .tint-red {
+        //   color: tint(#f00, 25%); // #ff4040
+        // }
+        $t = new Tint(25);
+        $this->assertEquals('#ff4040', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_tint_grays()
     {
-        $color = Color::fromString('#aaa');
+        $c = Color::fromString('#aaa');
 
-        $tests = [
-            // .tint-gray {
-            //   color: tint(#aaa, 33%); // #c6c6c6
-            // }
-            ['transformer' => new Tint(33), 'result' => [198, 198, 198]],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // .tint-gray {
+        //   color: tint(#aaa, 33%); // #c6c6c6
+        // }
+        $t = new Tint(33);
+        $this->assertEquals('#c6c6c6', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()

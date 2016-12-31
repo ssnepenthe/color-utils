@@ -44,14 +44,14 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
         }, new Lighten(30), new Darken(30));
 
         $color = Color::fromString('red');
-        $newColor = $transformer->transform($color);
+        $darkened = $transformer->transform($color);
 
-        $this->assertEquals([102, 0, 0], $newColor->toArray()); // Darkened.
+        $this->assertEquals([102, 0, 0], $darkened->toArray());
 
         $color = Color::fromString('green');
-        $newColor = $transformer->transform($color);
+        $lightened = $transformer->transform($color);
 
-        $this->assertEquals([26, 255, 26], $newColor->toArray()); // Lightened.
+        $this->assertEquals([26, 255, 26], $lightened->toArray());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()

@@ -54,7 +54,7 @@ class Rgb implements ColorInterface
 
         if ($this->hasAlpha()) {
             $type .= 'a';
-            $values[3] = rtrim(number_format($values[3], 2), '0');
+            $values[3] = rtrim(number_format($values[3], 2), '0.');
         }
 
         return sprintf('%s(%s)', $type, implode(', ', $values));

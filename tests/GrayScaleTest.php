@@ -6,83 +6,65 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\grayscale;
 use SSNepenthe\ColorUtils\Transformers\GrayScale;
 
-class GrayScaleTest extends TransformerTestCase
+class GrayScaleTest extends PHPUnit_Framework_TestCase
 {
+    protected $t;
+
+    public function setUp()
+    {
+        $this->t = new GrayScale;
+    }
+
     public function test_it_can_convert_hex_colors_to_grayscale()
     {
-        $color = Color::fromString('#abc');
+        $c = Color::fromString('#abc');
 
-        $tests = [
-            // @todo Off by one from SASS.
-            // assert_equal("#bbbbbb", evaluate("grayscale(#abc)"))
-            ['transformer' => new GrayScale, 'result' => [186, 186, 186]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo Off by one from SASS.
+        // assert_equal("#bbbbbb", evaluate("grayscale(#abc)"))
+        $this->assertEquals(
+            '#bababa',
+            $this->t->transform($c)->getRgb()->toHexString()
+        );
     }
 
     public function test_it_can_convert_hsl_colors_to_grayscale()
     {
-        $color = Color::fromHsl(25, 100, 80);
+        $c = Color::fromHsl(25, 100, 80);
 
-        $tests = [
-            ['transformer' => new GrayScale, 'result' => [25, 0, 80]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        $this->assertEquals([25, 0, 80], $this->t->transform($c)->toArray());
     }
 
     public function test_it_can_convert_rgb_colors_to_grayscale()
     {
-        $color = Color::fromRgb(136, 0, 0);
+        $c = Color::fromRgb(136, 0, 0);
 
-        $tests = [
-            ['transformer' => new GrayScale, 'result' => [69, 69, 69]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        $this->assertEquals([69, 69, 69], $this->t->transform($c)->toArray());
     }
 
     public function test_it_doesnt_change_shades_of_gray()
     {
-        $color = Color::fromString('#fff');
+        $c = Color::fromString('#fff');
 
-        $tests = [
-            // assert_equal("white", evaluate("grayscale(white)"))
-            ['transformer' => new GrayScale, 'result' => [255, 255, 255]]
-        ];
+        // assert_equal("white", evaluate("grayscale(white)"))
+        $this->assertEquals('white', $this->t->transform($c)->getName());
 
-        $this->runTransformerTests($color, $tests);
+        $c = Color::fromString('#000');
 
-        $color = Color::fromString('#000');
-
-        $tests = [
-            // assert_equal("black", evaluate("grayscale(black)"))
-            ['transformer' => new GrayScale, 'result' => [0, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("black", evaluate("grayscale(black)"))
+        $this->assertEquals('black', $this->t->transform($c)->getName());
     }
 
     public function test_it_converts_primary_colors_straight_to_gray()
     {
-        $color = Color::fromString('#f00');
+        $c = Color::fromString('#f00');
 
-        $tests = [
-            // assert_equal("gray", evaluate("grayscale(#f00)"))
-            ['transformer' => new GrayScale, 'result' => [128, 128, 128]]
-        ];
+        // assert_equal("gray", evaluate("grayscale(#f00)"))
+        $this->assertEquals('gray', $this->t->transform($c)->getName());
 
-        $this->runTransformerTests($color, $tests);
+        $c = Color::fromString('#00f');
 
-        $color = Color::fromString('#00f');
-
-        $tests = [
-            // assert_equal("gray", evaluate("grayscale(#00f)"))
-            ['transformer' => new GrayScale, 'result' => [128, 128, 128]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("gray", evaluate("grayscale(#00f)"))
+        $this->assertEquals('gray', $this->t->transform($c)->getName());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
@@ -93,19 +75,19 @@ class GrayScaleTest extends TransformerTestCase
             Hsl::fromString('hsl(0, 100%, 50%)'),
         ];
 
-        $transformer = new GrayScale;
-
-        foreach ($colors as $color) {
+        foreach ($colors as $c) {
             $this->assertEquals(
                 [0, 0, 50],
-                $transformer->transform($color)->getHsl()->toArray()
+                $this->t->transform($c)->getHsl()->toArray()
             );
         }
     }
 
     public function test_functional_wrapper()
     {
-        $color = grayscale(Color::fromString('red'));
-        $this->assertEquals([0, 0, 50], $color->getHsl()->toArray());
+        $this->assertEquals(
+            [0, 0, 50],
+            grayscale(Color::fromString('red'))->getHsl()->toArray()
+        );
     }
 }

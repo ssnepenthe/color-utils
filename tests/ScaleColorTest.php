@@ -6,190 +6,123 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\scale_color;
 use SSNepenthe\ColorUtils\Transformers\ScaleColor;
 
-/**
- * SASS tests some of these results to the decimal but our Rgb and Hsl classes round
- * these off for us so we test to the rounded value.
- */
-class ScaleColorTest extends TransformerTestCase
+class ScaleColorTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_scale_hsl_colors()
     {
-        $color = Color::fromHsl(120, 30, 90);
+        $c = Color::fromHsl(120, 30, 90);
 
-        $tests = [
-            // assert_equal(evaluate("hsl(120, 51, 90)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => 30]
-                ),
-                'result' => [120, 51, 90],
-            ],
-            // assert_equal(evaluate("hsl(120, 30, 76.5)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $lightness: -15%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['lightness' => -15]
-                ),
-                'result' => [120, 30, 77],
-            ],
-        ];
+        // assert_equal(evaluate("hsl(120, 51, 90)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%)"))
+        $t = new ScaleColor(['saturation' => 30]);
+        $this->assertEquals('hsl(120, 51%, 90%)', $t->transform($c));
 
-        $this->runTransformerTests($color, $tests);
+        // @todo Don't round off HSL values.
+        // assert_equal(evaluate("hsl(120, 30, 76.5)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $lightness: -15%)"))
+        $t = new ScaleColor(['lightness' => -15]);
+        $this->assertEquals('hsl(120, 30%, 77%)', $t->transform($c));
     }
 
     public function test_it_can_scale_rgb_colors()
     {
-        $color = Color::fromRgb(10, 20, 30);
+        $c = Color::fromRgb(10, 20, 30);
 
-        $tests = [
-            // assert_equal(evaluate("rgb(157, 20, 30)"),
-            // evaluate("scale-color(rgb(10, 20, 30), $red: 60%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['red' => 60]
-                ),
-                'result' => [157, 20, 30],
-            ],
-            // assert_equal(evaluate("rgb(10, 38.8, 30)"),
-            // evaluate("scale-color(rgb(10, 20, 30), $green: 8%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['green' => 8]
-                ),
-                'result' => [10, 39, 30],
-            ],
-            // assert_equal(evaluate("rgb(10, 20, 20)"),
-            // evaluate("scale-color(rgb(10, 20, 30), $blue: -(1/3)*100%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['blue' => -(1 / 3) * 100]
-                ),
-                'result' => [10, 20, 20],
-            ],
-        ];
+        // assert_equal(evaluate("rgb(157, 20, 30)"),
+        // evaluate("scale-color(rgb(10, 20, 30), $red: 60%)"))
+        $t = new ScaleColor(['red' => 60]);
+        $this->assertEquals('rgb(157, 20, 30)', $t->transform($c));
 
-        $this->runTransformerTests($color, $tests);
+        // @todo SASS tests to 38.8 green but the actual SASS output is 39.
+        // assert_equal(evaluate("rgb(10, 38.8, 30)"),
+        // evaluate("scale-color(rgb(10, 20, 30), $green: 8%)"))
+        $t = new ScaleColor(['green' => 8]);
+        $this->assertEquals('rgb(10, 39, 30)', $t->transform($c));
+
+        // assert_equal(evaluate("rgb(10, 20, 20)"),
+        // evaluate("scale-color(rgb(10, 20, 30), $blue: -(1/3)*100%)"))
+        $t = new ScaleColor(['blue' => -(1 / 3) * 100]);
+        $this->assertEquals('rgb(10, 20, 20)', $t->transform($c));
     }
 
     public function test_it_can_scale_alpha_attributes()
     {
         // assert_equal(evaluate("hsla(120, 30, 90, 0.86)"),
         // evaluate("scale-color(hsl(120, 30, 90), $alpha: -14%)"))
-        $transformer = new ScaleColor(['alpha' => -14]);
+        $t = new ScaleColor(['alpha' => -14]);
         $this->assertEquals(
-            [120, 30, 90, 0.86],
-            $transformer->transform(Color::fromHsl(120, 30, 90))->toArray()
+            'hsla(120, 30%, 90%, 0.86)',
+            $t->transform(Color::fromHsl(120, 30, 90))
         );
 
         // assert_equal(evaluate("rgba(10, 20, 30, 0.82)"),
         // evaluate("scale-color(rgba(10, 20, 30, 0.8), $alpha: 10%)"))
-        $transformer = new ScaleColor(['alpha' => 10]);
+        $t = new ScaleColor(['alpha' => 10]);
         $this->assertEquals(
-            [10, 20, 30, 0.82],
-            $transformer->transform(Color::fromRgb(10, 20, 30, 0.8))->toArray()
+            'rgba(10, 20, 30, 0.82)',
+            $t->transform(Color::fromRgb(10, 20, 30, 0.8))
         );
     }
 
     public function test_it_can_scale_multiple_hsl_attributes()
     {
-        $color = Color::fromHsl(120, 30, 90);
+        $c = Color::fromHsl(120, 30, 90);
 
-        $tests = [
-            // assert_equal(evaluate("hsl(120, 51, 76.5)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $lightness: -15%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => 30, 'lightness' => -15]
-                ),
-                'result' => [120, 51, 77],
-            ],
-            // assert_equal(evaluate("hsla(120, 51, 90, 0.2)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $alpha: -80%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => 30, 'alpha' => -80]
-                ),
-                'result' => [120, 51, 90, 0.2],
-            ],
-        ];
+        // @todo Don't round of HSL values.
+        // assert_equal(evaluate("hsl(120, 51, 76.5)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $lightness: -15%)"))
+        $t = new ScaleColor(['saturation' => 30, 'lightness' => -15]);
+        $this->assertEquals('hsl(120, 51%, 77%)', $t->transform($c));
 
-        $this->runTransformerTests($color, $tests);
+        // assert_equal(evaluate("hsla(120, 51, 90, 0.2)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $alpha: -80%)"))
+        $t = new ScaleColor(['saturation' => 30, 'alpha' => -80]);
+        $this->assertEquals('hsla(120, 51%, 90%, 0.2)', $t->transform($c));
     }
 
     public function test_it_can_scale_multiple_rgb_attributes()
     {
-        $color = Color::fromRgb(10, 20, 30);
+        $c = Color::fromRgb(10, 20, 30);
 
-        $tests = [
-            // assert_equal(evaluate("rgb(157, 38.8, 30)"),
-            // evaluate("scale-color(rgb(10, 20, 30), $red: 60%, $green: 8%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['red' => 60, 'green' => 8]
-                ),
-                'result' => [157, 39, 30],
-            ],
-            // assert_equal(evaluate("rgb(157, 38.8, 20)"),
-            // evaluate("scale-color(rgb(10, 20, 30), $red: 60%, $green: 8%, $blue: -(1/3)*100%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['red' => 60, 'green' => 8, 'blue' => -(1 / 3) * 100]
-                ),
-                'result' => [157, 39, 20],
-            ],
-        ];
+        // @todo While SASS tests to 38.8 green, actual SASS output is 39.
+        // assert_equal(evaluate("rgb(157, 38.8, 30)"),
+        // evaluate("scale-color(rgb(10, 20, 30), $red: 60%, $green: 8%)"))
+        $t = new ScaleColor(['red' => 60, 'green' => 8]);
+        $this->assertEquals('rgb(157, 39, 30)', $t->transform($c));
 
-        $this->runTransformerTests($color, $tests);
+        // @todo See note above.
+        // assert_equal(evaluate("rgb(157, 38.8, 20)"),
+        // evaluate("scale-color(rgb(10, 20, 30), $red: 60%, $green: 8%, $blue: -(1/3)*100%)"))
+        $t = new ScaleColor(['red' => 60, 'green' => 8, 'blue' => -(1 / 3) * 100]);
+        $this->assertEquals('rgb(157, 39, 20)', $t->transform($c));
 
-        $color = Color::fromRgb(10, 20, 30, 0.5);
+        $c = Color::fromRgb(10, 20, 30, 0.5);
 
-        $tests = [
-            // assert_equal(evaluate("rgba(10, 38.8, 20, 0.55)"),
-            // evaluate("scale-color(rgba(10, 20, 30, 0.5), $green: 8%, $blue: -(1/3)*100%, $alpha: 10%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['green' => 8, 'blue' => -(1 / 3) * 100, 'alpha' => 10]
-                ),
-                'result' => [10, 39, 20, 0.55],
-            ],
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo See note above.
+        // assert_equal(evaluate("rgba(10, 38.8, 20, 0.55)"),
+        // evaluate("scale-color(rgba(10, 20, 30, 0.5), $green: 8%, $blue: -(1/3)*100%, $alpha: 10%)"))
+        $t = new ScaleColor(['green' => 8, 'blue' => -(1 / 3) * 100, 'alpha' => 10]);
+        $this->assertEquals('rgba(10, 39, 20, 0.55)', $t->transform($c));
     }
 
     public function test_it_can_handle_extremes()
     {
-        $color = Color::fromHsl(120, 30, 90);
+        $c = Color::fromHsl(120, 30, 90);
 
-        $tests = [
-            // assert_equal(evaluate("hsl(120, 100, 90)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: 100%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => 100]
-                ),
-                'result' => [120, 100, 90],
-            ],
-            // assert_equal(evaluate("hsl(120, 30, 90)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: 0%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => 0]
-                ),
-                'result' => [120, 30, 90],
-            ],
-            // assert_equal(evaluate("hsl(120, 0, 90)"),
-            // evaluate("scale-color(hsl(120, 30, 90), $saturation: -100%)"))
-            [
-                'transformer' => new ScaleColor(
-                    ['saturation' => -100]
-                ),
-                'result' => [120, 0, 90],
-            ],
-        ];
+        // assert_equal(evaluate("hsl(120, 100, 90)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: 100%)"))
+        $t = new ScaleColor(['saturation' => 100]);
+        $this->assertEquals('hsl(120, 100%, 90%)', $t->transform($c));
 
-        $this->runTransformerTests($color, $tests);
+        // assert_equal(evaluate("hsl(120, 30, 90)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: 0%)"))
+        $t = new ScaleColor(['saturation' => 0]);
+        $this->assertEquals('hsl(120, 30%, 90%)', $t->transform($c));
+
+        // assert_equal(evaluate("hsl(120, 0, 90)"),
+        // evaluate("scale-color(hsl(120, 30, 90), $saturation: -100%)"))
+        $t = new ScaleColor(['saturation' => -100]);
+        $this->assertEquals('hsl(120, 0%, 90%)', $t->transform($c));
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
@@ -200,19 +133,19 @@ class ScaleColorTest extends TransformerTestCase
             Hsl::fromString('hsl(0, 0%, 0%)'),
         ];
 
-        $transformer = new ScaleColor(['lightness' => 50]);
+        $t = new ScaleColor(['lightness' => 50]);
 
-        foreach ($colors as $color) {
+        foreach ($colors as $c) {
             $this->assertEquals(
                 [0, 0, 50],
-                $transformer->transform($color)->getHsl()->toArray()
+                $t->transform($c)->getHsl()->toArray()
             );
         }
     }
 
     public function test_functional_wrapper()
     {
-        $color = scale_color(Color::fromString('black'), ['lightness' => 50]);
-        $this->assertEquals([0, 0, 50], $color->getHsl()->toArray());
+        $c = scale_color(Color::fromString('black'), ['lightness' => 50]);
+        $this->assertEquals([0, 0, 50], $c->getHsl()->toArray());
     }
 }

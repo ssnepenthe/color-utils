@@ -6,61 +6,53 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\lighten;
 use SSNepenthe\ColorUtils\Transformers\Lighten;
 
-class LightenTest extends TransformerTestCase
+class LightenTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_lighten_hex_colors()
     {
-        $color = Color::fromString('#800');
+        $c = Color::fromString('#800');
 
-        $tests = [
-            // @todo
-            // assert_equal("#ee0000", evaluate("lighten(#800, 20%)"))
-            ['transformer' => new Lighten(20), 'result' => [240, 0, 0]],
-            // assert_equal("white", evaluate("lighten(#800, 100%)"))
-            ['transformer' => new Lighten(100), 'result' => [255, 255, 255]],
-            // @todo
-            // assert_equal("#880000", evaluate("lighten(#800, 0%)"))
-            ['transformer' => new Lighten(0), 'result' => [138, 0, 0]],
-        ];
+        // @todo
+        // assert_equal("#ee0000", evaluate("lighten(#800, 20%)"))
+        $t = new Lighten(20);
+        $this->assertEquals('#f00000', $t->transform($c)->getRgb()->toHexString());
 
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("white", evaluate("lighten(#800, 100%)"))
+        $t = new Lighten(100);
+        $this->assertEquals('white', $t->transform($c)->getName());
+
+        // @todo
+        // assert_equal("#880000", evaluate("lighten(#800, 0%)"))
+        $t = new Lighten(0);
+        $this->assertEquals('#8a0000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_lighten_hsl_colors()
     {
-        $color = Color::fromHsl(0, 0, 0);
+        $c = Color::fromHsl(0, 0, 0);
 
-        $tests = [
-            // assert_equal("#4d4d4d", evaluate("lighten(hsl(0, 0, 0), 30%)"))
-            ['transformer' => new Lighten(30), 'result' => [0, 0, 30]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("#4d4d4d", evaluate("lighten(hsl(0, 0, 0), 30%)"))
+        $t = new Lighten(30);
+        $this->assertEquals('#4d4d4d', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_lighten_rgb_colors()
     {
-        $color = Color::fromRgb(136, 0, 0, 0.5);
+        $c = Color::fromRgb(136, 0, 0, 0.5);
 
-        $tests = [
-            // @todo
-            // assert_equal("rgba(238, 0, 0, 0.5)", evaluate("lighten(rgba(136, 0, 0, 0.5), 20%)"))
-            ['transformer' => new Lighten(20), 'result' => [240, 0, 0, 0.5]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // @todo
+        // assert_equal("rgba(238, 0, 0, 0.5)", evaluate("lighten(rgba(136, 0, 0, 0.5), 20%)"))
+        $t = new Lighten(20);
+        $this->assertEquals('rgba(240, 0, 0, 0.5)', $t->transform($c));
     }
 
     public function test_it_can_only_go_as_light_as_white()
     {
-        $color = Color::fromString('white');
+        $c = Color::fromString('white');
 
-        $tests = [
-            // assert_equal("white", evaluate("lighten(#fff, 20%)"))
-            ['transformer' => new Lighten(20), 'result' => [255, 255, 255]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("white", evaluate("lighten(#fff, 20%)"))
+        $t = new Lighten(20);
+        $this->assertEquals('white', $t->transform($c)->getName());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()

@@ -6,61 +6,51 @@ use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\complement;
 use SSNepenthe\ColorUtils\Transformers\Complement;
 
-class ComplementTest extends TransformerTestCase
+class ComplementTest extends PHPUnit_Framework_TestCase
 {
+    protected $t;
+
+    public function setUp()
+    {
+        $this->t = new Complement;
+    }
+
     public function test_it_can_create_complement_from_hex()
     {
-        $color = Color::fromString('#abc');
+        // assert_equal("#ccbbaa", evaluate("complement(#abc)"))
+        $c = Color::fromString('#abc');
 
-        $tests = [
-            // @todo Conversion is off by one from SASS for each value.
-            // assert_equal("#ccbbaa", evaluate("complement(#abc)"))
-            ['transformer' => new Complement, 'result' => [203, 186, 169]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        /**
+         * @todo Conversion is off by one from SASS for each channel.
+         *       It does match with tools like rgb.to, www.rapidtables.com, etc.
+         */
+        $this->assertEquals(
+            '#cbbaa9',
+            $this->t->transform($c)->getRgb()->toHexString()
+        );
     }
 
     public function test_it_can_create_complement_from_keywords()
     {
-        $color = Color::fromString('#f00');
+        // assert_equal("cyan", evaluate("complement(red)"))
+        // SASS uses cyan but underneath it is just an alias for aqua.
+        $c = Color::fromString('#f00');
+        $this->assertEquals('aqua', $this->t->transform($c)->getName());
 
-        $tests = [
-            // assert_equal("cyan", evaluate("complement(red)"))
-            ['transformer' => new Complement, 'result' => [0, 255, 255]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
-
-        $color = Color::fromString('#0ff');
-
-        $tests = [
-            // assert_equal("red", evaluate("complement(cyan)"))
-            ['transformer' => new Complement, 'result' => [255, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("red", evaluate("complement(cyan)"))
+        $c =  Color::fromString('#0ff');
+        $this->assertEquals('red', $this->t->transform($c)->getName());
     }
 
     public function test_it_cant_adjust_shades_of_gray()
     {
-        $color = Color::fromString('#fff');
+        // assert_equal("white", evaluate("complement(white)"))
+        $c = Color::fromString('#fff');
+        $this->assertEquals('white', $this->t->transform($c)->getName());
 
-        $tests = [
-            // assert_equal("white", evaluate("complement(white)"))
-            ['transformer' => new Complement, 'result' => [255, 255, 255]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
-
-        $color = Color::fromString('#000');
-
-        $tests = [
-            // assert_equal("black", evaluate("complement(black)"))
-            ['transformer' => new Complement, 'result' => [0, 0, 0]]
-        ];
-
-        $this->runTransformerTests($color, $tests);
+        // assert_equal("black", evaluate("complement(black)"))
+        $c = Color::fromString('#000');
+        $this->assertEquals('black', $this->t->transform($c)->getName());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
@@ -71,19 +61,19 @@ class ComplementTest extends TransformerTestCase
             Hsl::fromString('hsl(0, 0%, 0%)'),
         ];
 
-        $transformer = new Complement;
-
-        foreach ($colors as $color) {
+        foreach ($colors as $c) {
             $this->assertEquals(
                 [180, 0, 0],
-                $transformer->transform($color)->getHsl()->toArray()
+                $this->t->transform($c)->getHsl()->toArray()
             );
         }
     }
 
     public function test_functional_wrapper()
     {
-        $color = complement(Color::fromString('black'));
-        $this->assertEquals([180, 0, 0], $color->getHsl()->toArray());
+        $this->assertEquals(
+            [180, 0, 0],
+            complement(Color::fromString('black'))->getHsl()->toArray()
+        );
     }
 }
