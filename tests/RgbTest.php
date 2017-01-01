@@ -21,9 +21,9 @@ class RgbTest extends PHPUnit_Framework_TestCase
         ];
 
         foreach ($colors as $color) {
-            $this->assertAttributeInternalType('float', 'red', $color);
-            $this->assertAttributeInternalType('float', 'green', $color);
-            $this->assertAttributeInternalType('float', 'blue', $color);
+            $this->assertAttributeInternalType('int', 'red', $color);
+            $this->assertAttributeInternalType('int', 'green', $color);
+            $this->assertAttributeInternalType('int', 'blue', $color);
             $this->assertAttributeInternalType('float', 'alpha', $color);
         }
     }
@@ -64,7 +64,7 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($rgb->hasAlpha());
         $this->assertEquals(0.7, $rgb->getAlpha());
-        $this->assertEquals('b2', $rgb->getAlphaByte());
+        $this->assertEquals('b3', $rgb->getAlphaByte());
     }
 
     public function test_it_gives_the_correct_blue_value()

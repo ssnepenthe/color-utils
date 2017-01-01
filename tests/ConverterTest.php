@@ -162,7 +162,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $hsl->getHue());
         $this->assertEquals(0, $hsl->getSaturation());
-        $this->assertEquals(39, $hsl->getLightness());
+        $this->assertEquals(39.21569, $hsl->getLightness());
     }
 
     /**
@@ -174,8 +174,8 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $hsl = $this->converter->rgbToHsl($rgb);
 
         $this->assertEquals(150, $hsl->getHue());
-        $this->assertEquals(38, $hsl->getSaturation());
-        $this->assertEquals(16, $hsl->getLightness());
+        $this->assertEquals(37.5, $hsl->getSaturation());
+        $this->assertEquals(15.68627, $hsl->getLightness());
     }
 
     /**
@@ -188,7 +188,7 @@ class ConverterTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(210, $hsl->getHue());
         $this->assertEquals(20, $hsl->getSaturation());
-        $this->assertEquals(49, $hsl->getLightness());
+        $this->assertEquals(49.01961, $hsl->getLightness());
     }
 
     /**
@@ -199,9 +199,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(255, 50, 100);
         $hsl = $this->converter->rgbToHsl($rgb);
 
-        $this->assertEquals(345, $hsl->getHue());
+        $this->assertEquals(345.36585, $hsl->getHue());
         $this->assertEquals(100, $hsl->getSaturation());
-        $this->assertEquals(60, $hsl->getLightness());
+        $this->assertEquals(59.80392, $hsl->getLightness());
     }
 
     /**
@@ -212,9 +212,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(50, 255, 100);
         $hsl = $this->converter->rgbToHsl($rgb);
 
-        $this->assertEquals(135, $hsl->getHue());
+        $this->assertEquals(134.63415, $hsl->getHue());
         $this->assertEquals(100, $hsl->getSaturation());
-        $this->assertEquals(60, $hsl->getLightness());
+        $this->assertEquals(59.80392, $hsl->getLightness());
     }
 
     /**
@@ -225,9 +225,9 @@ class ConverterTest extends PHPUnit_Framework_TestCase
         $rgb = new Rgb(50, 100, 255);
         $hsl = $this->converter->rgbToHsl($rgb);
 
-        $this->assertEquals(225, $hsl->getHue());
+        $this->assertEquals(225.36585, $hsl->getHue());
         $this->assertEquals(100, $hsl->getSaturation());
-        $this->assertEquals(60, $hsl->getLightness());
+        $this->assertEquals(59.80392, $hsl->getLightness());
     }
 
     public function test_it_converts_rgb_with_alpha_when_appropriate()

@@ -38,8 +38,8 @@ class Rgb implements ColorInterface
             );
         }
 
-        $args = array_map(function ($value) : float {
-            return $this->forceIntoRange(floatval($value), 0.0, 255.0);
+        $args = array_map(function ($value) {
+            return $this->forceIntoRange(intval(round($value)), 0, 255);
         }, $args);
 
         $args[] = $this->forceIntoRange(floatval($alpha), 0.0, 1.0);
@@ -78,14 +78,17 @@ class Rgb implements ColorInterface
         return $this->alpha;
     }
 
+    /**
+     * @todo Should alpha be rounded before conversion like this? Or left alone?
+     */
     public function getAlphaByte() : string
     {
-        return $this->intToHexByte(intval($this->alpha * 255));
+        return $this->intToHexByte(intval(round($this->alpha * 255)));
     }
 
     public function getBlue() : int
     {
-        return intval(round($this->blue));
+        return $this->blue;
     }
 
     public function getBlueByte() : string
@@ -95,7 +98,7 @@ class Rgb implements ColorInterface
 
     public function getGreen() : int
     {
-        return intval(round($this->green));
+        return $this->green;
     }
 
     public function getGreenByte() : string
@@ -114,7 +117,7 @@ class Rgb implements ColorInterface
 
     public function getRed() : int
     {
-        return intval(round($this->red));
+        return $this->red;
     }
 
     public function getRedByte() : string
@@ -209,15 +212,15 @@ class Rgb implements ColorInterface
         switch (strlen($hex)) {
             case 3:
             case 4:
-                $rgb = array_map(function (string $byte) : float {
-                    return floatval(hexdec($byte . $byte));
+                $rgb = array_map(function (string $byte) {
+                    return hexdec($byte . $byte);
                 }, str_split($hex, 1));
                 break;
             case 6:
             case 8:
-                $rgb = array_map(function (string $byte) : float {
-                    return floatval(hexdec($byte));
-                }, str_split($hex, 2)); // int.
+                $rgb = array_map(function (string $byte) {
+                    return hexdec($byte);
+                }, str_split($hex, 2));
                 break;
             default:
                 throw new InvalidArgumentException(
@@ -227,7 +230,7 @@ class Rgb implements ColorInterface
 
         if (4 === count($rgb)) {
             // Convert alpha to percentage.
-            $rgb[3] = $rgb[3] / 255.0;
+            $rgb[3] = $rgb[3] / 255;
         }
 
         return new static(...$rgb);
@@ -288,20 +291,20 @@ class Rgb implements ColorInterface
             );
         }
 
-        $colors = array_map(function (string $value) : float {
+        $colors = array_map(function (string $value) {
             $percent = false !== strpos($value, '%');
 
-            $value = floatval(trim($value, '%'));
+            $value = intval(trim($value, '%'));
 
             if ($percent) {
-                $value = ($value / 100.0) * 255.0;
+                $value = intval(round(($value / 100) * 255));
             }
 
             return $value;
         }, $colors);
 
         if (is_string($alpha) && false !== strpos($alpha, '%')) {
-            $colors[] = floatval(trim($alpha, '%')) / 100.0;
+            $colors[] = floatval(trim($alpha, '%')) / 100;
         } elseif (is_string($alpha)) {
             $colors[] = floatval($alpha);
         }

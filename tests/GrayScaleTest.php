@@ -19,10 +19,9 @@ class GrayScaleTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#abc');
 
-        // @todo Off by one from SASS.
         // assert_equal("#bbbbbb", evaluate("grayscale(#abc)"))
         $this->assertEquals(
-            '#bababa',
+            '#bbbbbb',
             $this->t->transform($c)->getRgb()->toHexString()
         );
     }
@@ -38,7 +37,7 @@ class GrayScaleTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromRgb(136, 0, 0);
 
-        $this->assertEquals([69, 69, 69], $this->t->transform($c)->toArray());
+        $this->assertEquals([68, 68, 68], $this->t->transform($c)->toArray());
     }
 
     public function test_it_doesnt_change_shades_of_gray()

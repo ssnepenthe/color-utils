@@ -21,20 +21,18 @@ class DarkenTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#800');
 
-        // @todo Off from SASS, matches rgb.to.
         // assert_equal("#220000", evaluate("darken(#800, 20%)"))
         $t = new Darken(20);
-        $this->assertEquals('#240000', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#220000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_darken_rgb_colors()
     {
         $c = Color::fromRgb(136, 0, 0, 0.5);
 
-        // @todo Off from SASS, matches rgb.to.
         // assert_equal("rgba(34, 0, 0, 0.5)", evaluate("darken(rgba(136, 0, 0, 0.5), 20%)"))
         $t = new Darken(20);
-        $this->assertEquals('rgba(36, 0, 0, 0.5)', $t->transform($c));
+        $this->assertEquals('rgba(34, 0, 0, 0.5)', $t->transform($c));
     }
 
     public function test_it_can_only_go_as_dark_as_black()
@@ -56,10 +54,9 @@ class DarkenTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#800');
 
-        // @todo This is a weird one... Matches rgb.to though.
         // assert_equal("#880000", evaluate("darken(#800, 0%)"))
         $t = new Darken(0);
-        $this->assertEquals('#8a0000', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#880000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()

@@ -4,6 +4,9 @@ namespace SSNepenthe\ColorUtils;
 
 use InvalidArgumentException;
 
+/**
+ * @todo Round alpha to 5 digits like hue, sat and lightness? Same for rgb.
+ */
 class Hsl implements ColorInterface
 {
     use RangeableTrait;
@@ -40,7 +43,7 @@ class Hsl implements ColorInterface
 
         $hue = $this->shiftIntoRange(floatval($args[0]), 0.0, 360.0);
 
-        list($saturation, $lightness) = array_map(function ($val) : float {
+        list($saturation, $lightness) = array_map(function ($val) {
             return $this->forceIntoRange(floatval($val), 0.0, 100.0);
         }, [$args[1], $args[2]]);
 
@@ -62,7 +65,7 @@ class Hsl implements ColorInterface
 
         if ($this->hasAlpha) {
             $type .= 'a';
-            $values[3] = rtrim(number_format($values[3], 2), '0');
+            $values[3] = rtrim(number_format($values[3], 2), '0.');
         }
 
         return sprintf('%s(%s)', $type, implode(', ', $values));
@@ -106,12 +109,12 @@ class Hsl implements ColorInterface
             );
         }
 
-        $hsl = array_map(function (string $val) : float {
+        $hsl = array_map(function (string $val) {
             return floatval(trim($val, '%'));
         }, [$hue, $saturation, $lightness]);
 
         if (static::isPercentageString($alpha)) {
-            $hsl[] = floatval(trim($alpha, '%')) / 100.0;
+            $hsl[] = floatval(trim($alpha, '%')) / 100;
         } elseif (is_string($alpha)) {
             $hsl[] = floatval($alpha);
         }
@@ -124,19 +127,19 @@ class Hsl implements ColorInterface
         return $this->alpha;
     }
 
-    public function getHue() : int
+    public function getHue() : float
     {
-        return intval(round($this->hue));
+        return round($this->hue, 5);
     }
 
-    public function getLightness() : int
+    public function getLightness() : float
     {
-        return intval(round($this->lightness));
+        return round($this->lightness, 5);
     }
 
-    public function getSaturation() : int
+    public function getSaturation() : float
     {
-        return intval(round($this->saturation));
+        return round($this->saturation, 5);
     }
 
     public function hasAlpha() : bool

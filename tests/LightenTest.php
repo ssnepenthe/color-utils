@@ -12,19 +12,17 @@ class LightenTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#800');
 
-        // @todo
         // assert_equal("#ee0000", evaluate("lighten(#800, 20%)"))
         $t = new Lighten(20);
-        $this->assertEquals('#f00000', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#ee0000', $t->transform($c)->getRgb()->toHexString());
 
         // assert_equal("white", evaluate("lighten(#800, 100%)"))
         $t = new Lighten(100);
         $this->assertEquals('white', $t->transform($c)->getName());
 
-        // @todo
         // assert_equal("#880000", evaluate("lighten(#800, 0%)"))
         $t = new Lighten(0);
-        $this->assertEquals('#8a0000', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#880000', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_lighten_hsl_colors()
@@ -40,10 +38,9 @@ class LightenTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromRgb(136, 0, 0, 0.5);
 
-        // @todo
         // assert_equal("rgba(238, 0, 0, 0.5)", evaluate("lighten(rgba(136, 0, 0, 0.5), 20%)"))
         $t = new Lighten(20);
-        $this->assertEquals('rgba(240, 0, 0, 0.5)', $t->transform($c));
+        $this->assertEquals('rgba(238, 0, 0, 0.5)', $t->transform($c));
     }
 
     public function test_it_can_only_go_as_light_as_white()

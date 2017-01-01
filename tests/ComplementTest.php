@@ -20,12 +20,8 @@ class ComplementTest extends PHPUnit_Framework_TestCase
         // assert_equal("#ccbbaa", evaluate("complement(#abc)"))
         $c = Color::fromString('#abc');
 
-        /**
-         * @todo Conversion is off by one from SASS for each channel.
-         *       It does match with tools like rgb.to, www.rapidtables.com, etc.
-         */
         $this->assertEquals(
-            '#cbbaa9',
+            '#ccbbaa',
             $this->t->transform($c)->getRgb()->toHexString()
         );
     }

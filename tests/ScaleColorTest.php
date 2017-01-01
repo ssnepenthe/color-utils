@@ -17,11 +17,10 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         $t = new ScaleColor(['saturation' => 30]);
         $this->assertEquals('hsl(120, 51%, 90%)', $t->transform($c));
 
-        // @todo Don't round off HSL values.
         // assert_equal(evaluate("hsl(120, 30, 76.5)"),
         // evaluate("scale-color(hsl(120, 30, 90), $lightness: -15%)"))
         $t = new ScaleColor(['lightness' => -15]);
-        $this->assertEquals('hsl(120, 30%, 77%)', $t->transform($c));
+        $this->assertEquals('hsl(120, 30%, 76.5%)', $t->transform($c));
     }
 
     public function test_it_can_scale_rgb_colors()
@@ -68,11 +67,10 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromHsl(120, 30, 90);
 
-        // @todo Don't round of HSL values.
         // assert_equal(evaluate("hsl(120, 51, 76.5)"),
         // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $lightness: -15%)"))
         $t = new ScaleColor(['saturation' => 30, 'lightness' => -15]);
-        $this->assertEquals('hsl(120, 51%, 77%)', $t->transform($c));
+        $this->assertEquals('hsl(120, 51%, 76.5%)', $t->transform($c));
 
         // assert_equal(evaluate("hsla(120, 51, 90, 0.2)"),
         // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $alpha: -80%)"))

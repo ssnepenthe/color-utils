@@ -21,20 +21,18 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#855');
 
-        // @todo Off by one from SASS.
         // assert_equal("#726b6b", evaluate("desaturate(#855, 20%)"))
         $t = new Desaturate(20);
-        $this->assertEquals('#716a6a', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#726b6b', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_it_can_desaturate_rgb_colors()
     {
         $c = Color::fromRgb(136, 85, 85, 0.5);
 
-        // @todo Off by one from SASS.
         // assert_equal("rgba(114, 107, 107, 0.5)", evaluate("desaturate(rgba(136, 85, 85, 0.5), 20%)"))
         $t = new Desaturate(20);
-        $this->assertEquals('rgba(113, 106, 106, 0.5)', $t->transform($c));
+        $this->assertEquals('rgba(114, 107, 107, 0.5)', $t->transform($c));
     }
 
     public function it_cant_desaturate_shades_of_gray()
@@ -68,16 +66,16 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
     public function test_it_can_transform_any_instance_of_color_interface()
     {
         $colors = [
-            Color::fromString('#8a8'),
-            new Rgb(136, 170, 136),
-            Hsl::fromString('hsl(120, 17%, 60%)'),
+            Color::fromString('#f00'),
+            new Rgb(255, 0, 0),
+            Hsl::fromString('hsl(0, 100%, 50%)'),
         ];
 
         $transformer = new Desaturate(5);
 
         foreach ($colors as $color) {
             $this->assertEquals(
-                [120, 12, 60],
+                [0, 95, 50],
                 $transformer->transform($color)->getHsl()->toArray()
             );
         }
@@ -85,7 +83,7 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
 
     public function test_functional_wrapper()
     {
-        $color = desaturate(Color::fromString('#8a8'), 5);
-        $this->assertEquals([120, 12, 60], $color->getHsl()->toArray());
+        $color = desaturate(Color::fromString('#f00'), 5);
+        $this->assertEquals([0, 95, 50], $color->getHsl()->toArray());
     }
 }

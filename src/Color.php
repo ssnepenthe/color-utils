@@ -76,12 +76,12 @@ class Color implements ColorInterface
         return $this->hsl;
     }
 
-    public function getHue() : int
+    public function getHue() : float
     {
         return $this->hsl->getHue();
     }
 
-    public function getLightness() : int
+    public function getLightness() : float
     {
         return $this->hsl->getLightness();
     }
@@ -91,6 +91,9 @@ class Color implements ColorInterface
         return $this->rgb->getName();
     }
 
+    /**
+     * @todo Should this method be on the Rgb class?
+     */
     public function getPerceivedBrightness() : int
     {
         $weightedRed = 0.299 * pow($this->getRed() / 255, 2);
@@ -110,7 +113,7 @@ class Color implements ColorInterface
         return $this->rgb;
     }
 
-    public function getSaturation() : int
+    public function getSaturation() : float
     {
         return $this->hsl->getSaturation();
     }

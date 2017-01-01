@@ -29,21 +29,19 @@ class Mix implements TransformerInterface
     {
         $color = $color->toColor();
 
-        $p = floatval($this->weight / 100.0);
+        $p = $this->weight / 100;
         $w = $p * 2 - 1;
         $a = $this->color->getAlpha() - $color->getAlpha();
 
-        $w1 = (($w * $a == -1 ? $w : ($w + $a) / (1 + $w * $a)) + 1) / 2.0;
+        $w1 = (($w * $a == -1 ? $w : ($w + $a) / (1 + $w * $a)) + 1) / 2;
         $w2 = 1 - $w1;
 
-        $rgba = ['red' => 0, 'green' => 0, 'blue' => 0];
+        $rgba = [];
 
-        foreach ($rgba as $key => $value) {
+        foreach (['red', 'green', 'blue'] as $key) {
             $getter = 'get' . ucfirst($key);
 
-            $rgba[$key] = intval(round(
-                $this->color->{$getter}() * $w1 + $color->{$getter}() * $w2
-            ));
+            $rgba[$key] = $this->color->{$getter}() * $w1 + $color->{$getter}() * $w2;
         }
 
         if ($this->color->hasAlpha() || $color->hasAlpha()) {

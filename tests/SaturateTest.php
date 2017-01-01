@@ -21,10 +21,9 @@ class SaturateTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromString('#855');
 
-        // @todo Hue off by one from SASS.
         // assert_equal("#9e3f3f", evaluate("saturate(#855, 20%)"))
         $t = new Saturate(20);
-        $this->assertEquals('#9d3f3f', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#9e3f3f', $t->transform($c)->getRgb()->toHexString());
     }
 
     public function test_saturating_shades_of_gray_doesnt_change_the_color()
@@ -64,10 +63,9 @@ class SaturateTest extends PHPUnit_Framework_TestCase
     {
         $c = Color::fromRgb(136, 85, 85, 0.5);
 
-        // @todo
         // assert_equal("rgba(158, 63, 63, 0.5)", evaluate("saturate(rgba(136, 85, 85, 0.5), 20%)"))
         $t = new Saturate(20);
-        $this->assertEquals('rgba(157, 63, 63, 0.5)', $t->transform($c)->toString());
+        $this->assertEquals('rgba(158, 63, 63, 0.5)', $t->transform($c)->toString());
     }
 
     public function test_it_can_transform_any_instance_of_color_interface()
