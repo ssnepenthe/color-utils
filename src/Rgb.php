@@ -6,8 +6,6 @@ use InvalidArgumentException;
 
 class Rgb implements ColorInterface
 {
-    use RangeableTrait;
-
     protected $alpha;
     protected $blue;
     protected $green;
@@ -39,10 +37,10 @@ class Rgb implements ColorInterface
         }
 
         $args = array_map(function ($value) {
-            return $this->forceIntoRange(intval(round($value)), 0, 255);
+            return restrict(intval(round($value)), 0, 255);
         }, $args);
 
-        $args[] = $this->forceIntoRange(floatval($alpha), 0.0, 1.0);
+        $args[] = restrict(floatval($alpha), 0.0, 1.0);
 
         list($this->red, $this->green, $this->blue, $this->alpha) = $args;
     }

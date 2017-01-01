@@ -34,7 +34,11 @@
         "phpunit/phpunit": "^5.7"
     },
     "autoload": {
-        "files": ["functions.php"],
+        "files": [
+            "inc/colors.php",
+            "inc/helpers.php",
+            "inc/transformations.php"
+        ],
         "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
     }
 }

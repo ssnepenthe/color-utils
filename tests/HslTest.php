@@ -132,7 +132,7 @@ class HslTest extends PHPUnit_Framework_TestCase
             1 => new Hsl(361, 50, 50),
             220 => new Hsl(580, 50, 50),
             330 => new Hsl(-30, 50, 50),
-            360 => new Hsl(720, 50, 50),
+            0 => new Hsl(720, 50, 50),
         ];
 
         foreach ($tests as $expected => $hsl) {

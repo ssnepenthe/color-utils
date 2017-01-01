@@ -10,8 +10,6 @@ namespace SSNepenthe\ColorUtils;
  */
 class Converter
 {
-    use RangeableTrait;
-
     public function hslToRgb(Hsl $hsl) : Rgb
     {
         // 0) We want saturation and lightness on a scale of 0 - 1.
@@ -43,7 +41,7 @@ class Converter
 
         // 5) Temporary colors.
         $tempColors = array_map(function ($colorValue) {
-            return $this->shiftIntoRange($colorValue, 0, 1);
+            return modulo($colorValue, 1);
         }, [$hue + (1 / 3), $hue, $hue - (1 / 3)]);
 
         // 6) Actual color values.

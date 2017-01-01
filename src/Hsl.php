@@ -9,8 +9,6 @@ use InvalidArgumentException;
  */
 class Hsl implements ColorInterface
 {
-    use RangeableTrait;
-
     protected $alpha;
     protected $hue;
     protected $lightness;
@@ -41,13 +39,13 @@ class Hsl implements ColorInterface
             );
         }
 
-        $hue = $this->shiftIntoRange(floatval($args[0]), 0.0, 360.0);
+        $hue = modulo(floatval($args[0]), 360);
 
         list($saturation, $lightness) = array_map(function ($val) {
-            return $this->forceIntoRange(floatval($val), 0.0, 100.0);
+            return restrict(floatval($val), 0.0, 100.0);
         }, [$args[1], $args[2]]);
 
-        $alpha = $this->forceIntoRange(floatval($alpha), 0.0, 1.0);
+        $alpha = restrict(floatval($alpha), 0.0, 1.0);
 
         $this->hue = $hue;
         $this->saturation = $saturation;
