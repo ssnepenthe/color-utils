@@ -1,5 +1,5 @@
 # color-utils
-This package is intended to provide a variety of color manipulation functions similar to [those found in SASS](http://sass-lang.com/documentation/Sass/Script/Functions.html).
+This package is intended to provide a variety of [SASS-like color manipulation functions](http://sass-lang.com/documentation/Sass/Script/Functions.html).
 
 ## Requirements
 PHP 7.0 or later.
@@ -45,16 +45,15 @@ $color = rgb(string $s);
 Easily access individual components from any color object:
 
 ```php
-// All values are of type int except alpha, which is float.
-$color->getRed();
-$color->getGreen();
-$color->getBlue();
+$color->getRed(); // int.
+$color->getGreen(); // int.
+$color->getBlue(); // int.
 
-$color->getHue();
-$color->getSaturation();
-$color->getLightness();
+$color->getHue(); // float.
+$color->getSaturation(); // float.
+$color->getLightness(); // float.
 
-$color->getAlpha();
+$color->getAlpha(); // float.
 ```
 
 *OR*
@@ -330,6 +329,23 @@ $transformer = new ConditionalTransformer(function ($color) {
 $transformer->transform(Color::fromString('white')); // Darkened by 15%, 'rgb(217, 217, 217)'
 
 $transformer->transform(Color::fromString('black')); // Lightened by 30%, 'rgb(77, 77, 77)'
+```
+
+Note that this is essentially the same as the following:
+
+```php
+use function SSNepenthe\ColorUtils\rgb;
+use function SSNepenthe\ColorUtils\darken;
+use function SSNepenthe\ColorUtils\lighten;
+
+$color = rgb('white');
+
+// $newColor will be darkened by 15%, rgb(217, 217, 217).
+if ($color->isDark()) {
+    $newColor = lighten($color, 30);
+} else {
+    $newColor = darken($color, 15);
+}
 ```
 
 #### Transformer Pipeline
