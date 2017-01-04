@@ -252,7 +252,7 @@ class ColorTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function test_to_color_returns_same_instance()
+    public function test_converting_to_color_provides_same_object()
     {
         $color = Color::fromString('white');
 

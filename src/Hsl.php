@@ -161,6 +161,74 @@ class Hsl implements ColorInterface
         return new Color($this);
     }
 
+    public function toHsl() : Hsl
+    {
+        return $this;
+    }
+
+    public function toRgb() : Rgb
+    {
+        // 0) We want saturation and lightness on a scale of 0 - 1.
+        $saturation = $this->saturation / 100;
+        $lightness = $this->lightness / 100;
+
+        // 1) No saturation means no hue means color is a shade of gray.
+        if (0 === $saturation) {
+            $colors = array_fill(0, 3, $lightness * 255);
+
+            if ($this->hasAlpha()) {
+                $colors[] = $this->getAlpha();
+            }
+
+            return new Rgb(...$colors);
+        }
+
+        // 2/3) Temporary vars.
+        if ($lightness <= 0.5) {
+            $temp1 = $lightness * (1 + $saturation);
+        } else {
+            $temp1 = $lightness + $saturation - $lightness * $saturation;
+        }
+
+        $temp2 = 2 * $lightness - $temp1;
+
+        // 4) Get hue on a scale of 0 - 1.
+        $hue = $this->hue / 360;
+
+        // 5) Temporary colors.
+        $tempColors = array_map(function ($colorValue) {
+            return modulo($colorValue, 1);
+        }, [$hue + (1 / 3), $hue, $hue - (1 / 3)]);
+
+        // 6) Actual color values.
+        $colors = array_map(function ($colorValue) use ($temp1, $temp2) {
+            if (6 * $colorValue < 1) {
+                return $temp2 + ($temp1 - $temp2) * 6 * $colorValue;
+            }
+
+            if (2 * $colorValue < 1) {
+                return $temp1;
+            }
+
+            if (3 * $colorValue < 2) {
+                return $temp2 + ($temp1 - $temp2) * ((2 / 3) - $colorValue) * 6;
+            }
+
+            return $temp2;
+        }, $tempColors);
+
+        // 7) Convert to 8-bit.
+        $colors = array_map(function ($color) {
+            return $color * 255;
+        }, $colors);
+
+        if ($this->hasAlpha()) {
+            $colors[] = $this->getAlpha();
+        }
+
+        return new Rgb(...$colors);
+    }
+
     public function toString() : string
     {
         return $this->__toString();

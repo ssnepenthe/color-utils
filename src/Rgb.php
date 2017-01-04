@@ -160,6 +160,66 @@ class Rgb implements ColorInterface
         return '#' . implode('', $this->toHexArray());
     }
 
+    public function toHsl() : Hsl
+    {
+        // 1) Get RGB values in a range of 0-1.
+        list($red, $green, $blue) = array_map(function ($value) {
+            return $value / 255;
+        }, $this->toArray());
+
+        // 2) Find the max and min values from $red, $green, $blue.
+        $max = max($red, $green, $blue);
+        $min = min($red, $green, $blue);
+
+        // 3) Calculate lightness.
+        $lightness = ($max + $min) / 2;
+
+        // 4) Equal max/min means equal colors means this is a shade of gray.
+        if ($max === $min) {
+            $colors = [0, 0, $lightness * 100];
+
+            if ($this->hasAlpha()) {
+                $colors[] = $this->getAlpha();
+            }
+
+            return new Hsl(...$colors);
+        }
+
+        // 5) Calculate saturation.
+        if ($lightness < 0.5) {
+            $saturation = ($max - $min) / ($max + $min);
+        } else {
+            $saturation = ($max - $min) / (2 - $max - $min);
+        }
+
+        // 6) Calculate hue.
+        switch ($max) {
+            case $red:
+                $hue = ($green - $blue) / ($max - $min);
+                break;
+            case $green:
+                $hue = 2 + ($blue - $red) / ($max - $min);
+                break;
+            case $blue:
+                $hue = 4 + ($red - $green) / ($max - $min);
+                break;
+        }
+
+        // Return to proper scale.
+        $colors = [$hue * 60, $saturation * 100, $lightness * 100];
+
+        if ($this->hasAlpha()) {
+            $colors[] = $this->getAlpha();
+        }
+
+        return new Hsl(...$colors);
+    }
+
+    public function toRgb() : Rgb
+    {
+        return $this;
+    }
+
     public function toString() : string
     {
         return $this->__toString();

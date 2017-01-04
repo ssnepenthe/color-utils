@@ -1,5 +1,6 @@
 <?php
 
+use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\name;
@@ -363,5 +364,69 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $rgb = Rgb::fromString('rgb(1,2,3)')->with(['hue' => 120]);
+    }
+
+    public function test_converting_to_rgb_provides_same_object()
+    {
+        $rgb = new Rgb(255, 0, 51);
+
+        $this->assertSame($rgb, $rgb->toRgb());
+    }
+
+    public function test_it_can_convert_to_hsl()
+    {
+        $rgb = new Rgb(255, 0, 51);
+        $hsl = $rgb->toHsl();
+
+        $this->assertInstanceOf(Hsl::class, $hsl);
+        $this->assertEquals('hsl(348, 100%, 50%)', $hsl);
+        $this->assertFalse($hsl->hasAlpha());
+
+        $rgba = new Rgb(255, 0, 51, 0.7);
+        $hsla = $rgba->toHsl();
+
+        $this->assertTrue($hsla->hasAlpha());
+
+        // Shades of gray.
+        $rgb = new Rgb(100, 100, 100);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(0, 0%, 39.21569%)', $hsl);
+        $this->assertFalse($hsl->hasAlpha());
+
+        $rgba = new Rgb(55, 55, 55, 0.7);
+        $hsla = $rgba->toHsl();
+
+        $this->assertTrue($hsla->hasAlpha());
+
+        // Step 5 - lightness under 0.5.
+        $rgb = new Rgb(25, 55, 40);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(150, 37.5%, 15.68627%)', $hsl);
+
+        // Step 5 - lightness over 0.5.
+        $rgb = new Rgb(100, 125, 150);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(210, 20%, 49.01961%)', $hsl);
+
+        // Step 6 - max == red.
+        $rgb = new Rgb(255, 50, 100);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(345.36585, 100%, 59.80392%)', $hsl);
+
+        // Step 6 - max == green.
+        $rgb = new Rgb(50, 255, 100);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(134.63415, 100%, 59.80392%)', $hsl);
+
+        // Step 6 - max == blue.
+        $rgb = new Rgb(50, 100, 255);
+        $hsl = $rgb->toHsl();
+
+        $this->assertEquals('hsl(225.36585, 100%, 59.80392%)', $hsl);
     }
 }

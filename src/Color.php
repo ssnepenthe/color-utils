@@ -4,19 +4,13 @@ namespace SSNepenthe\ColorUtils;
 
 use InvalidArgumentException;
 
-/**
- * @todo ConverterInterface
- */
 class Color implements ColorInterface
 {
     protected $hsl;
     protected $rgb;
     protected $type;
 
-    public function __construct(
-        ColorInterface $color,
-        Converter $converter = null
-    ) {
+    public function __construct(ColorInterface $color) {
         $this->type = strtolower(
             (new \ReflectionClass($color))->getShortName()
         );
@@ -25,11 +19,10 @@ class Color implements ColorInterface
         $prop = reset($props);
 
         $this->{$this->type} = $color;
-        $this->converter = is_null($converter) ? new Converter : $converter;
 
-        // I.e. hslToRgb.
-        $converterMethod = sprintf('%sTo%s', $this->type, ucfirst($prop));
-        $this->{$prop} = $this->converter->{$converterMethod}($this->{$this->type});
+        // I.e. toRgb.
+        $converterMethod = 'to' . ucfirst($prop);
+        $this->{$prop} = $this->{$this->type}->{$converterMethod}();
     }
 
     public function __toString() : string
@@ -165,12 +158,19 @@ class Color implements ColorInterface
         return $this->{$this->type}->toArray();
     }
 
-    /**
-     * To clone or not to clone?
-     */
     public function toColor() : Color
     {
         return $this;
+    }
+
+    public function toHsl() : Hsl
+    {
+        return $this->hsl;
+    }
+
+    public function toRgb() : Rgb
+    {
+        return $this->rgb;
     }
 
     public function toString() : string
