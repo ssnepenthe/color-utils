@@ -139,6 +139,20 @@ class Hsl implements ColorInterface
         return 1.0 !== $this->alpha;
     }
 
+    public function isDark($threshold = 50.0) : bool
+    {
+        $threshold = restrict(floatval($threshold), 0.0, 100.0);
+
+        return $threshold > $this->getLightness();
+    }
+
+    public function isLight($threshold = 50.0) : bool
+    {
+        $threshold = restrict(floatval($threshold), 0.0, 100.0);
+
+        return $threshold <= $this->getLightness();
+    }
+
     public function toArray() : array
     {
         $values = [$this->getHue(), $this->getSaturation(), $this->getLightness()];

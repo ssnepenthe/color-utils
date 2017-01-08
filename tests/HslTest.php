@@ -4,6 +4,8 @@ use SSNepenthe\ColorUtils\Hsl;
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\ColorInterface;
+use function SSNepenthe\ColorUtils\is_dark;
+use function SSNepenthe\ColorUtils\is_light;
 
 class HslTest extends PHPUnit_Framework_TestCase
 {
@@ -84,6 +86,28 @@ class HslTest extends PHPUnit_Framework_TestCase
         $hsl = new Hsl(348, 100, 50);
 
         $this->assertEquals(100, $hsl->getSaturation());
+    }
+
+    public function test_it_can_tell_lightness()
+    {
+        $this->assertTrue(Hsl::fromString('hsl(38, 100%, 51%)')->isLight());
+        $this->assertFalse(Hsl::fromString('hsl(274, 100%, 25%)')->isLight());
+        $this->assertFalse(is_light(Hsl::fromString('hsl(274, 100%, 25%)')));
+
+        $this->assertTrue(Hsl::fromString('hsl(120, 100%, 25%)')->isDark());
+        $this->assertFalse(Hsl::fromString('hsl(0, 100%, 51%)')->isDark());
+        $this->assertFalse(is_dark(Hsl::fromString('hsl(0, 100%, 51%)')));
+    }
+
+    public function test_it_can_tell_lightness_with_custom_threshold()
+    {
+        $this->assertTrue(Hsl::fromString('hsl(60, 100%, 50%)')->isLight(35));
+        $this->assertFalse(Hsl::fromString('hsl(120, 100%, 25%)')->isLight(35));
+        $this->assertFalse(is_light(Hsl::fromString('hsl(120, 100%, 25%)'), 35));
+
+        $this->assertTrue(Hsl::fromString('hsl(275, 100%, 25%)')->isDark(35));
+        $this->assertFalse(Hsl::fromString('hsl(300, 76%, 72%)')->isDark(35));
+        $this->assertFalse(is_dark(Hsl::fromString('hsl(300, 76%, 72%)'), 35));
     }
 
     public function test_it_correctly_produces_hsl_array()

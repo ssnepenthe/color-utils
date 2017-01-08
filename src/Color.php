@@ -117,14 +117,14 @@ class Color implements ColorInterface
         return $this->hsl->hasAlpha() && $this->rgb->hasAlpha();
     }
 
-    public function isLight(int $threshold = 50) : bool
+    public function isDark($threshold = 50.0) : bool
     {
-        return $threshold <= $this->getLightness();
+        return $this->getHsl()->isDark($threshold);
     }
 
-    public function isDark(int $threshold = 50) : bool
+    public function isLight($threshold = 50.0) : bool
     {
-        return $threshold > $this->getLightness();
+        return $this->getHsl()->isLight($threshold);
     }
 
     public function looksDark($threshold = 50.0) : bool

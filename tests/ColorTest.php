@@ -11,8 +11,6 @@ use function SSNepenthe\ColorUtils\blue;
 use SSNepenthe\ColorUtils\ColorInterface;
 use function SSNepenthe\ColorUtils\alpha;
 use function SSNepenthe\ColorUtils\green;
-use function SSNepenthe\ColorUtils\is_dark;
-use function SSNepenthe\ColorUtils\is_light;
 use function SSNepenthe\ColorUtils\lightness;
 use function SSNepenthe\ColorUtils\saturation;
 
@@ -149,26 +147,17 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('rgb', Color::fromRgb(255, 0, 51)->getType());
     }
 
-    public function test_it_can_tell_lightness()
+    public function test_it_correctly_proxies_is_light()
     {
         $this->assertTrue(Color::fromString('orange')->isLight());
-        $this->assertFalse(Color::fromString('indigo')->isLight());
-        $this->assertFalse(is_light(Color::fromString('indigo')));
+        $this->assertTrue(Color::fromString('yellow')->isLight(35));
 
-        $this->assertTrue(Color::fromString('green')->isDark());
-        $this->assertFalse(Color::fromString('red')->isDark());
-        $this->assertFalse(is_dark(Color::fromString('red')));
     }
 
-    public function test_it_can_tell_lightness_with_custom_threshold()
+    public function test_it_correctly_proxies_is_dark()
     {
-        $this->assertTrue(Color::fromString('yellow')->isLight(35));
-        $this->assertFalse(Color::fromString('green')->isLight(35));
-        $this->assertFalse(is_light(Color::fromString('green'), 35));
-
+        $this->assertTrue(Color::fromString('green')->isDark());
         $this->assertTrue(Color::fromString('indigo')->isDark(35));
-        $this->assertFalse(Color::fromString('violet')->isDark(35));
-        $this->assertFalse(is_dark(Color::fromString('violet'), 35));
     }
 
     public function test_it_correctly_proxies_looks_light()
