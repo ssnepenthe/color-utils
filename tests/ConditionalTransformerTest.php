@@ -26,7 +26,7 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
             return $color->looksDark();
         }, new Lighten(30));
 
-        $color = Color::fromString('red');
+        $color = Color::fromString('orange');
         $newColor = $transformer->transform($color);
 
         $this->assertSame($color, $newColor);
@@ -43,10 +43,10 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
             return $color->looksDark();
         }, new Lighten(30), new Darken(30));
 
-        $color = Color::fromString('red');
+        $color = Color::fromString('orange');
         $darkened = $transformer->transform($color);
 
-        $this->assertEquals([102, 0, 0], $darkened->toArray());
+        $this->assertEquals([102, 66, 0], $darkened->toArray());
 
         $color = Color::fromString('green');
         $lightened = $transformer->transform($color);

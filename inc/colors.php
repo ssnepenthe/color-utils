@@ -73,9 +73,9 @@ function opacity(ColorInterface $color) : float
     return alpha($color);
 }
 
-function perceived_brightness(ColorInterface $color) : int
+function perceived_brightness(ColorInterface $color) : float
 {
-    return $color->toColor()->getPerceivedBrightness();
+    return $color->toColor()->calculatePerceivedBrightness();
 }
 
 function red(ColorInterface $color) : int

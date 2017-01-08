@@ -84,16 +84,9 @@ class Color implements ColorInterface
         return $this->rgb->getName();
     }
 
-    /**
-     * @todo Should this method be on the Rgb class?
-     */
-    public function getPerceivedBrightness() : int
+    public function calculatePerceivedBrightness() : float
     {
-        $weightedRed = 0.299 * pow($this->getRed() / 255, 2);
-        $weightedGreen = 0.587 * pow($this->getGreen() / 255, 2);
-        $weightedBlue = 0.114 * pow($this->getBlue() / 255, 2);
-
-        return intval(100 * sqrt($weightedRed + $weightedGreen + $weightedBlue));
+        return $this->getRgb()->calculatePerceivedBrightness();
     }
 
     public function getRed() : int
@@ -134,14 +127,14 @@ class Color implements ColorInterface
         return $threshold > $this->getLightness();
     }
 
-    public function looksLight(int $threshold = 50) : bool
+    public function looksDark($threshold = 50.0) : bool
     {
-        return $threshold <= $this->getPerceivedBrightness();
+        return $this->getRgb()->looksDark($threshold);
     }
 
-    public function looksDark(int $threshold = 50) : bool
+    public function looksLight($threshold = 50.0) : bool
     {
-        return $threshold > $this->getPerceivedBrightness();
+        return $this->getRgb()->looksLight($threshold);
     }
 
     public function setType(string $type) : self

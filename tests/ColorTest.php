@@ -14,10 +14,7 @@ use function SSNepenthe\ColorUtils\green;
 use function SSNepenthe\ColorUtils\is_dark;
 use function SSNepenthe\ColorUtils\is_light;
 use function SSNepenthe\ColorUtils\lightness;
-use function SSNepenthe\ColorUtils\looks_dark;
 use function SSNepenthe\ColorUtils\saturation;
-use function SSNepenthe\ColorUtils\looks_light;
-use function SSNepenthe\ColorUtils\perceived_brightness;
 
 class ColorTest extends PHPUnit_Framework_TestCase
 {
@@ -138,32 +135,12 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0.7, $color->getAlpha());
     }
 
-    public function test_it_can_calculate_perceived_brightness()
+    public function test_it_correctly_proxies_perceived_brightness_calculation()
     {
-        $tests = [
-            'black'  => 0,
-            'gray'   => 50,
-            'white'  => 99, // Formula gives 99, should it be 100?
-            'red'    => 54,
-            'orange' => 73,
-            'yellow' => 94,
-            'green'  => 38,
-            'blue'   => 33,
-            'indigo' => 23,
-            'violet' => 71,
-        ];
-
-        foreach ($tests as $keyword => $brightness) {
-            $this->assertEquals(
-                $brightness,
-                Color::fromString($keyword)->getPerceivedBrightness()
-            );
-
-            $this->assertEquals(
-                $brightness,
-                perceived_brightness(Color::fromString($keyword))
-            );
-        }
+        $this->assertEquals(
+            29.9,
+            Color::fromString('red')->calculatePerceivedBrightness()
+        );
     }
 
     public function test_it_gives_the_correct_type_value()
@@ -194,26 +171,16 @@ class ColorTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(is_dark(Color::fromString('violet'), 35));
     }
 
-    public function test_it_can_tell_perceived_brightness()
+    public function test_it_correctly_proxies_looks_light()
     {
         $this->assertTrue(Color::fromString('orange')->looksLight());
-        $this->assertFalse(Color::fromString('blue')->looksLight());
-        $this->assertTrue(looks_light(Color::fromString('orange')));
-
-        $this->assertTrue(Color::fromString('green')->looksDark());
-        $this->assertFalse(Color::fromString('red')->looksDark());
-        $this->assertTrue(looks_dark(Color::fromString('green')));
+        $this->assertTrue(Color::fromString('yellow')->looksLight(35));
     }
 
-    public function test_it_can_tell_perceived_brightness_with_custom_threshold()
+    public function test_it_correctly_proxies_looks_dark()
     {
-        $this->assertTrue(Color::fromString('yellow')->looksLight(35));
-        $this->assertFalse(Color::fromString('blue')->looksLight(35));
-        $this->assertTrue(looks_light(Color::fromString('yellow'), 35));
-
+        $this->assertTrue(Color::fromString('green')->looksDark());
         $this->assertTrue(Color::fromString('indigo')->looksDark(35));
-        $this->assertFalse(Color::fromString('violet')->looksDark(35));
-        $this->assertTrue(looks_dark(Color::fromString('indigo'), 35));
     }
 
     public function test_it_can_set_type()

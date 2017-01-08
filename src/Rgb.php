@@ -55,6 +55,22 @@ class Rgb implements ColorInterface
         return sprintf('%s(%s)', $type, implode(', ', $values));
     }
 
+    public function calculatePerceivedBrightness() : float
+    {
+        /**
+         * Based on W3 color brightness algorithm.
+         *
+         * Given as a percentage where black is 0 and white is 100.
+         *
+         * @link https://www.w3.org/TR/AERT#color-contrast
+         */
+        return round((array_sum([
+            $this->getRed() * 299,
+            $this->getGreen() * 587,
+            $this->getBlue() * 114,
+        ]) / 255000) * 100, 5);
+    }
+
     public static function fromString(string $color) : ColorInterface
     {
         if ('#' === substr($color, 0, 1)) {
@@ -120,6 +136,20 @@ class Rgb implements ColorInterface
     public function hasAlpha() : bool
     {
         return 1.0 !== $this->alpha;
+    }
+
+    public function looksDark($threshold = 50.0) : bool
+    {
+        $threshold = restrict(floatval($threshold), 0.0, 100.0);
+
+        return $threshold > $this->calculatePerceivedBrightness();
+    }
+
+    public function looksLight($threshold = 50.0) : bool
+    {
+        $threshold = restrict(floatval($threshold), 0.0, 100.0);
+
+        return $threshold <= $this->calculatePerceivedBrightness();
     }
 
     public function toArray() : array

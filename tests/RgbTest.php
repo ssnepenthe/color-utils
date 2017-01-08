@@ -5,6 +5,9 @@ use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
 use function SSNepenthe\ColorUtils\name;
 use SSNepenthe\ColorUtils\ColorInterface;
+use function SSNepenthe\ColorUtils\looks_dark;
+use function SSNepenthe\ColorUtils\looks_light;
+use function SSNepenthe\ColorUtils\perceived_brightness;
 
 class RgbTest extends PHPUnit_Framework_TestCase
 {
@@ -53,6 +56,29 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('rgba(255, 0, 51, 0.7)', (string) $rgba);
     }
 
+    public function test_it_can_calculate_perceived_brightness()
+    {
+        $tests = [
+            'black'  => 0.0,
+            'blue'   => 11.4,
+            'indigo' => 14.60588,
+            'green'  => 29.4651,
+            'red'    => 29.9,
+            'gray'   => 50.19608,
+            'orange' => 67.88235,
+            'violet' => 68.47216,
+            'yellow' => 88.6,
+            'white'  => 100.0,
+        ];
+
+        foreach ($tests as $keyword => $brightness) {
+            $c = Rgb::fromString($keyword);
+
+            $this->assertEquals($brightness, $c->calculatePerceivedBrightness());
+            $this->assertEquals($brightness, perceived_brightness($c));
+        }
+    }
+
     public function test_it_gives_the_correct_alpha_value()
     {
         $rgb = new Rgb(255, 0, 51);
@@ -66,6 +92,28 @@ class RgbTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($rgb->hasAlpha());
         $this->assertEquals(0.7, $rgb->getAlpha());
         $this->assertEquals('b3', $rgb->getAlphaByte());
+    }
+
+    public function test_it_can_tell_perceived_brightness()
+    {
+        $this->assertTrue(Rgb::fromString('orange')->looksLight());
+        $this->assertFalse(Rgb::fromString('blue')->looksLight());
+        $this->assertTrue(looks_light(Rgb::fromString('orange')));
+
+        $this->assertTrue(Rgb::fromString('green')->looksDark());
+        $this->assertFalse(Rgb::fromString('orange')->looksDark());
+        $this->assertTrue(looks_dark(Rgb::fromString('green')));
+    }
+
+    public function test_it_can_tell_perceived_brightness_with_custom_threshold()
+    {
+        $this->assertTrue(Rgb::fromString('yellow')->looksLight(35));
+        $this->assertFalse(Rgb::fromString('blue')->looksLight(35));
+        $this->assertTrue(looks_light(Rgb::fromString('yellow'), 35));
+
+        $this->assertTrue(Rgb::fromString('indigo')->looksDark(35));
+        $this->assertFalse(Rgb::fromString('violet')->looksDark(35));
+        $this->assertTrue(looks_dark(Rgb::fromString('indigo'), 35));
     }
 
     public function test_it_gives_the_correct_blue_value()
