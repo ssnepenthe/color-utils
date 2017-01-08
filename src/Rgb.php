@@ -11,8 +11,6 @@ class Rgb implements ColorInterface
     protected $green;
     protected $red;
 
-    protected $hasAlpha = false;
-
     public function __construct(...$args)
     {
         array_walk($args, function ($arg) {
@@ -26,7 +24,6 @@ class Rgb implements ColorInterface
         $alpha = 1.0;
 
         if (4 === count($args)) {
-            $this->hasAlpha = true;
             $alpha = array_pop($args);
         }
 
@@ -73,12 +70,9 @@ class Rgb implements ColorInterface
 
     public function getAlpha() : float
     {
-        return $this->alpha;
+        return round($this->alpha, 5);
     }
 
-    /**
-     * @todo Should alpha be rounded before conversion like this? Or left alone?
-     */
     public function getAlphaByte() : string
     {
         return $this->intToHexByte(intval(round($this->alpha * 255)));
@@ -125,7 +119,7 @@ class Rgb implements ColorInterface
 
     public function hasAlpha() : bool
     {
-        return $this->hasAlpha;
+        return 1.0 !== $this->alpha;
     }
 
     public function toArray() : array

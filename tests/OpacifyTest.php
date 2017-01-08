@@ -17,15 +17,13 @@ class OpacifyTest extends PHPUnit_Framework_TestCase
         $t = new Opacify(0.1);
         $this->assertEquals('rgba(0, 0, 0, 0.3)', $t->transform($c));
 
-        // @todo Can't use the name here because we are given the alpha byte...
         // assert_equal("black", evaluate("fade_in(rgba(0, 0, 0, 0.2), 0.8)"))
         $t = new Opacify(0.8);
-        $this->assertEquals('rgba(0, 0, 0, 1)', $t->transform($c));
+        $this->assertEquals('black', $t->transform($c)->getName());
 
-        // @todo See note above.
         // assert_equal("black", evaluate("opacify(rgba(0, 0, 0, 0.2), 1)"))
         $t = new Opacify(1.0);
-        $this->assertEquals('rgba(0, 0, 0, 1)', $t->transform($c));
+        $this->assertEquals('black', $t->transform($c)->getName());
 
         // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("opacify(rgba(0, 0, 0, 0.2), 0%)"))
         $t = new Opacify(0.0);

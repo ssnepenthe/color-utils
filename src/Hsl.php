@@ -4,17 +4,12 @@ namespace SSNepenthe\ColorUtils;
 
 use InvalidArgumentException;
 
-/**
- * @todo Round alpha to 5 digits like hue, sat and lightness? Same for rgb.
- */
 class Hsl implements ColorInterface
 {
     protected $alpha;
     protected $hue;
     protected $lightness;
     protected $saturation;
-
-    protected $hasAlpha = false;
 
     public function __construct(...$args)
     {
@@ -29,7 +24,6 @@ class Hsl implements ColorInterface
         $alpha = 1.0;
 
         if (4 === count($args)) {
-            $this->hasAlpha = true;
             $alpha = array_pop($args);
         }
 
@@ -61,7 +55,7 @@ class Hsl implements ColorInterface
         $values[1] = (string) $values[1] . '%';
         $values[2] = (string) $values[2] . '%';
 
-        if ($this->hasAlpha) {
+        if ($this->hasAlpha()) {
             $type .= 'a';
             $values[3] = rtrim(number_format($values[3], 2), '0.');
         }
@@ -122,7 +116,7 @@ class Hsl implements ColorInterface
 
     public function getAlpha() : float
     {
-        return $this->alpha;
+        return round($this->alpha, 5);
     }
 
     public function getHue() : float
@@ -142,7 +136,7 @@ class Hsl implements ColorInterface
 
     public function hasAlpha() : bool
     {
-        return $this->hasAlpha;
+        return 1.0 !== $this->alpha;
     }
 
     public function toArray() : array

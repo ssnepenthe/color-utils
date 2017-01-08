@@ -128,9 +128,9 @@ class RgbTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('#ff0033', $rgb->toHexString());
 
-        $rgba = new Rgb(255, 0, 51, 1.0);
+        $rgba = new Rgb(255, 0, 51, 0.8);
 
-        $this->assertEquals('#ff0033ff', $rgba->toHexString());
+        $this->assertEquals('#ff0033cc', $rgba->toHexString());
     }
 
     public function test_it_correctly_pads_hex_bytes()
@@ -212,7 +212,7 @@ class RgbTest extends PHPUnit_Framework_TestCase
         ];
 
         foreach ($colors as $color) {
-            $this->assertEquals([255, 0, 51, 136 / 255], $color->toArray());
+            $this->assertEquals([255, 0, 51, 0.53333], $color->toArray());
         }
     }
 
