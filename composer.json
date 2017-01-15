@@ -31,7 +31,10 @@
     },
     "require-dev": {
     	"psy/psysh": "^0.8",
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^5.7",
+        "phpmd/phpmd": "^2.5",
+        "phploc/phploc": "^3.0",
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
         "files": [
@@ -40,5 +43,12 @@
             "inc/transformations.php"
         ],
         "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
+    },
+    "scripts": {
+        "phpcs": "./vendor/bin/phpcs --colors --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
+        "phploc": "./vendor/bin/phploc --exclude={vendor,tests} .",
+        "phpmd": "./vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor/,tests/ --ignore-violations-on-exit",
+        "phpunit": "./vendor/bin/phpunit --colors=always",
+        "qc": ["@phpmd", "@phpunit", "@phpcs"]
     }
 }
