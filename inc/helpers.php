@@ -14,3 +14,7 @@ function modulo($x, $y) {
 function restrict($value, $min, $max) {
     return min(max($value, $min), $max);
 }
+
+function array_contains_one_of(array $array, array $keys) {
+    return ! empty(array_intersect($keys, array_keys($array)));
+}

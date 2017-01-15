@@ -244,10 +244,11 @@ class Hsl implements ColorInterface
 
     public function with(array $attrs) : ColorInterface
     {
-        $props = array_keys($attrs);
-
-        $allowed = ['hue', 'saturation', 'lightness', 'alpha'];
-        if (empty(array_intersect($allowed, $props))) {
+        // You must provide at least one of hue, saturation, lightness or alpha.
+        if (! array_contains_one_of(
+            $attrs,
+            ['hue', 'saturation', 'lightness', 'alpha']
+        )) {
             throw new InvalidArgumentException(
                 'One of hue, saturation, lightness or alpha is required'
             );

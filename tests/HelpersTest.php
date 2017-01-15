@@ -1,7 +1,8 @@
 <?php
 
-use function SSNepenthe\ColorUtils\restrict;
 use function SSNepenthe\ColorUtils\modulo;
+use function SSNepenthe\ColorUtils\restrict;
+use function SSNepenthe\ColorUtils\array_contains_one_of;
 
 class HelpersTest extends PHPUnit_Framework_TestCase
 {
@@ -19,5 +20,14 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(85, modulo(-15, 100));
         $this->assertEquals(20, modulo(420, 100));
         $this->assertEquals(80, modulo(-320, 100));
+    }
+
+    public function test_it_correctly_determines_if_array_contains_given_key()
+    {
+        $arr = ['one' => 1, 'two' => 2, 'three' => 3];
+
+        $this->assertTrue(array_contains_one_of($arr, ['one', 'two', 'three']));
+        $this->assertTrue(array_contains_one_of($arr, ['one', 'four', 'seven']));
+        $this->assertFalse(array_contains_one_of($arr, ['four', 'five', 'six']));
     }
 }

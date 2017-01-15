@@ -251,10 +251,8 @@ class Rgb implements ColorInterface
 
     public function with(array $attrs) : ColorInterface
     {
-        $props = array_keys($attrs);
-
         // You must provide at least one of red, green, blue or alpha.
-        if (empty(array_intersect(['red', 'green', 'blue', 'alpha'], $props))) {
+        if (! array_contains_one_of($attrs, ['red', 'green', 'blue', 'alpha'])) {
             throw new InvalidArgumentException(
                 'One of red, green, blue or alpha is required'
             );

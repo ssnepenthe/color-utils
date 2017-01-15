@@ -173,16 +173,8 @@ class Color implements ColorInterface
 
     public function with(array $attrs) : ColorInterface
     {
-        $props = array_keys($attrs);
-
-        $withHsl = ! empty(array_intersect(
-            ['hue', 'saturation', 'lightness'],
-            $props
-        ));
-        $withRgb = ! empty(array_intersect(
-            ['red', 'green', 'blue'],
-            $props
-        ));
+        $withHsl = array_contains_one_of($attrs, ['hue', 'saturation', 'lightness']);
+        $withRgb = array_contains_one_of($attrs, ['red', 'green', 'blue']);
 
         if ($withHsl && $withRgb) {
             throw new InvalidArgumentException(
