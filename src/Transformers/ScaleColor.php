@@ -4,6 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\ColorInterface;
+use function SSNepenthe\ColorUtils\restrict;
 
 /**
  * @todo Should we filter out any non-adjustments? I.e. 0 for any allowed attributes?
@@ -15,13 +16,7 @@ class ScaleColor implements TransformerInterface
     public function __construct(array $attrs)
     {
         $this->attrs = array_map(function (int $adjustment) {
-            if (-100 > $adjustment) {
-                $adjustment = -100;
-            }
-
-            if (100 < $adjustment) {
-                $adjustment = 100;
-            }
+            $adjustment = restrict($adjustment, -100, 100);
 
             return $adjustment / 100;
         }, $attrs);
@@ -50,10 +45,10 @@ class ScaleColor implements TransformerInterface
 
             $getter = 'get' . ucfirst($attr);
 
+            $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
+
             if (0 > $adjustment) {
                 $maxAdjustment = $color->{$getter}() - $whitelist[$attr][0];
-            } else {
-                $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
             }
 
             $scaleAdjustment = $adjustment * $maxAdjustment;

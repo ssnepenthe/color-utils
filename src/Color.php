@@ -10,7 +10,8 @@ class Color implements ColorInterface
     protected $rgb;
     protected $type;
 
-    public function __construct(ColorInterface $color) {
+    public function __construct(ColorInterface $color)
+    {
         $this->type = strtolower(
             (new \ReflectionClass($color))->getShortName()
         );

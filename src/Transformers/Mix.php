@@ -4,6 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\ColorInterface;
+use function SSNepenthe\ColorUtils\restrict;
 
 class Mix implements TransformerInterface
 {
@@ -13,39 +14,33 @@ class Mix implements TransformerInterface
     public function __construct(ColorInterface $color, int $weight = 50)
     {
         $this->color = $color->toColor();
-
-        if (0 > $weight) {
-            $weight = 0;
-        }
-
-        if (100 < $weight) {
-            $weight = 100;
-        }
-
-        $this->weight = $weight;
+        $this->weight = restrict($weight, 0, 100);
     }
 
     public function transform(ColorInterface $color) : Color
     {
         $color = $color->toColor();
 
-        $p = $this->weight / 100;
-        $w = $p * 2 - 1;
-        $a = $this->color->getAlpha() - $color->getAlpha();
+        $percentage = $this->weight / 100;
+        $scaledWeight = $percentage * 2 - 1;
+        $alphaDiff = $this->color->getAlpha() - $color->getAlpha();
 
-        $w1 = (($w * $a == -1 ? $w : ($w + $a) / (1 + $w * $a)) + 1) / 2;
-        $w2 = 1 - $w1;
+        $weight1 = (($scaledWeight * $alphaDiff == -1
+            ? $scaledWeight
+            : ($scaledWeight + $alphaDiff) / (1 + $scaledWeight * $alphaDiff)
+        ) + 1) / 2;
+        $weight2 = 1 - $weight1;
 
         $rgba = [];
 
         foreach (['red', 'green', 'blue'] as $key) {
             $getter = 'get' . ucfirst($key);
 
-            $rgba[$key] = $this->color->{$getter}() * $w1 + $color->{$getter}() * $w2;
+            $rgba[$key] = $this->color->{$getter}() * $weight1 + $color->{$getter}() * $weight2;
         }
 
         if ($this->color->hasAlpha() || $color->hasAlpha()) {
-            $rgba['alpha'] = $this->color->getAlpha() * $p + $color->getAlpha() * (1 - $p);
+            $rgba['alpha'] = $this->color->getAlpha() * $percentage + $color->getAlpha() * (1 - $percentage);
         }
 
         return $color->with($rgba);

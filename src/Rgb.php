@@ -210,10 +210,10 @@ class Rgb implements ColorInterface
         }
 
         // 5) Calculate saturation.
+        $saturation = ($max - $min) / (2 - $max - $min);
+
         if ($lightness < 0.5) {
             $saturation = ($max - $min) / ($max + $min);
-        } else {
-            $saturation = ($max - $min) / (2 - $max - $min);
         }
 
         // 6) Calculate hue.
