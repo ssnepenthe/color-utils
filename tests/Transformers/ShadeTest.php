@@ -1,9 +1,6 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use function SSNepenthe\ColorUtils\shade;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 
 class ShadeTest extends PHPUnit_Framework_TestCase
@@ -19,7 +16,7 @@ class ShadeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('#404040', $t->transform($c)->getRgb()->toHexString());
     }
 
-    public function test_shading_black_just_gives_black()
+    public function test_shading_black_gives_black()
     {
         $c = Color::fromString('#000');
 
@@ -32,49 +29,20 @@ class ShadeTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function test_it_can_shade_red()
+    public function test_it_can_shade_colors()
     {
-        $c = Color::fromString('#f00');
-
         // .shade-red {
         //   color: shade(#f00, 25%); // #bf0000
         // }
+        $c = Color::fromString('#f00');
         $t = new Shade(25);
         $this->assertEquals('#bf0000', $t->transform($c)->getRgb()->toHexString());
-    }
-
-    public function test_it_can_shade_grays()
-    {
-        $c = Color::fromString('#222');
 
         // .shade-gray {
         //   color: shade(#222, 33%); // #171717
         // }
+        $c = Color::fromString('#222');
         $t = new Shade(33);
         $this->assertEquals('#171717', $t->transform($c)->getRgb()->toHexString());
-    }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('white'),
-            Rgb::fromString('white'),
-            Hsl::fromString('hsl(0, 0%, 100%)'),
-        ];
-
-        $transformer = new Shade;
-
-        foreach ($colors as $color) {
-            $this->assertEquals(
-                [128, 128, 128],
-                $transformer->transform($color)->getRgb()->toArray()
-            );
-        }
-    }
-
-    public function test_functional_wrapper()
-    {
-        $color = shade(Color::fromString('white'));
-        $this->assertEquals([128, 128, 128], $color->getRgb()->toArray());
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use function SSNepenthe\ColorUtils\adjust_color;
 use SSNepenthe\ColorUtils\Transformers\AdjustColor;
 
 /**
@@ -13,7 +10,7 @@ use SSNepenthe\ColorUtils\Transformers\AdjustColor;
  */
 class AdjustColorTest extends PHPUnit_Framework_TestCase
 {
-    public function test_it_can_adjust_hsl_colors()
+    public function test_it_can_adjust_colors()
     {
         $c = Color::fromHsl(120, 30, 90);
 
@@ -31,10 +28,7 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
         // evaluate("adjust-color(hsl(120, 30, 90), $lightness: -30%)"))
         $t = new AdjustColor(['lightness' => -30]);
         $this->assertEquals('hsl(120, 30%, 60%)', $t->transform($c));
-    }
 
-    public function test_it_can_adjust_rgb_colors()
-    {
         $c = Color::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgb(15, 20, 30)"),
@@ -71,7 +65,7 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('rgba(10, 20, 30, 0.9)', $t->transform($c));
     }
 
-    public function test_it_can_adjust_multiple_hsl_attributes_at_once()
+    public function test_it_can_adjust_multiple_attributes_at_once()
     {
         $c = Color::fromHsl(120, 30, 90);
 
@@ -96,10 +90,7 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
             'hsla(120, 20%, 95%, 0.3)',
             $t->transform($c)
         );
-    }
 
-    public function test_it_can_adjust_multiple_rgb_attributes_at_once()
-    {
         $c = Color::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgb(15, 20, 29)"),
@@ -119,10 +110,10 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Technically restrictions are handled in the Hsl class but it can't really hurt
-     * to have some extra tests for it.
+     * Technically restrictions are handled in the Hsl and Rgb classes but it can't
+     * really hurt to have some extra tests for it.
      */
-    public function test_it_honors_hsl_range_restrictions()
+    public function test_it_honors_range_restrictions()
     {
         $c = Color::fromHsl(120, 30, 90);
 
@@ -140,13 +131,7 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
         // evaluate("adjust-color(hsl(120, 30, 90), $lightness: 30%)"))
         $t = new AdjustColor(['lightness' => 30]);
         $this->assertEquals('hsl(120, 30%, 100%)', $t->transform($c));
-    }
 
-    /**
-     * See note on hsl restriction test.
-     */
-    public function test_it_honors_rgb_range_restriction()
-    {
         $c = Color::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgb(255, 20, 30)"),
@@ -163,34 +148,5 @@ class AdjustColorTest extends PHPUnit_Framework_TestCase
         // evaluate("adjust-color(rgb(10, 20, 30), $blue: -40)"))
         $t = new AdjustColor(['blue' => -40]);
         $this->assertEquals('rgb(10, 20, 0)', $t->transform($c));
-    }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('black'),
-            Rgb::fromString('black'),
-            Hsl::fromString('hsl(0, 0%, 0%)'),
-        ];
-
-        $t = new AdjustColor(['lightness' => 50]);
-
-        foreach ($colors as $c) {
-            $this->assertEquals(
-                [0, 0, 50],
-                $t->transform($c)->getHsl()->toArray()
-            );
-        }
-    }
-
-    public function test_functional_wrapper()
-    {
-        $this->assertEquals(
-            [0, 0, 50],
-            adjust_color(
-                Color::fromString('black'),
-                ['lightness' => 50]
-            )->getHsl()->toArray()
-        );
     }
 }

@@ -3,7 +3,6 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\ColorInterface;
 
 /**
  * @todo Should we filter out any non-adjustments? I.e. hue in multiples of 360 and
@@ -18,10 +17,8 @@ class AdjustColor implements TransformerInterface
         $this->attrs = $attrs;
     }
 
-    public function transform(ColorInterface $color) : Color
+    public function transform(Color $color) : Color
     {
-        $color = $color->toColor();
-
         $whitelist = [
             'alpha',
             'blue',

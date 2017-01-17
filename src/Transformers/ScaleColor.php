@@ -3,7 +3,6 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\ColorInterface;
 use function SSNepenthe\ColorUtils\restrict;
 
 /**
@@ -22,10 +21,8 @@ class ScaleColor implements TransformerInterface
         }, $attrs);
     }
 
-    public function transform(ColorInterface $color) : Color
+    public function transform(Color $color) : Color
     {
-        $color = $color->toColor();
-
         $whitelist = [
             'alpha'      => [0,   1],
             'blue'       => [0, 255],

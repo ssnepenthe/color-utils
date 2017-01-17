@@ -68,24 +68,4 @@ class TransformerPipelineTest extends PHPUnit_Framework_TestCase
             $pipeline->transform($color)->toArray()
         );
     }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('black'),
-            Rgb::fromString('black'),
-            Hsl::fromString('hsl(0, 0%, 0%)'),
-        ];
-
-        $transformer = new TransformerPipeline([
-            new AdjustColor(['lightness' => 50])
-        ]);
-
-        foreach ($colors as $color) {
-            $this->assertEquals(
-                [0, 0, 50],
-                $transformer->transform($color)->getHsl()->toArray()
-            );
-        }
-    }
 }

@@ -1,29 +1,26 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use function SSNepenthe\ColorUtils\saturate;
 use SSNepenthe\ColorUtils\Transformers\Saturate;
 
 class SaturateTest extends PHPUnit_Framework_TestCase
 {
-    public function test_it_can_saturate_hsl_colors()
+    public function test_it_can_saturate_colors()
     {
-        $c = Color::fromHsl(120, 30, 90);
-
         // assert_equal("#d9f2d9", evaluate("saturate(hsl(120, 30, 90), 20%)"))
+        $c = Color::fromHsl(120, 30, 90);
         $t = new Saturate(20);
         $this->assertEquals('#d9f2d9', $t->transform($c)->getRgb()->toHexString());
-    }
-
-    public function test_it_can_saturate_hex_colors()
-    {
-        $c = Color::fromString('#855');
 
         // assert_equal("#9e3f3f", evaluate("saturate(#855, 20%)"))
+        $c = Color::fromString('#855');
         $t = new Saturate(20);
         $this->assertEquals('#9e3f3f', $t->transform($c)->getRgb()->toHexString());
+
+        // assert_equal("rgba(158, 63, 63, 0.5)", evaluate("saturate(rgba(136, 85, 85, 0.5), 20%)"))
+        $c = Color::fromRgb(136, 85, 85, 0.5);
+        $t = new Saturate(20);
+        $this->assertEquals('rgba(158, 63, 63, 0.5)', $t->transform($c));
     }
 
     public function test_saturating_shades_of_gray_doesnt_change_the_color()
@@ -41,7 +38,7 @@ class SaturateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('white', $t->transform($c)->getName());
     }
 
-    public function test_it_honors_hsl_ranges_when_saturating_colors()
+    public function test_it_honors_ranges_when_saturating_colors()
     {
         $c = Color::fromString('#8a8');
 
@@ -57,38 +54,5 @@ class SaturateTest extends PHPUnit_Framework_TestCase
         // assert_equal("#88aa88", evaluate("saturate(#8a8, 0%)"))
         $t = new Saturate(0);
         $this->assertEquals('#88aa88', $t->transform($c)->getRgb()->toHexString());
-    }
-
-    public function test_it_can_saturate_rgb_colors()
-    {
-        $c = Color::fromRgb(136, 85, 85, 0.5);
-
-        // assert_equal("rgba(158, 63, 63, 0.5)", evaluate("saturate(rgba(136, 85, 85, 0.5), 20%)"))
-        $t = new Saturate(20);
-        $this->assertEquals('rgba(158, 63, 63, 0.5)', $t->transform($c)->toString());
-    }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('black'),
-            Rgb::fromString('black'),
-            Hsl::fromString('hsl(0, 0%, 0%)'),
-        ];
-
-        $t = new Saturate(50);
-
-        foreach ($colors as $c) {
-            $this->assertEquals(
-                [0, 50, 0],
-                $t->transform($c)->getHsl()->toArray()
-            );
-        }
-    }
-
-    public function test_functional_wrapper()
-    {
-        $c = saturate(Color::fromString('black'), 50);
-        $this->assertEquals([0, 50, 0], $c->getHsl()->toArray());
     }
 }

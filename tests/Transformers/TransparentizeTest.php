@@ -1,9 +1,6 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use function SSNepenthe\ColorUtils\transparentize;
 use SSNepenthe\ColorUtils\Transformers\Transparentize;
 
 class TransparentizeTest extends PHPUnit_Framework_TestCase
@@ -47,29 +44,5 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
             'transparent',
             $t->transform(Color::fromRgb(0, 0, 0, 1))->getName()
         );
-    }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('black'),
-            Rgb::fromString('black'),
-            Hsl::fromString('hsl(0, 0%, 0%)'),
-        ];
-
-        $t = new Transparentize(0.5);
-
-        foreach ($colors as $c) {
-            $this->assertEquals(
-                [0, 0, 0, 0.5],
-                $t->transform($c)->getHsl()->toArray()
-            );
-        }
-    }
-
-    public function test_functional_wrapper()
-    {
-        $c = transparentize(Color::fromString('black'), 0.5);
-        $this->assertEquals(0.5, $c->getAlpha());
     }
 }

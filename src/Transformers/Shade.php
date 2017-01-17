@@ -4,7 +4,6 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\ColorInterface;
 
 class Shade implements TransformerInterface
 {
@@ -15,7 +14,7 @@ class Shade implements TransformerInterface
         $this->transformer = new Mix(new Color(new Rgb(0, 0, 0)), $weight);
     }
 
-    public function transform(ColorInterface $color) : Color
+    public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);
     }

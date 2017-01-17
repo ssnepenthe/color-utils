@@ -1,14 +1,11 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
 use SSNepenthe\ColorUtils\Color;
-use function SSNepenthe\ColorUtils\scale_color;
 use SSNepenthe\ColorUtils\Transformers\ScaleColor;
 
 class ScaleColorTest extends PHPUnit_Framework_TestCase
 {
-    public function test_it_can_scale_hsl_colors()
+    public function test_it_can_scale_colors()
     {
         $c = Color::fromHsl(120, 30, 90);
 
@@ -21,10 +18,7 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         // evaluate("scale-color(hsl(120, 30, 90), $lightness: -15%)"))
         $t = new ScaleColor(['lightness' => -15]);
         $this->assertEquals('hsl(120, 30%, 76.5%)', $t->transform($c));
-    }
 
-    public function test_it_can_scale_rgb_colors()
-    {
         $c = Color::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgb(157, 20, 30)"),
@@ -42,10 +36,7 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         // evaluate("scale-color(rgb(10, 20, 30), $blue: -(1/3)*100%)"))
         $t = new ScaleColor(['blue' => -(1 / 3) * 100]);
         $this->assertEquals('rgb(10, 20, 20)', $t->transform($c));
-    }
 
-    public function test_it_can_scale_alpha_attributes()
-    {
         // assert_equal(evaluate("hsla(120, 30, 90, 0.86)"),
         // evaluate("scale-color(hsl(120, 30, 90), $alpha: -14%)"))
         $t = new ScaleColor(['alpha' => -14]);
@@ -63,7 +54,7 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function test_it_can_scale_multiple_hsl_attributes()
+    public function test_it_can_scale_multiple_attributes()
     {
         $c = Color::fromHsl(120, 30, 90);
 
@@ -76,10 +67,7 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         // evaluate("scale-color(hsl(120, 30, 90), $saturation: 30%, $alpha: -80%)"))
         $t = new ScaleColor(['saturation' => 30, 'alpha' => -80]);
         $this->assertEquals('hsla(120, 51%, 90%, 0.2)', $t->transform($c));
-    }
 
-    public function test_it_can_scale_multiple_rgb_attributes()
-    {
         $c = Color::fromRgb(10, 20, 30);
 
         // @todo While SASS tests to 38.8 green, actual SASS output is 39.
@@ -121,29 +109,5 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         // evaluate("scale-color(hsl(120, 30, 90), $saturation: -100%)"))
         $t = new ScaleColor(['saturation' => -100]);
         $this->assertEquals('hsl(120, 0%, 90%)', $t->transform($c));
-    }
-
-    public function test_it_can_transform_any_instance_of_color_interface()
-    {
-        $colors = [
-            Color::fromString('black'),
-            Rgb::fromString('black'),
-            Hsl::fromString('hsl(0, 0%, 0%)'),
-        ];
-
-        $t = new ScaleColor(['lightness' => 50]);
-
-        foreach ($colors as $c) {
-            $this->assertEquals(
-                [0, 0, 50],
-                $t->transform($c)->getHsl()->toArray()
-            );
-        }
-    }
-
-    public function test_functional_wrapper()
-    {
-        $c = scale_color(Color::fromString('black'), ['lightness' => 50]);
-        $this->assertEquals([0, 0, 50], $c->getHsl()->toArray());
     }
 }
