@@ -2,55 +2,68 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\Color;
 use function SSNepenthe\ColorUtils\restrict;
 
 /**
- * @todo Should we filter out any non-adjustments? I.e. 0 for any allowed attributes?
+ * Class ScaleColor
  */
 class ScaleColor implements TransformerInterface
 {
-    protected $attrs;
+    /**
+     * @var array
+     */
+    protected $channels;
 
-    public function __construct(array $attrs)
+    /**
+     * ScaleColor constructor.
+     *
+     * @param array $channels
+     */
+    public function __construct(array $channels)
     {
-        $this->attrs = array_map(function (int $adjustment) {
+        $this->channels = array_map(function (int $adjustment) {
             $adjustment = restrict($adjustment, -100, 100);
 
             return $adjustment / 100;
-        }, $attrs);
+        }, $channels);
     }
 
+    /**
+     * @param Color $color
+     * @return Color
+     */
     public function transform(Color $color) : Color
     {
+        // Map allowed channels to max value of each.
         $whitelist = [
-            'alpha'      => [0,   1],
-            'blue'       => [0, 255],
-            'green'      => [0, 255],
-            'hue'        => [0, 360],
-            'lightness'  => [0, 100],
-            'red'        => [0, 255],
-            'saturation' => [0, 100],
+            'alpha'      => 1,
+            'blue'       => 255,
+            'green'      => 255,
+            'hue'        => 360,
+            'lightness'  => 100,
+            'red'        => 255,
+            'saturation' => 100,
         ];
 
         $adjustments = [];
 
-        foreach ($this->attrs as $attr => $adjustment) {
-            if (! in_array($attr, array_keys($whitelist))) {
+        foreach ($this->channels as $channel => $adjustment) {
+            if (! in_array($channel, array_keys($whitelist))) {
                 continue;
             }
 
-            $getter = 'get' . ucfirst($attr);
+            $getter = 'get' . ucfirst($channel);
 
-            $maxAdjustment = $whitelist[$attr][1] - $color->{$getter}();
+            $maxAdjustment = $whitelist[$channel] - $color->{$getter}();
 
             if (0 > $adjustment) {
-                $maxAdjustment = $color->{$getter}() - $whitelist[$attr][0];
+                $maxAdjustment = $color->{$getter}();
             }
 
             $scaleAdjustment = $adjustment * $maxAdjustment;
 
-            $adjustments[$attr] = $color->{$getter}() + $scaleAdjustment;
+            $adjustments[$channel] = $color->{$getter}() + $scaleAdjustment;
         }
 
         return $color->with($adjustments);

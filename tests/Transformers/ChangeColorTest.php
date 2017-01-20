@@ -1,13 +1,18 @@
 <?php
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\ChangeColor;
 
+/**
+ * Tests duplicated from SASS.
+ *
+ * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
+ */
 class ChangeColorTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_change_colors()
     {
-        $c = Color::fromHsl(120, 30, 90);
+        $c = ColorFactory::fromHsl(120, 30, 90);
 
         // assert_equal(evaluate("hsl(195, 30, 90)"),
         // evaluate("change-color(hsl(120, 30, 90), $hue: 195deg)"))
@@ -24,7 +29,7 @@ class ChangeColorTest extends PHPUnit_Framework_TestCase
         $t = new ChangeColor(['lightness' => 40]);
         $this->assertEquals('hsl(120, 30%, 40%)', $t->transform($c));
 
-        $c = Color::fromRgb(10, 20, 30);
+        $c = ColorFactory::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgb(123, 20, 30)"),
         // evaluate("change-color(rgb(10, 20, 30), $red: 123)"))
@@ -44,7 +49,7 @@ class ChangeColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_change_alpha_values()
     {
-        $c = Color::fromRgb(10, 20, 30);
+        $c = ColorFactory::fromRgb(10, 20, 30);
 
         // assert_equal(evaluate("rgba(10, 20, 30, 0.76)"),
         // evaluate("change-color(rgb(10, 20, 30), $alpha: 0.76)"))
@@ -54,7 +59,7 @@ class ChangeColorTest extends PHPUnit_Framework_TestCase
 
     public function test_it_can_change_multiple_attributes_at_once()
     {
-        $c = Color::fromHsl(120, 30, 90);
+        $c = ColorFactory::fromHsl(120, 30, 90);
 
         // assert_equal(evaluate("hsl(56, 30, 47)"),
         // evaluate("change-color(hsl(120, 30, 90), $hue: 56deg, $lightness: 47%)"))
@@ -66,12 +71,12 @@ class ChangeColorTest extends PHPUnit_Framework_TestCase
         $t = new ChangeColor(['hue' => 56, 'lightness' => 47, 'alpha' => 0.9]);
         $this->assertEquals('hsla(56, 30%, 47%, 0.9)', $t->transform($c));
 
-        $c = Color::fromRgb(10, 20, 30);
+        $c = ColorFactory::fromRgb(10, 20, 30);
 
         $t = new ChangeColor(['red' => 100, 'green' => 200]);
-        $this->assertEquals([100, 200, 30], $t->transform($c)->toArray());
+        $this->assertEquals('rgb(100, 200, 30)', $t->transform($c));
 
         $t = new ChangeColor(['red' => 100, 'green' => 200, 'alpha' => 0.9]);
-        $this->assertEquals([100, 200, 30, 0.9], $t->transform($c)->toArray());
+        $this->assertEquals('rgba(100, 200, 30, 0.9)', $t->transform($c));
     }
 }

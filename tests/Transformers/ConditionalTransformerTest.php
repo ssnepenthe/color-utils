@@ -1,6 +1,7 @@
 <?php
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\Color;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Darken;
 use SSNepenthe\ColorUtils\Transformers\Lighten;
 use SSNepenthe\ColorUtils\Transformers\TransformerInterface;
@@ -11,7 +12,7 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
     public function test_it_can_be_instantiated()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
-            return $color->looksDark();
+            return ! $color->looksBright();
         }, new Lighten(30));
 
         $this->assertInstanceOf(ConditionalTransformer::class, $transformer);
@@ -21,15 +22,15 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
     public function test_it_can_conditionally_transform_a_color()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
-            return $color->looksDark();
+            return ! $color->looksBright();
         }, new Lighten(30));
 
-        $color = Color::fromString('orange');
+        $color = ColorFactory::fromString('orange');
         $newColor = $transformer->transform($color);
 
         $this->assertSame($color, $newColor);
 
-        $color = Color::fromString('green');
+        $color = ColorFactory::fromString('green');
         $newColor = $transformer->transform($color);
 
         $this->assertNotSame($color, $newColor);
@@ -38,17 +39,17 @@ class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
     public function test_it_can_apply_a_fallback_transformation()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
-            return $color->looksDark();
+            return ! $color->looksBright();
         }, new Lighten(30), new Darken(30));
 
-        $color = Color::fromString('orange');
+        $color = ColorFactory::fromString('orange');
         $darkened = $transformer->transform($color);
 
-        $this->assertEquals([102, 66, 0], $darkened->toArray());
+        $this->assertEquals('rgb(102, 66, 0)', $darkened);
 
-        $color = Color::fromString('green');
+        $color = ColorFactory::fromString('green');
         $lightened = $transformer->transform($color);
 
-        $this->assertEquals([26, 255, 26], $lightened->toArray());
+        $this->assertEquals('rgb(26, 255, 26)', $lightened);
     }
 }

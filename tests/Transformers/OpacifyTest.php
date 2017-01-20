@@ -1,13 +1,18 @@
 <?php
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Opacify;
 
+/**
+ * Tests duplicated from SASS.
+ *
+ * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
+ */
 class OpacifyTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_add_opacity_to_colors()
     {
-        $c = Color::fromRgb(0, 0, 0, 0.2);
+        $c = ColorFactory::fromRgba(0, 0, 0, 0.2);
 
         // assert_equal("rgba(0, 0, 0, 0.3)", evaluate("opacify(rgba(0, 0, 0, 0.2), 0.1)"))
         $t = new Opacify(0.1);
@@ -25,7 +30,7 @@ class OpacifyTest extends PHPUnit_Framework_TestCase
         $t = new Opacify(0.0);
         $this->assertEquals('rgba(0, 0, 0, 0.2)', $t->transform($c));
 
-        $c = Color::fromRgb(0, 0, 0, 0.5);
+        $c = ColorFactory::fromRgba(0, 0, 0, 0.5);
         $t = new Opacify(0.25);
 
         // assert_equal("rgba(0, 0, 0, 0.75)", evaluate("opacify(rgba(0, 0, 0, 0.5), 0.25)"))

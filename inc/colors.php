@@ -2,109 +2,260 @@
 
 namespace SSNepenthe\ColorUtils;
 
-function alpha(ColorInterface $color) : float
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function alpha(...$args) : float
 {
-    return $color->getAlpha();
-}
-
-function blue(ColorInterface $color) : int
-{
-    return $color->toColor()->getBlue();
-}
-
-function green(ColorInterface $color) : int
-{
-    return $color->toColor()->getGreen();
-}
-
-function hsl(...$args) : Color
-{
-    $count = count($args);
-
-    if (1 === $count && is_string($args[0])) {
-        return Color::fromString(...$args);
-    }
-
-    return Color::fromHsl(...$args);
-}
-
-function hsla(...$args) : Color
-{
-    return hsl(...$args);
-}
-
-function hue(ColorInterface $color) : int
-{
-    return $color->toColor()->getHue();
-}
-
-function is_dark(ColorInterface $color, int $threshold = 50) : bool
-{
-    return $color->toColor()->isDark($threshold);
-}
-
-function is_light(ColorInterface $color, int $threshold = 50) : bool
-{
-    return $color->toColor()->isLight($threshold);
-}
-
-function lightness(ColorInterface $color) : int
-{
-    return $color->toColor()->getLightness();
-}
-
-function looks_dark(ColorInterface $color, int $threshold = 50) : bool
-{
-    return $color->toColor()->looksDark($threshold);
-}
-
-function looks_light(ColorInterface $color, int $threshold = 50) : bool
-{
-    return $color->toColor()->looksLight($threshold);
-}
-
-function name(ColorInterface $color) : string
-{
-    return $color->toColor()->getName();
-}
-
-function opacity(ColorInterface $color) : float
-{
-    return alpha($color);
-}
-
-function perceived_brightness(ColorInterface $color) : float
-{
-    return $color->toColor()->calculatePerceivedBrightness();
-}
-
-function red(ColorInterface $color) : int
-{
-    return $color->toColor()->getRed();
-}
-
-function rgb(...$args) : Color
-{
-    $count = count($args);
-
-    if (1 === $count && is_string($args[0])) {
-        return Color::fromString(...$args);
-    }
-
-    return Color::fromRgb(...$args);
+    return color(...$args)->getAlpha();
 }
 
 /**
- * Also set up to adjust opacity of existing color?
- *
- * @link http://sass-lang.com/documentation/Sass/Script/Functions.html#rgba-instance_method
+ * @param mixed ...$args
+ * @return int
  */
-function rgba(...$args) : Color
+function blue(...$args) : int
 {
-    return rgb(...$args);
+    return color(...$args)->getRgb()->getBlue();
 }
 
-function saturation(ColorInterface $color) : int
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function brightness(...$args) : float
 {
-    return $color->toColor()->getSaturation();
+    return color(...$args)->getRgb()->calculateBrightness();
+}
+
+/**
+ * @param Colors\Color $color1
+ * @param Colors\Color $color2
+ * @return float
+ */
+function brightness_difference(Colors\Color $color1, Colors\Color $color2) : float
+{
+    return $color1->calculateBrightnessDifferenceWith($color2);
+}
+
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function color(...$args) : Colors\Color
+{
+    return Colors\ColorFactory::fromUnknown(...$args);
+}
+
+/**
+ * @param Colors\Color $color1
+ * @param Colors\Color $color2
+ * @return int
+ */
+function color_difference(Colors\Color $color1, Colors\Color $color2) : int
+{
+    return $color1->calculateColorDifferenceWith($color2);
+}
+
+/**
+ * @param Colors\Color $color1
+ * @param Colors\Color $color2
+ * @return float
+ */
+function contrast_ratio(Colors\Color $color1, Colors\Color $color2) : float
+{
+    return $color1->calculateContrastRatioWith($color2);
+}
+
+/**
+ * @param mixed ...$args
+ * @return int
+ */
+function green(...$args) : int
+{
+    return color(...$args)->getGreen();
+}
+
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function hsl(...$args) : Colors\Color
+{
+    if (3 === count($args)) {
+        return Colors\ColorFactory::fromHsl(...$args);
+    }
+
+    return Colors\ColorFactory::fromUnknownOneArg(...$args);
+}
+
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function hsla(...$args) : Colors\Color
+{
+    if (4 === count($args)) {
+        return Colors\ColorFactory::fromHsla(...$args);
+    }
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $alpha = array_pop($args);
+
+        return Colors\ColorFactory::fromUnknownOneArg(...$args)
+            ->with(['alpha' => $alpha]);
+    }
+
+    return Colors\ColorFactory::fromUnknownOneArg(...$args);
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function hue(...$args) : float
+{
+    return color(...$args)->getHue();
+}
+
+/**
+ * @param mixed ...$args
+ * @return boolean
+ */
+function is_bright(...$args) : bool
+{
+    $threshold = 127.5;
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $threshold = array_pop($args);
+    }
+
+    return color(...$args)->isBright($threshold);
+}
+
+/**
+ * @param mixed ...$args
+ * @return bool
+ */
+function is_light(...$args) : bool
+{
+    $threshold = 50.0;
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $threshold = array_pop($args);
+    }
+
+    return color(...$args)->isLight($threshold);
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function lightness(...$args) : float
+{
+    return color(...$args)->getLightness();
+}
+
+/**
+ * @param mixed ...$args
+ * @return bool
+ */
+function looks_bright(...$args) : bool
+{
+    $threshold = 127.5;
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $threshold = array_pop($args);
+    }
+
+    return color(...$args)->looksBright($threshold);
+}
+
+/**
+ * @param mixed ...$args
+ * @return string
+ */
+function name(...$args) : string
+{
+    return color(...$args)->getName();
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function opacity(...$args) : float
+{
+    return alpha(...$args);
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function perceived_brightness(...$args) : float
+{
+    return color(...$args)->calculatePerceivedBrightness();
+}
+
+/**
+ * @param mixed ...$args
+ * @return int
+ */
+function red(...$args) : int
+{
+    return color(...$args)->getRed();
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function relative_luminance(...$args) : float
+{
+    return color(...$args)->calculateRelativeLuminance();
+}
+
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function rgb(...$args) : Colors\Color
+{
+    if (3 === count($args)) {
+        return Colors\ColorFactory::fromRgb(...$args);
+    }
+
+    return Colors\ColorFactory::fromUnknownOneArg(...$args);
+}
+
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function rgba(...$args) : Colors\Color
+{
+    if (4 === count($args)) {
+        return Colors\ColorFactory::fromRgba(...$args);
+    }
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $alpha = array_pop($args);
+
+        return Colors\ColorFactory::fromUnknownOneArg(...$args)
+            ->with(['alpha' => $alpha]);
+    }
+
+    return Colors\ColorFactory::fromUnknownOneArg(...$args);
+}
+
+/**
+ * @param mixed ...$args
+ * @return float
+ */
+function saturation(...$args) : float
+{
+    return color(...$args)->getSaturation();
 }

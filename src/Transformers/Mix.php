@@ -2,20 +2,40 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\Color;
 use function SSNepenthe\ColorUtils\restrict;
 
+/**
+ * Class Mix
+ */
 class Mix implements TransformerInterface
 {
+    /**
+     * @var Color
+     */
     protected $color;
+
+    /**
+     * @var int
+     */
     protected $weight;
 
+    /**
+     * Mix constructor.
+     *
+     * @param Color $color
+     * @param int $weight
+     */
     public function __construct(Color $color, int $weight = 50)
     {
         $this->color = $color;
         $this->weight = restrict($weight, 0, 100);
     }
 
+    /**
+     * @param Color $color
+     * @return Color
+     */
     public function transform(Color $color) : Color
     {
         $percentage = $this->weight / 100;

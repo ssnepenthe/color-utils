@@ -1,25 +1,30 @@
 <?php
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Desaturate;
 
+/**
+ * Tests duplicated from SASS.
+ *
+ * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
+ */
 class DesaturateTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_desaturate_colors()
     {
-        $c = Color::fromHsl(120, 30, 90);
+        $c = ColorFactory::fromHsl(120, 30, 90);
 
         // assert_equal("#e3e8e3", evaluate("desaturate(hsl(120, 30, 90), 20%)"))
         $t = new Desaturate(20);
-        $this->assertEquals('#e3e8e3', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#e3e8e3', $t->transform($c)->toHexString());
 
-        $c = Color::fromString('#855');
+        $c = ColorFactory::fromString('#855');
 
         // assert_equal("#726b6b", evaluate("desaturate(#855, 20%)"))
         $t = new Desaturate(20);
-        $this->assertEquals('#726b6b', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#726b6b', $t->transform($c)->toHexString());
 
-        $c = Color::fromRgb(136, 85, 85, 0.5);
+        $c = ColorFactory::fromRgba(136, 85, 85, 0.5);
 
         // assert_equal("rgba(114, 107, 107, 0.5)", evaluate("desaturate(rgba(136, 85, 85, 0.5), 20%)"))
         $t = new Desaturate(20);
@@ -28,13 +33,13 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
 
     public function it_cant_desaturate_shades_of_gray()
     {
-        $c = Color::fromString('#000');
+        $c = ColorFactory::fromString('#000');
 
         // assert_equal("black", evaluate("desaturate(#000, 20%)"))
         $t = new Desaturate(20);
         $this->assertEquals('black', $t->transform($c)->getName());
 
-        $c = Color::fromString('#fff');
+        $c = ColorFactory::fromString('#fff');
 
         // assert_equal("white", evaluate("desaturate(#fff, 20%)"))
         $t = new Desaturate(20);
@@ -43,14 +48,14 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
 
     public function test_it_handles_the_extremes()
     {
-        $c = Color::fromString('#8a8');
+        $c = ColorFactory::fromString('#8a8');
 
         // assert_equal("#999999", evaluate("desaturate(#8a8, 100%)"))
         $t = new Desaturate(100);
-        $this->assertEquals('#999999', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#999999', $t->transform($c)->toHexString());
 
         // assert_equal("#88aa88", evaluate("desaturate(#8a8, 0%)"))
         $t = new Desaturate(0);
-        $this->assertEquals('#88aa88', $t->transform($c)->getRgb()->toHexString());
+        $this->assertEquals('#88aa88', $t->transform($c)->toHexString());
     }
 }

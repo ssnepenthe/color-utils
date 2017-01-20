@@ -2,107 +2,238 @@
 
 namespace SSNepenthe\ColorUtils;
 
-function adjust_color(Color $color, array $components) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function adjust_color(...$args) : Colors\Color
 {
-    $tranformer = new Transformers\AdjustColor($components);
-    return $tranformer->transform($color);
+    $components = (array) array_pop($args);
+    $color = color(...$args);
+    $transformer = new Transformers\AdjustColor($components);
+
+    return $transformer->transform($color);
 }
 
-function adjust_hue(Color $color, int $degrees) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function adjust_hue(...$args) : Colors\Color
 {
+    $degrees = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\AdjustHue($degrees);
+
     return $transformer->transform($color);
 }
 
-function change_color(Color $color, array $components) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function change_color(...$args) : Colors\Color
 {
-    $tranformer = new Transformers\ChangeColor($components);
-    return $tranformer->transform($color);
+    $components = (array) array_pop($args);
+    $color = color(...$args);
+    $transformer = new Transformers\ChangeColor($components);
+
+    return $transformer->transform($color);
 }
 
-function complement(Color $color) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function complement(...$args) : Colors\Color
 {
+    $color = color(...$args);
     $transformer = new Transformers\Complement;
+
     return $transformer->transform($color);
 }
 
-function darken(Color $color, int $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function darken(...$args) : Colors\Color
 {
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\Darken($amount);
+
     return $transformer->transform($color);
 }
 
-function desaturate(Color $color, int $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function desaturate(...$args) : Colors\Color
 {
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\Desaturate($amount);
+
     return $transformer->transform($color);
 }
 
-function fade_in(Color $color, float $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function fade_in(...$args) : Colors\Color
 {
-    return opacify($color, $amount);
+    return opacify(...$args);
 }
 
-function fade_out(Color $color, float $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function fade_out(...$args) : Colors\Color
 {
-    return transparentize($color, $amount);
+    return transparentize(...$args);
 }
 
-function grayscale(Color $color) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function grayscale(...$args) : Colors\Color
 {
+    $color = color(...$args);
     $transformer = new Transformers\GrayScale;
+
     return $transformer->transform($color);
 }
 
-function invert(Color $color) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function invert(...$args) : Colors\Color
 {
+    $color = color(...$args);
     $transformer = new Transformers\Invert;
+
     return $transformer->transform($color);
 }
 
-function lighten(Color $color, int $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function lighten(...$args) : Colors\Color
 {
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\Lighten($amount);
+
     return $transformer->transform($color);
 }
 
-function mix(Color $color1, Color $color2, int $weight = 50) : Color {
+/**
+ * @param Colors\Color $color1
+ * @param Colors\Color $color2
+ * @param int $weight
+ * @return Colors\Color
+ */
+function mix(
+    Colors\Color $color1,
+    Colors\Color $color2,
+    int $weight = 50
+) : Colors\Color {
     $transformer = new Transformers\Mix($color1, $weight);
+
     return $transformer->transform($color2);
 }
 
-function opacify(Color $color, float $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function opacify(...$args) : Colors\Color
 {
-    $tranformer = new Transformers\Opacify($amount);
-    return $tranformer->transform($color);
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
+    $transformer = new Transformers\Opacify($amount);
+
+    return $transformer->transform($color);
 }
 
-function saturate(Color $color, int $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function saturate(...$args) : Colors\Color
 {
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\Saturate($amount);
+
     return $transformer->transform($color);
 }
 
-function scale_color(Color $color, array $components) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function scale_color(...$args) : Colors\Color
 {
-    $tranformer = new Transformers\ScaleColor($components);
-    return $tranformer->transform($color);
+    $components = (array) array_pop($args);
+    $color = color(...$args);
+    $transformer = new Transformers\ScaleColor($components);
+
+    return $transformer->transform($color);
 }
 
-function shade(Color $color, int $weight = 50) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function shade(...$args) : Colors\Color
 {
+    $weight = 50;
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $weight = intval(array_pop($args));
+    }
+
+    $color = color(...$args);
     $transformer = new Transformers\Shade($weight);
+
     return $transformer->transform($color);
 }
 
-function tint(Color $color, int $weight = 50) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function tint(...$args) : Colors\Color
 {
+    $weight = 50;
+
+    if (_color_args_probably_contain_extra_arg(...$args)) {
+        $weight = intval(array_pop($args));
+    }
+
+    $color = color(...$args);
     $transformer = new Transformers\Tint($weight);
+
     return $transformer->transform($color);
 }
 
-function transparentize(Color $color, float $amount) : Color
+/**
+ * @param mixed ...$args
+ * @return Colors\Color
+ */
+function transparentize(...$args) : Colors\Color
 {
+    $amount = floatval(array_pop($args));
+    $color = color(...$args);
     $transformer = new Transformers\Transparentize($amount);
+
     return $transformer->transform($color);
 }

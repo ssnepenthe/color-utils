@@ -2,21 +2,32 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\Color;
 
 /**
- * @todo Should we filter out any non-adjustments? I.e. hue in multiples of 360 and
- *       0 for any of the other allowed attributes?
+ * Class AdjustColor
  */
 class AdjustColor implements TransformerInterface
 {
-    protected $attrs;
+    /**
+     * @var array
+     */
+    protected $channels;
 
-    public function __construct(array $attrs)
+    /**
+     * AdjustColor constructor.
+     *
+     * @param array $channels
+     */
+    public function __construct(array $channels)
     {
-        $this->attrs = $attrs;
+        $this->channels = $channels;
     }
 
+    /**
+     * @param Color $color
+     * @return Color
+     */
     public function transform(Color $color) : Color
     {
         $whitelist = [
@@ -31,13 +42,13 @@ class AdjustColor implements TransformerInterface
 
         $adjustments = [];
 
-        foreach ($this->attrs as $attr => $adjustment) {
-            if (! in_array($attr, $whitelist)) {
+        foreach ($this->channels as $channel => $adjustment) {
+            if (! in_array($channel, $whitelist)) {
                 continue;
             }
 
-            $method = 'get' . ucfirst($attr);
-            $adjustments[$attr] = $color->{$method}() + $adjustment;
+            $method = 'get' . ucfirst($channel);
+            $adjustments[$channel] = $color->{$method}() + $adjustment;
         }
 
         return $color->with($adjustments);

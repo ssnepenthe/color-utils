@@ -1,8 +1,13 @@
 <?php
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Transparentize;
 
+/**
+ * Tests duplicated from SASS.
+ *
+ * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
+ */
 class TransparentizeTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_can_add_transparency_to_colors()
@@ -12,13 +17,15 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
         // assert_equal("rgba(0, 0, 0, 0.3)", evaluate("transparentize(rgba(0, 0, 0, 0.5), 0.2)"))
         $this->assertEquals(
             'rgba(0, 0, 0, 0.3)',
-            $t->transform(Color::fromRgb(0, 0, 0, 0.5))
+            $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.5))
         );
 
+        // Since keywords/names are mapped to hex strings and we don't allow RRGGBBAA
+        // hex strings, it is impossible to recognize "transparent" as a color name.
         // assert_equal("transparent", evaluate("fade_out(rgba(0, 0, 0, 0.2), 0.2)"))
         $this->assertEquals(
-            'transparent',
-            $t->transform(Color::fromRgb(0, 0, 0, 0.2))->getName()
+            'rgba(0, 0, 0, 0)',
+            $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.2))
         );
 
         $t = new Transparentize(0);
@@ -26,7 +33,7 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
         // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0)"))
         $this->assertEquals(
             'rgba(0, 0, 0, 0.2)',
-            $t->transform(Color::fromRgb(0, 0, 0, 0.2))
+            $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.2))
         );
 
         $t = new Transparentize(0.1);
@@ -34,15 +41,16 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
         // assert_equal("rgba(0, 0, 0, 0.1)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0.1)"))
         $this->assertEquals(
             'rgba(0, 0, 0, 0.1)',
-            $t->transform(Color::fromRgb(0, 0, 0, 0.2))
+            $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.2))
         );
 
         $t = new Transparentize(1);
 
+        // See note about "transparent" color name above.
         // assert_equal("transparent", evaluate("transparentize(rgba(0, 0, 0, 0.2), 1)"))
         $this->assertEquals(
-            'transparent',
-            $t->transform(Color::fromRgb(0, 0, 0, 1))->getName()
+            'rgba(0, 0, 0, 0)',
+            $t->transform(ColorFactory::fromRgba(0, 0, 0, 1))
         );
     }
 }

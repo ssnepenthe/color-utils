@@ -1,9 +1,7 @@
 <?php
 
-use SSNepenthe\ColorUtils\Hsl;
-use SSNepenthe\ColorUtils\Rgb;
-use SSNepenthe\ColorUtils\Color;
 use SSNepenthe\ColorUtils\Transformers\Shade;
+use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Invert;
 use SSNepenthe\ColorUtils\Transformers\Lighten;
 use SSNepenthe\ColorUtils\Transformers\AdjustColor;
@@ -41,31 +39,28 @@ class TransformerPipelineTest extends PHPUnit_Framework_TestCase
     public function test_it_can_transform_a_color()
     {
         $pipeline = new TransformerPipeline([new Lighten(30)]);
-        $color = $pipeline->transform(Color::fromString('green'));
+        $color = $pipeline->transform(ColorFactory::fromString('green'));
 
         // Untransformed green would be [0, 128, 0].
-        $this->assertEquals([26, 255, 26], $color->toArray());
+        $this->assertEquals('rgb(26, 255, 26)', $color);
     }
 
     public function test_it_transforms_colors_in_the_order_transformers_were_added()
     {
         $invert = new Invert;
         $shade25 = new Shade(25);
-        $color = Color::fromString('green');
+        $color = ColorFactory::fromString('green');
 
         $pipeline = new TransformerPipeline;
         $pipeline->add($invert); // from [0, 128, 0] to [255, 127, 255].
         $pipeline->add($shade25); // from [255, 127, 255] to [191, 95, 191].
 
-        $this->assertEquals([191, 95, 191], $pipeline->transform($color)->toArray());
+        $this->assertEquals('rgb(191, 95, 191)', $pipeline->transform($color));
 
         $pipeline = new TransformerPipeline;
         $pipeline->add($shade25); // from [0, 128, 0] to [0, 96, 0].
         $pipeline->add($invert); // from [0, 96, 0] to [255, 159, 255].
 
-        $this->assertEquals(
-            [255, 159, 255],
-            $pipeline->transform($color)->toArray()
-        );
+        $this->assertEquals('rgb(255, 159, 255)',$pipeline->transform($color));
     }
 }

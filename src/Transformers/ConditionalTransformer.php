@@ -2,14 +2,35 @@
 
 namespace SSNepenthe\ColorUtils\Transformers;
 
-use SSNepenthe\ColorUtils\Color;
+use SSNepenthe\ColorUtils\Colors\Color;
 
+/**
+ * Class ConditionalTransformer
+ */
 class ConditionalTransformer implements TransformerInterface
 {
+    /**
+     * @var callable
+     */
     protected $callback;
+
+    /**
+     * @var TransformerInterface|null
+     */
     protected $falsyTransformer = null;
+
+    /**
+     * @var TransformerInterface
+     */
     protected $truthyTransformer;
 
+    /**
+     * ConditionalTransformer constructor.
+     *
+     * @param callable $callback
+     * @param TransformerInterface $truthyTransformer
+     * @param TransformerInterface|null $falsyTransformer
+     */
     public function __construct(
         callable $callback,
         TransformerInterface $truthyTransformer,
@@ -21,8 +42,8 @@ class ConditionalTransformer implements TransformerInterface
     }
 
     /**
-     * @todo If callback returns false should the same color object be returned as it
-     *       is now or should a clone of the color object be returned?
+     * @param Color $color
+     * @return Color
      */
     public function transform(Color $color) : Color
     {
