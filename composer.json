@@ -20,7 +20,9 @@
         "red",
         "rgb",
         "rgba",
+        "sass",
         "saturation",
+        "scss",
         "manipulation",
         "transformation"
     ],
@@ -36,6 +38,7 @@
         "phploc/phploc": "^3.0",
         "squizlabs/php_codesniffer": "^2.7",
         "mockery/mockery": "^0.9",
+        "vimeo/psalm": "^0.3"
     },
     "autoload": {
         "files": [
@@ -47,9 +50,11 @@
     },
     "scripts": {
         "phpcs": "./vendor/bin/phpcs --colors --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
+        "phpcbf": "./vendor/bin/phpcbf --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
         "phploc": "./vendor/bin/phploc --exclude={vendor,tests} .",
         "phpmd": "./vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor/,tests/ --ignore-violations-on-exit",
         "phpunit": "./vendor/bin/phpunit --colors=always",
+        "psalm": "./vendor/bin/psalm",
         "qc": ["@phpmd", "@phpunit", "@phpcs"]
     }
 }

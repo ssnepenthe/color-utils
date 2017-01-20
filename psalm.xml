@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<psalm
+  stopOnFirstError="false"
+  useDocblockTypes="true"
+>
+    <projectFiles>
+        <directory name="inc" />
+        <directory name="src" />
+    </projectFiles>
+    <issueHandlers>
+        <MissingReturnType errorLevel="info" />
+        <MissingClosureReturnType errorLevel="info" />
+        <MissingPropertyType errorLevel="info" />
+    </issueHandlers>
+</psalm>
