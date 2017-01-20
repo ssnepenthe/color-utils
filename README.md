@@ -2,388 +2,278 @@
 This package is intended to provide a variety of [SASS-like color manipulation functions](http://sass-lang.com/documentation/Sass/Script/Functions.html).
 
 ## Requirements
-PHP 7.0 or later.
+Composer, PHP 7.0 or later.
 
 ## Installation
-Although this package has no dependencies, it does rely on the Composer autoloader and should therefore be installed using Composer:
+Install using Composer:
 
 ```
 composer require ssnepenthe/color-utils
 ```
 
 ## Usage
+*All functions listed are within the `SSNepenthe\ColorUtils` namespace.*
 
 ### Color Representation
-Start by creating a new `SSNepenthe\ColorUtils\Color` object:
+Create Color objects using the `color` function:
+
+**color(array $color)**
+
+`$color` is an array of `$channel => $value` pairs. Valid channels are red, green, blue, hue, saturation, lightness and alpha.
+
+* `color(['red' => 255, 'green' => 0, 'blue' => 51])`
+* `color(['hue' => 348, 'saturation' => 100, 'lightness' => 50, 'alpha' => 0.7])`
+
+**color(string $color)**
+
+`$color` is a string representation of a color in one of the following formats:
+
+* Hex notation: `'#f03'` or `'#ff0033'`
+* Keyword notation: `'white'` ([list of valid keywords on MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#Color_keywords))
+* Functional hsl(a) notation: `'hsl(348, 100%, 50%)` or `'hsla(348, 100%, 50%, 0.7)'`
+* Functional rgb(a) notation: `'rgb(255, 0, 51)'` or `'rgba(255, 0, 51, 0.7)'`
+
+**color(int $red, int $green, int $blue, [float $alpha])**
+
+0 - 255 range for each of `$red`, `$green` and `$blue`, 0 - 1 for `$alpha`.
+
+* `color(255, 0, 51)`
+* `color(255, 0, 51, 0.7)`
+
+**color(float $hue, float $saturation, float $lightness, [float $alpha])**
+
+0 - 360 range for `$hue`, 0 - 100 for each of `$saturation` and `$lightness`, 0 - 1 for `$alpha`.
+
+* `color(348, 100, 50)`
+* `color(348, 100, 50, 0.7)`
+
+*Regarding the previous two examples:*
+
+The values 255, 0 and 51 could technically represent RGB value as well as HSL values. In cases like this, RGB is preferred over HSL.
+
+If you need finer control, use the following functions:
+
+**hsl(float $hue, float $saturation, float $lightness)**
+
+**hsla(float $hue, float $saturation, float $lightness, float $alpha)**
+
+**rgb(int $red, int $green, int $blue)**
+
+**rgba(int $red, int $green, int $blue, float $alpha)**
+
+Lastly, the `hsla` and `rgba` functions can also be used to adjust the transparency of an existing color:
 
 ```php
-use SSNepenthe\ColorUtils\Color;
+$hsl = hsl(348, 100, 50);
+echo $hsl; // 'hsl(348, 100%, 50%)'
 
-$color = Color::fromHsl(int $h, int $s, int $l, [float $a]);
-$color = Color::fromRgb(int $r, int $g, int $b, [float $a]);
-
-// $s can be any of the following: color keyword, rgb hex notation, rgb functional notation,
-// rgba hex notation, rgba functional notation, hsl functional notation and hsla functional notation.
-// More info: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-$color = Color::fromString(string $s);
+$hsla = hsla($hsl, 0.7);
+echo $hsla; // 'hsla(348, 100%, 50%, 0.7)'
 ```
 
-Or use the functional counterparts:
+### Color Components
+Individual color components are accesible using the following functions (which each accept any `$color` argument recognized by the `color` function):
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\hsl;
+**alpha($color)**
 
-$color = hsl(int $h, int $s, int $l, [float $a]);
-$color = rgb(int $r, int $g, int $b, [float $a]);
+Get the alpha channel of a color.
 
-// $s can be any of the string formats mentioned above.
-$color = hsl(string $s);
-$color = rgb(string $s);
-```
+* `alpha('#f03'); // 1.0`
 
-Easily access individual components from any color object:
+**blue($color)**
 
-```php
-$color->getRed(); // int.
-$color->getGreen(); // int.
-$color->getBlue(); // int.
+Get the blue channel of a color.
 
-$color->getHue(); // float.
-$color->getSaturation(); // float.
-$color->getLightness(); // float.
+* `blue('#f03'); // 51`
 
-$color->getAlpha(); // float.
-```
+**brightness($color)**
 
-*OR*
+Calculates [color brightness](https://www.w3.org/TR/AERT#color-contrast) on a scale from 0 (black) to 255 (white).
 
-```php
-use function SSNepenthe\ColorUtils\hue;
-use function SSNepenthe\ColorUtils\red;
-use function SSNepenthe\ColorUtils\blue;
-use function SSNepenthe\ColorUtils\alpha;
-use function SSNepenthe\ColorUtils\green;
-use function SSNepenthe\ColorUtils\lightness;
-use function SSNepenthe\ColorUtils\saturation;
+* `brightness('#f03') // 82.059`
 
-red($color);
-green($color);
-blue($color);
+**green($color)**
 
-hue($color);
-saturation($color);
-lightness($color);
+Get the green channel of a color.
 
-alpha($color);
-```
+* `green('#f03'); // 0`
 
-Conversion between RGB and HSL (and vice versa) is automatic.
+**hue($color)**
 
-If a color has a corresponding keyword in the CSS spec, you can access that keyword like so:
+Get the hue channel of a color.
 
-```php
-// String.
-$color->getName();
-```
+* `hue('#f03'); // 348.0`
 
-*OR*
+**is_bright($color)**
 
-```php
-use function SSNepenthe\ColorUtils\name;
+Accepts an optional `$threshold` float as the last parameter with a default of 127.5. Checks `brightness($color) >= $threshold`.
 
-name($color);
-```
+* `is_bright('#f03'); // false`
+* `is_bright('#f03', 82); // true`
 
-Check whether a color is light or dark:
+**is_light($color)**
 
-```php
-// Bool.
-$color->isLight();
-$color->isDark();
-```
+Accepts an optional `$threshold` float as the last parameter with a default of 50.0. Checks `lightness($color) >= $threshold`.
 
-*OR*
+* `is_light('#f03'); // true`
+* `is_light('#f03', 55); // false`
 
-```php
-use function SSNepenthe\ColorUtils\is_light;
-use function SSNepenthe\ColorUtils\is_dark;
+**lightness($color)**
 
-is_light($color);
-is_dark($color);
-```
+Get the lightness channel of a color.
 
-Check whether a color is perceived as light or dark (adjusted for human sensitivity to various color components):
+* `lightness('#f03'); // 50.0`
 
-```php
-// Bool.
-$color->looksLight();
-$color->looksDark();
-```
+**looks_bright($color)**
 
-*OR*
+Accepts an optional `$threshold` float as the last parameter with a default of 127.5. Checks `perceived_brightness($color) >= $threshold`.
 
-```php
-use function SSNepenthe\ColorUtils\looks_light;
-use function SSNepenthe\ColorUtils\looks_dark;
+* `looks_bight('#f03'); // true`
+* `looks_bight('#f03', 141.0); // false`
 
-looks_light($color);
-looks_dark($color);
-```
+**name($color)**
 
-You can also set a custom threshold for each of these brightness checks (on a scale from 0 - 100, default is 50):
+Get the name (keyword) representation of a color. Returns an empty string if none is found.
 
-```php
-$color->isLight(30);
-```
+* `name('#f03'); // ''`
+* `name('#00f'); // 'blue'`
 
-*OR*
+**opacity($color)**
 
-```php
-use function SSNepenthe\ColorUtils\is_light;
+Alias of `alpha($color)`.
 
-is_light($color, 30);
-```
+**perceived_brightness($color)**
+
+Calculates the [perceived brightness](http://alienryderflex.com/hsp.html) of a color on a scale from 0 (black) to 255 (white).
+
+* `perceived_brightness('#f03'); // 140.49551`
+
+**red($color)**
+
+Get the red channel of a color.
+
+* `red('#f03'); // 255`
+
+**relative_luminance($color)**
+
+Calculates the [relative luminance](https://www.w3.org/TR/WCAG20/#relativeluminancedef) of a color on a scale from 0 (black) to 1 (white).
+
+* `relative_luminance('#f03'); // 0.21499`
+
+**saturation($color)**
+
+Get the saturation channel of a color.
+
+* `saturation('#f03'); // 100.0`
+
+### Color Calculations
+The following functions calculate differences between two given colors:
+
+**brightness_difference(Color $color1, Color $color2)**
+
+Calculates [brightness difference](https://www.w3.org/TR/AERT#color-contrast) on a scale from 0 to 255.
+
+* `brightness_difference(color('red'), color('green')) // 1.109`
+
+**color_difference(Color $color1, Color $color2)**
+
+Calculates [color difference](https://www.w3.org/TR/AERT#color-contrast) on a scale from 0 to 765.
+
+* `color_difference(color('red'), color('green')) // 383`
+
+**constrast_ratio(Color $color1, Color $color2)**
+
+Calculates the [contrast ratio](https://www.w3.org/TR/WCAG20/#contrast-ratiodef) between two colors on a scale from 1 to 21.
+
+* `contrast_ratio(color('red'), color('green')) // 1.28486`
 
 ### Color Transformations
-The following primary transformations are available:
+Colors can be transformed using the following functions (all accept any `$color` argument recognized by the `color` function):
 
-**Adjust Color**:
+**adjust_color($color, array $channels)**
 
-Provide an array of `component` => `amount` pairs. Components can be any of `hue`, `saturation`, `lightness`, `red`, `green`, `blue` or `alpha`.
+Creates a new color by increasing/decreasing one or more channel values of `$color`. This can change red, green, blue, hue, saturation, lightness and alpha channels. `$channels` are specified as an array of `$channel => $amount` pairs.
 
-This transformation creates a new color where each `amount` has been *added to* the values of the existing color amount.
+* `(string) adjust_color('rgb(50, 100, 150)', ['green' => 50, 'blue' => -50]); // 'rgb(50, 150, 100)'`
 
-The following examples create the color `rgb(50, 150, 175)`.
+**change_color($color, array $channels)**
 
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\AdjustColor;
+Creates a new color by changing one or more channel values of `$color`. This can change red, green, blue, hue, saturation, lightness and alpha channels. `$channels` are specified as an array of `$channel => $amount` pairs.
 
-$color = Color::fromRgb(50, 100, 150);
-$transformer = new AdjustColor(['green' => 50, 'blue' => 25]);
-$newColor = $transformer->transform($color);
-```
+* `(string) change_color('rgb(50, 100, 150)', ['green' => 50, 'blue' => 25]); // 'rgb(50, 50, 25)'`
 
-*OR*
+**invert($color)**
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\adjust_color;
+Creates a new color by inverting (subtracting from 255) the red, green and blue channels of `$color`. Alpha is left unchanged.
 
-$color = rgb(50, 100, 150);
-$newColor = adjust_color($color, ['green' => 50, 'blue' => 25]);
-```
+* `(string) invert('rgb(50, 100, 150)'); // 'rgb(205, 155, 105)'`
 
-**Change Color**
+**mix(Color $color1, Color $color2, int $weight = 50)**
 
-Provide an array of `component` => `amount` pairs.
+Creates a new color by averaging the red, green and blue channels from `$color1` and `$color2`, with `$color1` optionally weighted by `$weight`%. Alpha is also considered. [Uses the same algorithm as SASS](https://github.com/sass/sass/blob/stable/lib/sass/script/functions.rb#L1291).
 
-This transformation creates a new color where each `amount` is used *in place of* the existing color amount.
+* `(string) mix(color('rgb(50, 100, 150)'), color('rgb(100, 100, 100)')); // 'rgb(75, 100, 125)`
+* `(string) mix(color('rgb(50, 100, 150)'), color('rgb(100, 100, 100)'), 25); // 'rgb(88, 100, 113)`
+* `(string) mix(color('rgb(50, 100, 150)'), color('rgb(100, 100, 100)'), 75); // 'rgb(63, 100, 138)`
 
-The following examples create the color `rgb(50, 50, 25)`.
+**scale_color($color, array $channels)**
 
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\ChangeColor;
+Creates a new color by scaling one or more channel values of `$color`. This can change red, green, blue, hue, saturation, lightness and alpha channels. `$channels` are specified as an array of `$channel => $percent` pairs, and each channel value is scaled by `$percent`% of the max possible adjustment.
 
-$color = Color::fromRgb(50, 100, 150);
-$transformer = new ChangeColor(['green' => 50, 'blue' => 25]);
-$newColor = $transformer->transform($color);
-```
+In the example below, green is 100 and we want to scale positively by 50%. The maximum allowed value is 255 which means the maximum possible adjustment is 155. The new green value then becomes 100 + (155 * 0.5).
 
-*OR*
+Likewise, blue is 150 and we want to scale negatively by 50%. The minimum allowed value is 0 which means the maximum possible adjustment is -150. The new blue value then becomes 150 + (-150 * 0.5).
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\change_color;
+* `(string) scale_color('rgb(50, 100, 150)', ['green' => 50, 'blue' => -50]); // 'rgb(50, 178, 75)'`
 
-$color = rgb(50, 100, 150);
-$newColor = change_color($color, ['green' => 50, 'blue' => 25]);
-```
+**adjust_hue($color, float $degrees)**
 
-**Invert Color**
+Alias of `adjust_color($color, ['hue' => $degrees])`.
 
-This transformation creates a new color where the values of `red`, `green`, and `blue` have been inverted (subtracted from the max 255).
+**complement($color)**
 
-The following examples create the color `rgb(205, 155, 105)`.
+Alias of `adjust_color($color, ['hue' => 180])`.
 
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Invert;
+**darken($color, float $amount)**
 
-$color = Color::fromRgb(50, 100, 150);
-$transformer = new Invert;
-$newColor = $transformer->transform($color);
-```
+Alias of `adjust_color($color, ['lightness' => -1 * $amount])`.
 
-*OR*
+**desaturate($color, float $amount)**
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\invert;
+Alias of `adjust_color($color, ['saturation' => -1 * $amount])`.
 
-$color = rgb(50, 100, 150);
-$newColor = invert($color);
-```
+**fade_in($color, float $amount)**
 
-**Mix Color**
+Alias of `opacify($color, $amount)`.
 
-Provide two color objects and a weight between 0 and 100.
+**fade_out($color, float $amount)**
 
-This transformation creates a new color by mixing `weight`% of `color1` with 100 - `weight`% of `color2`. The alpha values of each color are also factored in to the transformation.
+Alias of `transparentize($color, $amount)`.
 
-The following examples create the color `rgb(27, 108, 104)`.
+**grayscale($color)**
 
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Mix;
+Alias of `change_color($color, ['saturation' => 0])`.
 
-$color1 = Color::fromRgb(50, 100, 150);
-$color2 = Color::fromRgb(17, 112, 84);
-$transformer = new Mix($color1, 30);
-$newColor = $transformer->transform($color2);
-```
+**lighten($color, float $amount)**
 
-*OR*
+Alias of `adjust_color($color, ['lightness' => $amount])`.
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\mix;
+**opacify($color, float $amount)**
 
-$color1 = rgb(50, 100, 150);
-$color2 = rgb(17, 112, 84);
-$newColor = mix($color1, $color2, 30);
-```
+Alias of `adjust_color($color, ['alpha' => $amount])`.
 
-**Scale Color**
+**saturate($color, float $amount)**
 
-Provide an array of `component` => `amount` pairs.
+Alias of `adjust_color($color, ['saturation' => $amount])`.
 
-This transformation creates a new color where the maximum possible adjustment for each `component` is modified by `amount`% of that maximum.
+**shade($color, int $weight = 50)**
 
-The following examples create the color `rgb(50, 178, 176)`.
+Alias of `mix(color('black'), color($color), $weight)`.
 
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\ScaleColor;
+**tint($color, int $weight = 50)**
 
-$color = Color::fromRgb(50, 100, 150);
-$transformer = new ScaleColor(['green' => 50, 'blue' => 25]);
-$newColor = $transformer->transform($color);
-```
+Alias of `mix(color('white'), color($color), $weight)`.
 
-*OR*
+**transparentize($color, float $amount)**
 
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\scale_color;
-
-$color = rgb(50, 100, 150);
-$newColor = scale_color($color, ['green' => 50, 'blue' => 25]);
-```
-
-There are also functions for each of the following transformations, though they simply use the previously mentioned transformers to make their own color modifications:
-
-* Adjust Hue
-* Complement
-* Darken
-* Desaturate
-* Gray Scale
-* Lighten
-* Opacify
-* Saturate
-* Shade
-* Tint
-* Transparentize
-
-#### Conditional Transformers
-You can conditionally apply a transformation to a color using `SSNepenthe\ColorUtils\Transformers\ConditionalTransformer`:
-
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Lighten;
-use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
-
-$transformer = new ConditionalTransformer(function (Color $color) : bool {
-    return $color->isDark();
-}, new Lighten(30));
-
-$transformer->transform(Color::fromString('white')); // Unmodified, 'rgb(255, 255, 255)'
-
-$transformer->transform(Color::fromString('black')); // Lightened by 30%, 'rgb(77, 77, 77)'
-```
-
-Pass another transformer object as the optional third parameter to apply a transformation in the case where the callable returns false.
-
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Darken;
-use SSNepenthe\ColorUtils\Transformers\Lighten;
-use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
-
-$transformer = new ConditionalTransformer(function ($color) {
-    return $color->isDark();
-}, new Lighten(30), new Darken(15));
-
-$transformer->transform(Color::fromString('white')); // Darkened by 15%, 'rgb(217, 217, 217)'
-
-$transformer->transform(Color::fromString('black')); // Lightened by 30%, 'rgb(77, 77, 77)'
-```
-
-Note that this is essentially the same as the following:
-
-```php
-use function SSNepenthe\ColorUtils\rgb;
-use function SSNepenthe\ColorUtils\darken;
-use function SSNepenthe\ColorUtils\lighten;
-
-$color = rgb('white');
-
-// $newColor will be darkened by 15%, rgb(217, 217, 217).
-if ($color->isDark()) {
-    $newColor = lighten($color, 30);
-} else {
-    $newColor = darken($color, 15);
-}
-```
-
-#### Transformer Pipeline
-Create transformation pipelines using `SSNepenthe\ColorUtils\Transformers\TransformerPipeline`:
-
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Darken;
-use SSNepenthe\ColorUtils\Transformers\Desaturate;
-use SSNepenthe\ColorUtils\Transformers\TransformerPipeline;
-use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
-
-$pipeline = new TransformerPipeline;
-$pipeline->add(new Desaturate(15));
-$pipeline->add(new ConditionalTransformer(function ($color) {
-    return $color->looksLight();
-}, new Darken(5)));
-
-$pipeline->transform(Color::fromString('red'));
-```
-
-Entire pipelines can be reused as transformers in other pipelines:
-
-```php
-use SSNepenthe\ColorUtils\Color;
-use SSNepenthe\ColorUtils\Transformers\Complement;
-use SSNepenthe\ColorUtils\Transformers\AdjustColor;
-use SSNepenthe\ColorUtils\Transformers\TransformerPipeline;
-use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
-
-$pipeline2 = new TransformerPipeline;
-$pipeline2->add(new Complement);
-$pipeline2->add(new ConditionalTransformer(function ($color) {
-    return $color->getRed() > 100;
-}, new AdjustColor(['red' => -100])));
-$pipeline2->add($pipeline);
-
-$pipeline2->transform(Color::fromString('red'));
-```
-
-Transformers are called in the order they were added to the pipeline and receive the color object returned from the previous transformation.
+Alias of `adjust_color($color, ['alpha' => -1 * $amount])`.
