@@ -34,7 +34,8 @@
         "phpunit/phpunit": "^5.7",
         "phpmd/phpmd": "^2.5",
         "phploc/phploc": "^3.0",
-        "squizlabs/php_codesniffer": "^2.7"
+        "squizlabs/php_codesniffer": "^2.7",
+        "mockery/mockery": "^0.9",
     },
     "autoload": {
         "files": [
