@@ -6,6 +6,7 @@
 **In-browser color conversion and SASS compilation**
 * http://rgb.to
 * http://www.sassmeister.com/
+* http://springmeier.org/www/contrastcalculator/index.php
 
 **Similar packages/inspiration**
 * https://github.com/mexitek/phpColors
@@ -21,7 +22,11 @@
 * https://github.com/niftynei/color-wheel
 * https://github.com/carloscabo/colz
 
-**About the perceived brightness used in the Color class**
+**On colors, accessibility**
+https://www.imagemagick.org/Usage/color_basics/
+https://www.w3.org/TR/AERT#color-contrast
+
+**About "perceived brightness"**
 * https://stackoverflow.com/questions/1855884/determine-font-color-based-on-background-color
 * https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
 * http://alienryderflex.com/hsp.html
