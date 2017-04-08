@@ -6,5 +6,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{json,xml}]
+[*.{json,yml}]
+indent_size = 2
+
+[*.{xml}]
 insert_final_newline = false
