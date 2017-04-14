@@ -13,10 +13,10 @@ class HslaParser extends HslParser
     protected function getPattern() : string
     {
         return '/^hsla\(
-            (?<hue>\d{1,3}),\s*
-            (?<saturation>\d{1,3}%),\s*
-            (?<lightness>\d{1,3}%),\s*
-            (?<alpha>(1|0)(\.)?(?(6)\d{1,5}))
+            (?<hue>\d{1,3}(\.)?(?(2)\d{1,5})),\s*
+            (?<saturation>\d{1,3}(\.)?(?(4)\d{1,5})%),\s*
+            (?<lightness>\d{1,3}(\.)?(?(6)\d{1,5})%),\s*
+            (?<alpha>(1|0)(\.)?(?(9)\d{1,5}))
         \)$/ix';
     }
 }
