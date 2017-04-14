@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\ScaleColor;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -115,5 +116,23 @@ class ScaleColorTest extends PHPUnit_Framework_TestCase
         // evaluate("scale-color(hsl(120, 30, 90), $saturation: -100%)"))
         $t = new ScaleColor(['saturation' => -100]);
         $this->assertEquals('hsl(120, 0%, 90%)', $t->transform($c));
+    }
+
+    public function test_it_throws_when_given_non_numeric_adjustments()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $t = new ScaleColor(['saturation' => 'test']);
+    }
+
+    public function test_it_discards_invalid_channels()
+    {
+        // Basically testing that no BadMethodCallException is thrown.
+        $t = new ScaleColor(['purple' => 50, 'blue' => 25]);
+
+        $this->assertEquals(
+            'rgb(255, 0, 64)',
+            $t->transform(ColorFactory::fromString('red'))
+        );
     }
 }

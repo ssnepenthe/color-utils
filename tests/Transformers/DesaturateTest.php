@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Desaturate;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -53,9 +54,14 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
         // assert_equal("#999999", evaluate("desaturate(#8a8, 100%)"))
         $t = new Desaturate(100);
         $this->assertEquals('#999999', $t->transform($c)->toHexString());
+    }
+
+    public function test_it_throws_when_given_invalid_adjustments()
+    {
+        // SASS allows this, I don't like it.
+        $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#88aa88", evaluate("desaturate(#8a8, 0%)"))
         $t = new Desaturate(0);
-        $this->assertEquals('#88aa88', $t->transform($c)->toHexString());
     }
 }

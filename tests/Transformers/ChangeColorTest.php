@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\ChangeColor;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -78,5 +79,23 @@ class ChangeColorTest extends PHPUnit_Framework_TestCase
 
         $t = new ChangeColor(['red' => 100, 'green' => 200, 'alpha' => 0.9]);
         $this->assertEquals('rgba(100, 200, 30, 0.9)', $t->transform($c));
+    }
+
+    public function test_it_throws_when_given_non_numeric_adjustments()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $t = new ChangeColor(['blue' => 'test']);
+    }
+
+    public function test_it_discards_invalid_channels()
+    {
+        // Basically testing that no BadMethodCallException is thrown.
+        $t = new ChangeColor(['purple' => 50, 'blue' => 25]);
+
+        $this->assertEquals(
+            'rgb(255, 0, 25)',
+            $t->transform(ColorFactory::fromString('red'))
+        );
     }
 }

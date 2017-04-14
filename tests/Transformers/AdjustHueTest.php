@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\AdjustHue;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -49,15 +50,21 @@ class AdjustHueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('white', $t->transform($c)->getName());
     }
 
-    public function test_adjustments_of_0_or_360_dont_change_a_color()
+    public function test_adjustments_of_360_creates_the_same_color()
     {
-        $c = ColorFactory::fromString('#8a8');
+        $t = new AdjustHue(360);
 
-        foreach ([new AdjustHue(360), new AdjustHue(0)] as $t) {
-            $this->assertEquals(
-                '#88aa88',
-                $t->transform($c)->toHexString()
-            );
-        }
+        $this->assertEquals(
+            '#88aa88',
+            $t->transform(ColorFactory::fromString('#8a8'))->toHexString()
+        );
+    }
+
+    public function test_it_throws_when_given_invalid_adjustments()
+    {
+        // SASS allows this, I don't like it.
+        $this->expectException(InvalidArgumentException::class);
+
+        $t = new AdjustHue(0);
     }
 }

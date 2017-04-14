@@ -3,6 +3,7 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Colors\Color;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Class AdjustColor
@@ -12,16 +13,45 @@ class AdjustColor implements TransformerInterface
     /**
      * @var array
      */
-    protected $channels;
+    protected $adjustments = [];
+
+    /**
+     * @var array
+     */
+    protected $whitelist = [
+        'alpha',
+        'blue',
+        'green',
+        'hue',
+        'lightness',
+        'red',
+        'saturation',
+    ];
 
     /**
      * AdjustColor constructor.
      *
      * @param array $channels
      */
-    public function __construct(array $channels)
+    public function __construct(array $adjustments)
     {
-        $this->channels = $channels;
+        // First filter out non-adjustments (0 or non-numeric adjustments).
+        $adjustments = array_filter($adjustments, function ($adjustment) {
+            return $adjustment && is_numeric($adjustment);
+        });
+
+        foreach ($this->whitelist as $channel) {
+            if (isset($adjustments[$channel])) {
+                $this->adjustments[$channel] = $adjustments[$channel];
+            }
+        }
+
+        if (empty($this->adjustments)) {
+            throw new InvalidArgumentException(sprintf(
+                'No valid adjustments provided in %s',
+                __METHOD__
+            ));
+        }
     }
 
     /**
@@ -30,27 +60,13 @@ class AdjustColor implements TransformerInterface
      */
     public function transform(Color $color) : Color
     {
-        $whitelist = [
-            'alpha',
-            'blue',
-            'green',
-            'hue',
-            'lightness',
-            'red',
-            'saturation',
-        ];
+        $channels = [];
 
-        $adjustments = [];
-
-        foreach ($this->channels as $channel => $adjustment) {
-            if (! in_array($channel, $whitelist)) {
-                continue;
-            }
-
-            $method = 'get' . ucfirst($channel);
-            $adjustments[$channel] = $color->{$method}() + $adjustment;
+        foreach ($this->adjustments as $channel => $adjustment) {
+            $getter = 'get' . ucfirst($channel);
+            $channels[$channel] = $color->{$getter}() + $adjustment;
         }
 
-        return $color->with($adjustments);
+        return $color->with($channels);
     }
 }

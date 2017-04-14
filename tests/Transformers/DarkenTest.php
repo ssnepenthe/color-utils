@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Darken;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -41,12 +42,12 @@ class DarkenTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('black', $t->transform($c)->getName());
     }
 
-    public function test_darkening_by_0_does_not_change_color()
+    public function test_it_throws_when_given_invalid_adjustments()
     {
-        $c = ColorFactory::fromString('#800');
+        // SASS allows this, I don't like it.
+        $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#880000", evaluate("darken(#800, 0%)"))
         $t = new Darken(0);
-        $this->assertEquals('#880000', $t->transform($c)->toHexString());
     }
 }

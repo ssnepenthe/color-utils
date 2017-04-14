@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Saturate;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -52,12 +53,12 @@ class SaturateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('#33ff33', $t->transform($c)->toHexString());
     }
 
-    public function test_it_doesnt_change_the_color_when_given_a_zero_amount()
+    public function test_it_throws_when_given_invalid_adjustments()
     {
-        $c = ColorFactory::fromString('#8a8');
+        // SASS allows this, I don't like it.
+        $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#88aa88", evaluate("saturate(#8a8, 0%)"))
         $t = new Saturate(0);
-        $this->assertEquals('#88aa88', $t->transform($c)->toHexString());
     }
 }

@@ -2,6 +2,7 @@
 
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Transparentize;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Tests duplicated from SASS.
@@ -28,14 +29,6 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
             $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.2))
         );
 
-        $t = new Transparentize(0);
-
-        // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0)"))
-        $this->assertEquals(
-            'rgba(0, 0, 0, 0.2)',
-            $t->transform(ColorFactory::fromRgba(0, 0, 0, 0.2))
-        );
-
         $t = new Transparentize(0.1);
 
         // assert_equal("rgba(0, 0, 0, 0.1)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0.1)"))
@@ -52,5 +45,14 @@ class TransparentizeTest extends PHPUnit_Framework_TestCase
             'rgba(0, 0, 0, 0)',
             $t->transform(ColorFactory::fromRgba(0, 0, 0, 1))
         );
+    }
+
+    public function test_it_throws_when_invalid_adjustments_provided()
+    {
+        // SASS allows this, I don't like it.
+        $this->expectException(InvalidArgumentException::class);
+
+        // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0)"))
+        $t = new Transparentize(0);
     }
 }

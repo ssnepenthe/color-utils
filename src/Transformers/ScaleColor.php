@@ -4,6 +4,7 @@ namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Colors\Color;
 use function SSNepenthe\ColorUtils\restrict;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Class ScaleColor
@@ -13,20 +14,51 @@ class ScaleColor implements TransformerInterface
     /**
      * @var array
      */
-    protected $channels;
+    protected $adjustments = [];
+
+    /**
+     * Maps allowed channels to the maximum value of each.
+     *
+     * @var array
+     */
+    protected $whitelist = [
+        'alpha'      => 1,
+        'blue'       => 255,
+        'green'      => 255,
+        'hue'        => 360,
+        'lightness'  => 100,
+        'red'        => 255,
+        'saturation' => 100,
+    ];
 
     /**
      * ScaleColor constructor.
      *
      * @param array $channels
      */
-    public function __construct(array $channels)
+    public function __construct(array $adjustments)
     {
-        $this->channels = array_map(function (int $adjustment) {
-            $adjustment = restrict($adjustment, -100, 100);
+        // First filter out non-numeric adjustments.
+        $adjustments = array_filter($adjustments, function ($adjustment) {
+            return is_numeric($adjustment);
+        });
 
-            return $adjustment / 100;
-        }, $channels);
+        foreach ($this->whitelist as $channel => $_) {
+            if (isset($adjustments[$channel])) {
+                $this->adjustments[$channel] = restrict(
+                    $adjustments[$channel],
+                    -100,
+                    100
+                ) / 100;
+            }
+        }
+
+        if (empty($this->adjustments)) {
+            throw new InvalidArgumentException(sprintf(
+                'No valid adjustments provided in %s',
+                __METHOD__
+            ));
+        }
     }
 
     /**
@@ -35,27 +67,11 @@ class ScaleColor implements TransformerInterface
      */
     public function transform(Color $color) : Color
     {
-        // Map allowed channels to max value of each.
-        $whitelist = [
-            'alpha'      => 1,
-            'blue'       => 255,
-            'green'      => 255,
-            'hue'        => 360,
-            'lightness'  => 100,
-            'red'        => 255,
-            'saturation' => 100,
-        ];
+        $channels = [];
 
-        $adjustments = [];
-
-        foreach ($this->channels as $channel => $adjustment) {
-            if (! in_array($channel, array_keys($whitelist))) {
-                continue;
-            }
-
+        foreach ($this->adjustments as $channel => $adjustment) {
             $getter = 'get' . ucfirst($channel);
-
-            $maxAdjustment = $whitelist[$channel] - $color->{$getter}();
+            $maxAdjustment = $this->whitelist[$channel] - $color->{$getter}();
 
             if (0 > $adjustment) {
                 $maxAdjustment = $color->{$getter}();
@@ -63,9 +79,9 @@ class ScaleColor implements TransformerInterface
 
             $scaleAdjustment = $adjustment * $maxAdjustment;
 
-            $adjustments[$channel] = $color->{$getter}() + $scaleAdjustment;
+            $channels[$channel] = $color->{$getter}() + $scaleAdjustment;
         }
 
-        return $color->with($adjustments);
+        return $color->with($channels);
     }
 }

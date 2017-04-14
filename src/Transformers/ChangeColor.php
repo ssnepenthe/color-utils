@@ -3,6 +3,7 @@
 namespace SSNepenthe\ColorUtils\Transformers;
 
 use SSNepenthe\ColorUtils\Colors\Color;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
  * Class ChangeColor
@@ -12,16 +13,45 @@ class ChangeColor implements TransformerInterface
     /**
      * @var array
      */
-    protected $channels;
+    protected $adjustments = [];
+
+    /**
+     * @var array
+     */
+    protected $whitelist = [
+        'alpha',
+        'blue',
+        'green',
+        'hue',
+        'lightness',
+        'red',
+        'saturation',
+    ];
 
     /**
      * ChangeColor constructor.
      *
      * @param array $channels
      */
-    public function __construct(array $channels)
+    public function __construct(array $adjustments)
     {
-        $this->channels = $channels;
+        // First filter out non-numeric adjustments.
+        $adjustments = array_filter($adjustments, function ($adjustment) {
+            return is_numeric($adjustment);
+        });
+
+        foreach ($this->whitelist as $channel) {
+            if (isset($adjustments[$channel])) {
+                $this->adjustments[$channel] = $adjustments[$channel];
+            }
+        }
+
+        if (empty($this->adjustments)) {
+            throw new InvalidArgumentException(sprintf(
+                'No valid adjustments provided in %s',
+                __METHOD__
+            ));
+        }
     }
 
     /**
@@ -30,26 +60,6 @@ class ChangeColor implements TransformerInterface
      */
     public function transform(Color $color) : Color
     {
-        $whitelist = [
-            'alpha',
-            'blue',
-            'green',
-            'hue',
-            'lightness',
-            'red',
-            'saturation',
-        ];
-
-        $adjustments = [];
-
-        foreach ($this->channels as $channel => $adjustment) {
-            if (! in_array($channel, $whitelist)) {
-                continue;
-            }
-
-            $adjustments[$channel] = $adjustment;
-        }
-
-        return $color->with($adjustments);
+        return $color->with($this->adjustments);
     }
 }
