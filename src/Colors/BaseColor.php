@@ -10,7 +10,7 @@ abstract class BaseColor implements ColorInterface
     /**
      * @var float
      */
-    protected $alpha;
+    protected $alpha = 1.0;
 
     /**
      * @return string

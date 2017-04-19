@@ -53,10 +53,7 @@ class Hsl extends BaseColor
             $args[$i] = restrict(floatval($args[$i]), 0.0, 100.0);
         }
 
-        // Alpha.
-        $args[] = 1.0;
-
-        list($this->hue, $this->saturation, $this->lightness, $this->alpha) = $args;
+        list($this->hue, $this->saturation, $this->lightness) = $args;
     }
 
     /**

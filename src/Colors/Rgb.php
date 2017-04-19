@@ -53,10 +53,7 @@ class Rgb extends BaseColor
             return restrict(intval(round($value)), 0, 255);
         }, $args);
 
-        // Alpha.
-        $args[] = 1.0;
-
-        list($this->red, $this->green, $this->blue, $this->alpha) = $args;
+        list($this->red, $this->green, $this->blue) = $args;
     }
 
     /**
