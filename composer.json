@@ -49,12 +49,12 @@
     "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
   },
   "scripts": {
-    "phpcs": "./vendor/bin/phpcs --colors --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
-    "phpcbf": "./vendor/bin/phpcbf --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
+    "phpcs": "./vendor/bin/phpcs --colors --standard=PSR2 {inc,src}",
+    "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 {inc,src}",
     "phploc": "./vendor/bin/phploc --exclude={vendor,tests} .",
     "phpmd": "./vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor/,tests/ --ignore-violations-on-exit",
     "phpunit": "./vendor/bin/phpunit --colors=always",
     "psalm": "./vendor/bin/psalm",
-    "qc": ["@phpmd", "@phpunit", "@phpcs"]
+    "qc": ["@phpunit", "@phpcs"]
   }
 }
