@@ -168,7 +168,7 @@ class HslaParserTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function test_it_throws_when_attempting_to_parse_unsopported_string()
+    public function test_it_throws_when_attempting_to_parse_unsupported_string()
     {
         $parser = new HslaParser;
 
