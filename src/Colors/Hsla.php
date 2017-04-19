@@ -67,7 +67,7 @@ class Hsla extends Hsl
 
         // Single trim with '0.' mask would convert '0.0' to empty string.
         $channels['alpha'] = rtrim(
-            rtrim(number_format($this->getAlpha(), 2),'0'),
+            rtrim(number_format($this->getAlpha(), 2), '0'),
             '.'
         );
 
