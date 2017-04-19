@@ -41,6 +41,7 @@ class ParserResolver implements ParserResolverInterface
 
     /**
      * @param ParserInterface $parser
+     * @return void
      */
     protected function addParser(ParserInterface $parser)
     {

@@ -58,7 +58,7 @@ class Color
         $this->representations[] = $converter->convert($color);
 
         if (! is_null($base)) {
-            usort($this->representations, function($one, $two) use ($base) : int {
+            usort($this->representations, function ($one, $two) use ($base) : int {
                 if ($one instanceof $base) {
                     return -1;
                 }
@@ -152,7 +152,7 @@ class Color
      * @param array $channels
      * @return Color
      */
-    public function with(array $channels) : self
+    public function with(array $channels) : Color
     {
         $withHsl = array_contains_one_of(
             $channels,

@@ -36,7 +36,7 @@ class ChangeColor implements TransformerInterface
     public function __construct(array $adjustments)
     {
         // First filter out non-numeric adjustments.
-        $adjustments = array_filter($adjustments, function ($adjustment) {
+        $adjustments = array_filter($adjustments, function ($adjustment) : bool {
             return is_numeric($adjustment);
         });
 

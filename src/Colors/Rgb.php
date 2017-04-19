@@ -92,7 +92,7 @@ class Rgb extends BaseColor
      */
     public function calculateRelativeLuminance() : float
     {
-        $rgb = array_map(function ($value) {
+        $rgb = array_map(function ($value) : float {
             $value /= 255;
 
             if ($value <= 0.03928) {
@@ -172,7 +172,7 @@ class Rgb extends BaseColor
 
     /**
      * @param float $threshold
-     * @return boolean
+     * @return bool
      */
     public function isBright($threshold = 127.5) : bool
     {

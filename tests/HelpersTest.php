@@ -39,17 +39,17 @@ class HelpersTest extends PHPUnit_Framework_TestCase
     public function test_it_correctly_performs_x_mod_y()
     {
         // In range.
-        $this->assertEquals(75, modulo(75, 100));
+        $this->assertSame(75.0, modulo(75, 100));
 
         // Bottom of or below range.
-        $this->assertEquals(0, modulo(0, 100));
-        $this->assertEquals(85, modulo(-15, 100));
-        $this->assertEquals(80, modulo(-320, 100));
+        $this->assertSame(0.0, modulo(0, 100));
+        $this->assertSame(85.0, modulo(-15, 100));
+        $this->assertSame(80.0, modulo(-320, 100));
 
         // Top of or above range.
-        $this->assertEquals(0, modulo(100, 100));
-        $this->assertEquals(15, modulo(115, 100));
-        $this->assertEquals(20, modulo(420, 100));
+        $this->assertSame(0.0, modulo(100, 100));
+        $this->assertSame(15.0, modulo(115, 100));
+        $this->assertSame(20.0, modulo(420, 100));
     }
 
     public function test_it_restricts_value_to_given_range()

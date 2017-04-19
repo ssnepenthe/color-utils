@@ -7,7 +7,7 @@ namespace SSNepenthe\ColorUtils;
  * @param array $keys
  * @return bool
  */
-function array_contains_all_of(array $array, array $keys)
+function array_contains_all_of(array $array, array $keys) : bool
 {
     return $keys === array_intersect($keys, array_keys($array));
 }
@@ -17,7 +17,7 @@ function array_contains_all_of(array $array, array $keys)
  * @param array $keys
  * @return bool
  */
-function array_contains_one_of(array $array, array $keys)
+function array_contains_one_of(array $array, array $keys) : bool
 {
     return ! empty(array_intersect($keys, array_keys($array)));
 }
@@ -25,9 +25,9 @@ function array_contains_one_of(array $array, array $keys)
 /**
  * @param mixed $value1
  * @param mixed $value2
- * @return mixed
+ * @return float
  */
-function modulo($value1, $value2)
+function modulo($value1, $value2) : float
 {
     // PHP % handles negative number differently than Ruby so here is a Ruby implementation.
     // @link http://ruby-doc.org/core-2.4.0/Numeric.html#method-i-modulo
@@ -51,7 +51,7 @@ function restrict($value, $min, $max)
  * @param mixed $max
  * @return bool
  */
-function value_is_between($value, $min, $max)
+function value_is_between($value, $min, $max) : bool
 {
     return $min <= $value && $value <= $max;
 }
