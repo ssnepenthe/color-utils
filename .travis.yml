@@ -8,4 +8,3 @@ matrix:
   allow_failures:
     - php: nightly
 install: composer install --no-interaction --optimize-autoloader --prefer-dist
-script: composer qc
