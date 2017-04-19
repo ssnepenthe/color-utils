@@ -41,12 +41,12 @@
     "vimeo/psalm": "^0.3"
   },
   "autoload": {
-  "files": [
-    "inc/colors.php",
-    "inc/helpers.php",
-    "inc/transformations.php"
-  ],
-  "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
+    "files": [
+      "inc/colors.php",
+      "inc/helpers.php",
+      "inc/transformations.php"
+    ],
+    "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
   },
   "scripts": {
     "phpcs": "./vendor/bin/phpcs --colors --ignore=vendor/,tests/ --standard=PSR2 ./**/*.php",
