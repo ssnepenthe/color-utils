@@ -15,8 +15,6 @@ class Desaturate implements TransformerInterface
     protected $transformer;
 
     /**
-     * Desaturate constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

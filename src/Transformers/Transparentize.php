@@ -15,8 +15,6 @@ class Transparentize implements TransformerInterface
     protected $transformer;
 
     /**
-     * Transparentize constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

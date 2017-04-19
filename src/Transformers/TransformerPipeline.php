@@ -15,8 +15,6 @@ class TransformerPipeline implements TransformerInterface
     protected $transformers = [];
 
     /**
-     * TransformerPipeline constructor.
-     *
      * @param array $transformers
      */
     public function __construct(array $transformers = [])

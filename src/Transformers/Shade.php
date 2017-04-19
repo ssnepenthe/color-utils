@@ -16,8 +16,6 @@ class Shade implements TransformerInterface
     protected $transformer;
 
     /**
-     * Shade constructor.
-     *
      * @param int $weight
      */
     public function __construct(int $weight = 50)

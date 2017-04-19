@@ -25,8 +25,6 @@ class ConditionalTransformer implements TransformerInterface
     protected $truthyTransformer;
 
     /**
-     * ConditionalTransformer constructor.
-     *
      * @param callable $callback
      * @param TransformerInterface $truthyTransformer
      * @param TransformerInterface|null $falsyTransformer

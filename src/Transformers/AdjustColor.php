@@ -29,9 +29,7 @@ class AdjustColor implements TransformerInterface
     ];
 
     /**
-     * AdjustColor constructor.
-     *
-     * @param array $channels
+     * @param array $adjustments
      */
     public function __construct(array $adjustments)
     {

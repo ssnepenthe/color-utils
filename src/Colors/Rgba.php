@@ -11,8 +11,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class Rgba extends Rgb
 {
     /**
-     * Rgba constructor.
-     *
      * @param int $red
      * @param int $green
      * @param int $blue

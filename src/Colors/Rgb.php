@@ -32,8 +32,6 @@ class Rgb extends BaseColor
     protected $red;
 
     /**
-     * Rgb constructor.
-     *
      * @param int $red
      * @param int $green
      * @param int $blue

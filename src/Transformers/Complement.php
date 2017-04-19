@@ -14,9 +14,6 @@ class Complement implements TransformerInterface
      */
     protected $transformer;
 
-    /**
-     * Complement constructor.
-     */
     public function __construct()
     {
         $this->transformer = new AdjustColor(['hue' => 180]);

@@ -15,8 +15,6 @@ class Opacify implements TransformerInterface
     protected $transformer;
 
     /**
-     * Opacify constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

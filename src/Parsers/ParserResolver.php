@@ -13,8 +13,6 @@ class ParserResolver implements ParserResolverInterface
     protected $parsers = [];
 
     /**
-     * ParserResolver constructor.
-     *
      * @param array $parsers
      */
     public function __construct(array $parsers)

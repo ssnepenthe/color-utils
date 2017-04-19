@@ -15,8 +15,6 @@ class DelegatingParser implements ParserInterface
     protected $resolver;
 
     /**
-     * DelegatingParser constructor.
-     *
      * @param ParserResolverInterface $resolver
      */
     public function __construct(ParserResolverInterface $resolver)

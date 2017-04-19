@@ -14,9 +14,6 @@ class GrayScale implements TransformerInterface
      */
     protected $transformer;
 
-    /**
-     * GrayScale constructor.
-     */
     public function __construct()
     {
         $this->transformer = new ChangeColor(['saturation' => 0]);

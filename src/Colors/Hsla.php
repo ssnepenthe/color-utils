@@ -11,8 +11,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class Hsla extends Hsl
 {
     /**
-     * Hsla constructor.
-     *
      * @param float $hue
      * @param float $saturation
      * @param float $lightness

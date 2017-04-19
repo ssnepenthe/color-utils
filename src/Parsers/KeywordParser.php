@@ -5,6 +5,8 @@ namespace SSNepenthe\ColorUtils\Parsers;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
+ * Class KeywordParser
+ *
  * @todo Rethink... This is very similar to DelegatingParser.
  */
 class KeywordParser implements ParserInterface
@@ -166,8 +168,6 @@ class KeywordParser implements ParserInterface
     protected $parser;
 
     /**
-     * KeywordParser constructor.
-     *
      * @param HexParser|null $parser
      */
     public function __construct(HexParser $parser = null)

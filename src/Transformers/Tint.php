@@ -16,8 +16,6 @@ class Tint implements TransformerInterface
     protected $transformer;
 
     /**
-     * Tint constructor.
-     *
      * @param int $weight
      */
     public function __construct(int $weight = 50)

@@ -15,8 +15,6 @@ class Saturate implements TransformerInterface
     protected $transformer;
 
     /**
-     * Saturate constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

@@ -32,9 +32,7 @@ class ScaleColor implements TransformerInterface
     ];
 
     /**
-     * ScaleColor constructor.
-     *
-     * @param array $channels
+     * @param array $adjustments
      */
     public function __construct(array $adjustments)
     {

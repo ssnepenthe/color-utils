@@ -15,8 +15,6 @@ class AdjustHue implements TransformerInterface
     protected $transformer;
 
     /**
-     * AdjustHue constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

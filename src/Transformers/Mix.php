@@ -21,8 +21,6 @@ class Mix implements TransformerInterface
     protected $weight;
 
     /**
-     * Mix constructor.
-     *
      * @param Color $color
      * @param int $weight
      */

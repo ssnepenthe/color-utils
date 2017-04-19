@@ -15,8 +15,6 @@ class Lighten implements TransformerInterface
     protected $transformer;
 
     /**
-     * Lighten constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)

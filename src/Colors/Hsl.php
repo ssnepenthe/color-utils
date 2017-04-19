@@ -28,8 +28,6 @@ class Hsl extends BaseColor
     protected $saturation;
 
     /**
-     * Hsl constructor.
-     *
      * @param float $hue
      * @param float $saturation
      * @param float $lightness

@@ -29,9 +29,7 @@ class ChangeColor implements TransformerInterface
     ];
 
     /**
-     * ChangeColor constructor.
-     *
-     * @param array $channels
+     * @param array $adjustments
      */
     public function __construct(array $adjustments)
     {

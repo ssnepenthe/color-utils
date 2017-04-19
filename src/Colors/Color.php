@@ -44,8 +44,6 @@ class Color
     }
 
     /**
-     * Color constructor.
-     *
      * @param ColorInterface $color
      * @param string|null $base
      */
@@ -80,6 +78,10 @@ class Color
         return $this->representations[0]->__toString();
     }
 
+    /**
+     * @param Color $other
+     * @return float
+     */
     public function calculateBrightnessDifferenceWith(Color $other) : float
     {
         $brightness1 = $this->getRgb()->calculateBrightness();

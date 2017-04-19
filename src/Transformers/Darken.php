@@ -15,8 +15,6 @@ class Darken implements TransformerInterface
     protected $transformer;
 
     /**
-     * Darken constructor.
-     *
      * @param float $amount
      */
     public function __construct(float $amount)
