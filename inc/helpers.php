@@ -62,17 +62,16 @@ function value_is_between($value, $min, $max) : bool
  */
 function _color_args_probably_contain_extra_arg(...$args) : bool
 {
-    switch (count($args)) {
-        case 2:
-        case 5:
-            return true;
-        case 4:
-            // (255, 255, 255, 0.7) => ($channel1, $channel2, $channel3, $channel4).
-            // (255, 255, 255, 1) => ($channel1, $channel2, $channel3, $extra).
-            return is_numeric($args[3]) && 1 <= $args[3];
-        case 1:
-        case 3:
-        default:
-            return false;
+    $count = count($args);
+
+    if (2 === $count || 5 === $count) {
+        return true;
     }
+
+    if (4 === $count) {
+        // 4th arg is likely alpha if numeric and between 0 - 1, otherwise extra.
+        return is_numeric($args[3]) && 1 <= $args[3];
+    }
+
+    return false;
 }
