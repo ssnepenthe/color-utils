@@ -66,9 +66,12 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(100, restrict(105, 0, 100));
     }
 
-    public function test_it_can_tell_if_value_is_in_range()
+    public function test_it_can_tell_if_value_is_in_range_inclusive()
     {
         $this->assertTrue(value_is_between(25, 0, 50));
         $this->assertFalse(value_is_between(25, 50, 100));
+
+        $this->assertTrue(value_is_between(0, 0, 50));
+        $this->assertTrue(value_is_between(50, 0, 50));
     }
 }
