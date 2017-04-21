@@ -44,12 +44,12 @@ Create Color objects using the `color` function:
 
 0 - 360 range for `$hue`, 0 - 100 for each of `$saturation` and `$lightness`, 0 - 1 for `$alpha`.
 
-* `color(348, 100, 50)`
-* `color(348, 100, 50, 0.7)`
+* `color(348.0, 100.0, 50.0)`
+* `color(348.0, 100.0, 50.0, 0.7)`
 
 *Regarding the previous two examples:*
 
-The values 255, 0 and 51 could technically represent RGB value as well as HSL values. In cases like this, RGB is preferred over HSL.
+The values 255, 0 and 51 could technically represent RGB values as well as HSL values. In cases like this, RGB takes precedence over HSL.
 
 If you need finer control, use the following functions:
 
@@ -72,7 +72,7 @@ echo $hsla; // 'hsla(348, 100%, 50%, 0.7)'
 ```
 
 ### Color Components
-Individual color components are accesible using the following functions (which each accept any `$color` argument recognized by the `color` function):
+Individual color components are accessible using the following functions (which each accept any `$color` argument recognized by the `color` function, including a complete color object):
 
 **alpha($color)**
 
@@ -128,8 +128,8 @@ Get the lightness channel of a color.
 
 Accepts an optional `$threshold` float as the last parameter with a default of 127.5. Checks `perceived_brightness($color) >= $threshold`.
 
-* `looks_bight('#f03'); // true`
-* `looks_bight('#f03', 141.0); // false`
+* `looks_bright('#f03'); // true`
+* `looks_bright('#f03', 141.0); // false`
 
 **name($color)**
 
