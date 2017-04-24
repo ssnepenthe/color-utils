@@ -14,7 +14,8 @@ class RgbToHslTest extends TestCase
         $this->c = new RgbToHsl;
     }
 
-    public function test_it_can_convert_rgb_and_rgba()
+    /** @test */
+    public function it_can_convert_rgb_and_rgba()
     {
         $rgb = new Rgb(255, 0, 51);
         $rgba = new Rgba(255, 0, 51, 0.7);
@@ -30,7 +31,8 @@ class RgbToHslTest extends TestCase
         $this->assertEquals('hsla(348, 100%, 50%, 0.7)', $hsla);
     }
 
-    public function test_it_correctly_handles_each_step_of_conversion()
+    /** @test */
+    public function it_correctly_handles_each_step_of_conversion()
     {
         // Step 4 - Shades of gray.
         $rgb = new Rgb(100, 100, 100);

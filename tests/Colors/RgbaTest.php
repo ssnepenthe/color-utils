@@ -7,7 +7,8 @@ use SSNepenthe\ColorUtils\Colors\ColorInterface;
 
 class RgbaTest extends TestCase
 {
-    public function test_it_is_instantiable()
+    /** @test */
+    public function it_is_instantiable()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
 
@@ -15,7 +16,8 @@ class RgbaTest extends TestCase
         $this->assertInstanceOf(ColorInterface::class, $rgba);
     }
 
-    public function test_it_forces_a_0_to_1_range_for_alpha()
+    /** @test */
+    public function it_forces_a_0_to_1_range_for_alpha()
     {
         $rgba = new Rgba(0, 0, 0, -0.1);
         $rgba2 = new Rgba(0, 0, 0, 1.1);
@@ -24,7 +26,8 @@ class RgbaTest extends TestCase
         $this->assertEquals('rgb(0, 0, 0)', $rgba2);
     }
 
-    public function test_it_can_be_cast_to_a_string()
+    /** @test */
+    public function it_can_be_cast_to_a_string()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
 
@@ -32,7 +35,8 @@ class RgbaTest extends TestCase
         $this->assertEquals('rgba(255, 0, 51, 0.7)', $rgba->toString());
     }
 
-    public function test_it_correctly_formats_alpha_channel_in_string_conversion()
+    /** @test */
+    public function it_correctly_formats_alpha_channel_in_string_conversion()
     {
         /*
 
@@ -55,7 +59,8 @@ class RgbaTest extends TestCase
         }
     }
 
-    public function test_channel_getters_give_correct_value()
+    /** @test */
+    public function channel_getters_give_correct_value()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
 
@@ -63,7 +68,8 @@ class RgbaTest extends TestCase
         $this->assertTrue($rgba->hasAlpha());
     }
 
-    public function test_it_correctly_produces_rgb_array()
+    /** @test */
+    public function it_correctly_produces_rgb_array()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
         $rgba2 = new Rgba(255, 0, 51, 1);
@@ -78,7 +84,8 @@ class RgbaTest extends TestCase
         );
     }
 
-    public function test_it_correctly_produces_color_instance()
+    /** @test */
+    public function it_correctly_produces_color_instance()
     {
         $this->assertInstanceOf(
             Color::class,
@@ -86,7 +93,8 @@ class RgbaTest extends TestCase
         );
     }
 
-    public function test_it_ignores_alpha_when_converting_to_hex()
+    /** @test */
+    public function it_ignores_alpha_when_converting_to_hex()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
 
@@ -97,7 +105,8 @@ class RgbaTest extends TestCase
         $this->assertEquals('#ff0033', $rgba->toHexString());
     }
 
-    public function test_it_can_create_a_modified_version_of_itself()
+    /** @test */
+    public function it_can_create_a_modified_version_of_itself()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
         $rgba2 = $rgba->with(['blue' => 0]);
@@ -107,7 +116,8 @@ class RgbaTest extends TestCase
         $this->assertEquals('rgba(0, 0, 0, 0.7)', $rgba3);
     }
 
-    public function test_it_can_create_a_version_of_itself_without_transparency()
+    /** @test */
+    public function it_can_create_a_version_of_itself_without_transparency()
     {
         $rgba = new Rgba(255, 0, 51, 0.7);
         $rgb = $rgba->with(['red' => 0, 'blue' => 0, 'alpha' => 1]);
@@ -117,7 +127,8 @@ class RgbaTest extends TestCase
         $this->assertEquals('rgb(0, 0, 0)', $rgb);
     }
 
-    public function test_it_cant_be_instantiated_with_non_numeric_alpha()
+    /** @test */
+    public function it_cant_be_instantiated_with_non_numeric_alpha()
     {
         $this->expectException(InvalidArgumentException::class);
 

@@ -12,7 +12,8 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  */
 class DesaturateTest extends TestCase
 {
-    public function test_it_can_desaturate_colors()
+    /** @test */
+    public function it_can_desaturate_colors()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -33,7 +34,8 @@ class DesaturateTest extends TestCase
         $this->assertEquals('rgba(114, 107, 107, 0.5)', $t->transform($c));
     }
 
-    public function test_it_cant_desaturate_shades_of_gray()
+    /** @test */
+    public function it_cant_desaturate_shades_of_gray()
     {
         $c = ColorFactory::fromString('#000');
 
@@ -48,7 +50,8 @@ class DesaturateTest extends TestCase
         $this->assertEquals('white', $t->transform($c)->getName());
     }
 
-    public function test_it_handles_the_extremes()
+    /** @test */
+    public function it_handles_the_extremes()
     {
         $c = ColorFactory::fromString('#8a8');
 
@@ -57,7 +60,8 @@ class DesaturateTest extends TestCase
         $this->assertEquals('#999999', $t->transform($c)->toHexString());
     }
 
-    public function test_it_throws_when_given_invalid_adjustments()
+    /** @test */
+    public function it_throws_when_given_invalid_adjustments()
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

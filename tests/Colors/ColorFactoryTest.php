@@ -8,7 +8,8 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 class ColorFactoryTest extends TestCase
 {
-    public function test_it_gets_the_values_right_no_matter_how_it_is_created()
+    /** @test */
+    public function it_gets_the_values_right_no_matter_how_it_is_created()
     {
         $colors = [
             ColorFactory::fromString('hsl(348, 100%, 50%)'),
@@ -29,7 +30,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_colors_from_array()
+    /** @test */
+    public function it_can_create_colors_from_array()
     {
         $colors = [
             ColorFactory::fromArray(['red' => 255, 'green' => 0, 'blue' => 51]),
@@ -50,7 +52,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_color_from_hsl_values()
+    /** @test */
+    public function it_can_create_color_from_hsl_values()
     {
         $colors = [
             ColorFactory::fromHsl(348, 100, 50),
@@ -63,7 +66,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_color_from_rgb_values()
+    /** @test */
+    public function it_can_create_color_from_rgb_values()
     {
         $colors = [
             ColorFactory::fromRgb(255, 0, 51),
@@ -76,7 +80,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_colors_from_strings()
+    /** @test */
+    public function it_can_create_colors_from_strings()
     {
         $colors = [
             ColorFactory::fromString('#ff0000'),
@@ -93,7 +98,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_colors_from_unknown_args()
+    /** @test */
+    public function it_can_create_colors_from_unknown_args()
     {
         $colors = [
             ColorFactory::fromUnknown('#fff'),
@@ -106,7 +112,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_colors_from_single_unknown_arg()
+    /** @test */
+    public function it_can_create_colors_from_single_unknown_arg()
     {
         $c1 = new Color(new Rgb(255, 255, 255));
         $c2 = ColorFactory::fromUnknownOneArg($c1);
@@ -126,7 +133,8 @@ class ColorFactoryTest extends TestCase
         }
     }
 
-    public function test_it_can_create_colors_from_three_unknown_args()
+    /** @test */
+    public function it_can_create_colors_from_three_unknown_args()
     {
         $this->assertEquals(
             'rgb(255, 255, 255)',
@@ -145,7 +153,8 @@ class ColorFactoryTest extends TestCase
         );
     }
 
-    public function test_it_can_create_colors_from_four_unknown_args()
+    /** @test */
+    public function it_can_create_colors_from_four_unknown_args()
     {
         $this->assertEquals(
             'rgba(255, 255, 255, 0.7)',
@@ -164,35 +173,40 @@ class ColorFactoryTest extends TestCase
         );
     }
 
-    public function test_it_cant_create_a_color_without_a_complete_color_array()
+    /** @test */
+    public function it_cant_create_a_color_without_a_complete_color_array()
     {
         $this->expectException(InvalidArgumentException::class);
 
         ColorFactory::fromArray(['one' => 25, 'green' => 35, 'blue' => 45]);
     }
 
-    public function test_it_cant_create_an_unknown_color_with_bad_args()
+    /** @test */
+    public function it_cant_create_an_unknown_color_with_bad_args()
     {
         $this->expectException(InvalidArgumentException::class);
 
         ColorFactory::fromUnknown(25, 35);
     }
 
-    public function test_it_cant_create_a_color_from_four_args_if_out_of_bounds()
+    /** @test */
+    public function it_cant_create_a_color_from_four_args_if_out_of_bounds()
     {
         $this->expectException(InvalidArgumentException::class);
 
         ColorFactory::fromUnknownFourArgs(400, 100, 100, 0.9);
     }
 
-    public function test_it_cant_create_a_color_from_one_arg_if_wrong_type()
+    /** @test */
+    public function it_cant_create_a_color_from_one_arg_if_wrong_type()
     {
         $this->expectException(InvalidArgumentException::class);
 
         ColorFactory::fromUnknownOneArg(100);
     }
 
-    public function test_it_cant_create_a_color_from_three_args_if_out_of_bounds()
+    /** @test */
+    public function it_cant_create_a_color_from_three_args_if_out_of_bounds()
     {
         $this->expectException(InvalidArgumentException::class);
 

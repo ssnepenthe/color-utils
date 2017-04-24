@@ -11,7 +11,8 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
  */
 class ShadeTest extends TestCase
 {
-    public function test_shading_white_gives_gray()
+    /** @test */
+    public function shading_white_gives_gray()
     {
         $c = ColorFactory::fromString('#fff');
 
@@ -22,7 +23,8 @@ class ShadeTest extends TestCase
         $this->assertEquals('#404040', $t->transform($c)->toHexString());
     }
 
-    public function test_shading_black_gives_black()
+    /** @test */
+    public function shading_black_gives_black()
     {
         $c = ColorFactory::fromString('#000');
 
@@ -35,7 +37,8 @@ class ShadeTest extends TestCase
         }
     }
 
-    public function test_it_can_shade_colors()
+    /** @test */
+    public function it_can_shade_colors()
     {
         // .shade-red {
         //   color: shade(#f00, 25%); // #bf0000

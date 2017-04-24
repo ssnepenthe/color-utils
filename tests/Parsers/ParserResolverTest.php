@@ -7,14 +7,16 @@ use SSNepenthe\ColorUtils\Parsers\ParserResolverInterface;
 
 class ParserResolverTest extends TestCase
 {
-    public function test_it_is_intantiable()
+    /** @test */
+    public function it_is_intantiable()
     {
         $resolver = new ParserResolver([$this->createMock(ParserInterface::class)]);
 
         $this->assertInstanceOf(ParserResolverInterface::class, $resolver);
     }
 
-    public function test_it_correctly_resolves_parser_based_on_support()
+    /** @test */
+    public function it_correctly_resolves_parser_based_on_support()
     {
         $hex = '#abcdef';
         $firstParserStub = $this->createMock(ParserInterface::class);

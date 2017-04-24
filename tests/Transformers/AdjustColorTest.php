@@ -12,7 +12,8 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  */
 class AdjustColorTest extends TestCase
 {
-    public function test_it_can_adjust_colors()
+    /** @test */
+    public function it_can_adjust_colors()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -49,7 +50,8 @@ class AdjustColorTest extends TestCase
         $this->assertEquals('rgb(10, 20, 40)', $t->transform($c));
     }
 
-    public function test_it_can_adjust_alpha_values()
+    /** @test */
+    public function it_can_adjust_alpha_values()
     {
         // assert_equal(evaluate("hsla(120, 30, 90, 0.65)"),
         // evaluate("adjust-color(hsl(120, 30, 90), $alpha: -0.35)"))
@@ -67,7 +69,8 @@ class AdjustColorTest extends TestCase
         $this->assertEquals('rgba(10, 20, 30, 0.9)', $t->transform($c));
     }
 
-    public function test_it_can_adjust_multiple_attributes_at_once()
+    /** @test */
+    public function it_can_adjust_multiple_attributes_at_once()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -111,7 +114,8 @@ class AdjustColorTest extends TestCase
         $this->assertEquals('rgba(10, 25, 29, 0.7)', $t->transform($c));
     }
 
-    public function test_it_honors_range_restrictions()
+    /** @test */
+    public function it_honors_range_restrictions()
     {
         // Technically restrictions are handled in the Hsl and Rgb classes...
         $c = ColorFactory::fromHsl(120, 30, 90);
@@ -149,21 +153,24 @@ class AdjustColorTest extends TestCase
         $this->assertEquals('rgb(10, 20, 0)', $t->transform($c));
     }
 
-    public function test_it_throws_when_given_non_numeric_adjustments()
+    /** @test */
+    public function it_throws_when_given_non_numeric_adjustments()
     {
         $this->expectException(InvalidArgumentException::class);
 
         $t = new AdjustColor(['blue' => 'test']);
     }
 
-    public function test_it_throws_when_given_adjustments_of_zero()
+    /** @test */
+    public function it_throws_when_given_adjustments_of_zero()
     {
         $this->expectException(InvalidArgumentException::class);
 
         $t = new AdjustColor(['green' => 0]);
     }
 
-    public function test_it_discards_invalid_channels()
+    /** @test */
+    public function it_discards_invalid_channels()
     {
         // Basically testing that no BadMethodCallException is thrown.
         $t = new AdjustColor(['purple' => 50, 'blue' => 25]);

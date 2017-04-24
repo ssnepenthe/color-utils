@@ -9,14 +9,16 @@ use SSNepenthe\ColorUtils\Colors\Color;
 
 class ColorTest extends TestCase
 {
-    public function test_it_is_instantiable()
+    /** @test */
+    public function it_is_instantiable()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
         $this->assertInstanceOf(Color::class, $color);
     }
 
-    public function test_it_correctly_proxies_all_rgb_methods()
+    /** @test */
+    public function it_correctly_proxies_all_rgb_methods()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
@@ -54,7 +56,8 @@ class ColorTest extends TestCase
         $this->assertSame($color, $color->toColor());
     }
 
-    public function test_it_correctly_proxies_all_hsl_methods()
+    /** @test */
+    public function it_correctly_proxies_all_hsl_methods()
     {
         $color = new Color(new Hsl(348, 100, 50));
 
@@ -79,7 +82,8 @@ class ColorTest extends TestCase
         $this->assertSame($color, $color->toColor());
     }
 
-    public function test_it_can_override_base_color_on_instantiation()
+    /** @test */
+    public function it_can_override_base_color_on_instantiation()
     {
         $rgb = new Color(new Rgb(255, 0, 51));
         $rgba = new Color(new Rgba(255, 0, 51, 0.7));
@@ -92,7 +96,8 @@ class ColorTest extends TestCase
         $this->assertEquals('hsla(348, 100%, 50%, 0.7)', $hsla->toString());
     }
 
-    public function test_it_can_calculate_brightness_difference_with_a_color()
+    /** @test */
+    public function it_can_calculate_brightness_difference_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -107,7 +112,8 @@ class ColorTest extends TestCase
         );
     }
 
-    public function test_it_can_calculate_color_difference_with_a_color()
+    /** @test */
+    public function it_can_calculate_color_difference_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -116,7 +122,8 @@ class ColorTest extends TestCase
         $this->assertEquals(408, $color2->calculateColorDifferenceWith($color1));
     }
 
-    public function test_it_can_calculate_contrast_ratio_with_a_color()
+    /** @test */
+    public function it_can_calculate_contrast_ratio_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -125,7 +132,8 @@ class ColorTest extends TestCase
         $this->assertEquals(2.05037, $color2->calculateContrastRatioWith($color1));
     }
 
-    public function test_it_can_retrieve_individual_representations()
+    /** @test */
+    public function it_can_retrieve_individual_representations()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
@@ -133,7 +141,8 @@ class ColorTest extends TestCase
         $this->assertInstanceOf(Hsl::class, $color->getHsl());
     }
 
-    public function test_it_can_create_a_modified_versions_of_itself()
+    /** @test */
+    public function it_can_create_a_modified_versions_of_itself()
     {
         $white = (new Color(new Rgb(255, 255, 0)))->with(['blue' => 255]);
         $blue = (new Color(new Hsl(348, 100, 50)))->with(['hue' => 240]);
@@ -154,7 +163,8 @@ class ColorTest extends TestCase
         $this->assertEquals('hsla(270, 100%, 50%, 0.5)', $transparent);
     }
 
-    public function test_it_creates_a_new_color_with_the_same_type_as_original()
+    /** @test */
+    public function it_creates_a_new_color_with_the_same_type_as_original()
     {
         $hsl = new Color(new Hsl(60, 100, 50));
         $rgb = new Color(new Rgb(255, 255, 0));
@@ -163,21 +173,24 @@ class ColorTest extends TestCase
         $this->assertEquals('rgb(0, 255, 0)', $rgb->with(['red' => 0]));
     }
 
-    public function test_it_throws_exception_for_non_existent_methods()
+    /** @test */
+    public function it_throws_exception_for_non_existent_methods()
     {
         $this->expectException(BadMethodCallException::class);
 
         (new Color(new Rgb(255, 0, 51)))->notARealMethod();
     }
 
-    public function test_it_cant_modify_hsl_and_rgb_in_same_operation()
+    /** @test */
+    public function it_cant_modify_hsl_and_rgb_in_same_operation()
     {
         $this->expectException(InvalidArgumentException::class);
 
         (new Color(new Rgb(255, 255, 0)))->with(['blue' => 255, 'hue' => 360]);
     }
 
-    public function test_it_cant_create_a_new_color_without_any_changes()
+    /** @test */
+    public function it_cant_create_a_new_color_without_any_changes()
     {
         $this->expectException(InvalidArgumentException::class);
 

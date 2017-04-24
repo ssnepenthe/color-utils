@@ -12,7 +12,8 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  */
 class AdjustHueTest extends TestCase
 {
-    public function test_it_can_positively_adjust_hue()
+    /** @test */
+    public function it_can_positively_adjust_hue()
     {
         // assert_equal("#deeded", evaluate("adjust-hue(hsl(120, 30, 90), 60deg)"))
         $t = new AdjustHue(60);
@@ -30,7 +31,8 @@ class AdjustHueTest extends TestCase
         $this->assertEquals('rgba(136, 106, 17, 0.5)', (string) $t->transform($c));
     }
 
-    public function test_it_can_negatively_adjust_hue()
+    /** @test */
+    public function it_can_negatively_adjust_hue()
     {
         // assert_equal("#ededde", evaluate("adjust-hue(hsl(120, 30, 90), -60deg)"))
         $c = ColorFactory::fromHsl(120, 30, 90);
@@ -38,7 +40,8 @@ class AdjustHueTest extends TestCase
         $this->assertEquals('#ededde', $t->transform($c)->toHexString());
     }
 
-    public function test_it_cant_adjust_shades_of_gray()
+    /** @test */
+    public function it_cant_adjust_shades_of_gray()
     {
         // assert_equal("black", evaluate("adjust-hue(#000, 45deg)"))
         $c = ColorFactory::fromString('#000');
@@ -51,7 +54,8 @@ class AdjustHueTest extends TestCase
         $this->assertEquals('white', $t->transform($c)->getName());
     }
 
-    public function test_adjustments_of_360_creates_the_same_color()
+    /** @test */
+    public function adjustments_of_360_creates_the_same_color()
     {
         $t = new AdjustHue(360);
 
@@ -61,7 +65,8 @@ class AdjustHueTest extends TestCase
         );
     }
 
-    public function test_it_throws_when_given_invalid_adjustments()
+    /** @test */
+    public function it_throws_when_given_invalid_adjustments()
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

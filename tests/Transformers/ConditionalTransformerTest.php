@@ -10,7 +10,8 @@ use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
 
 class ConditionalTransformerTest extends TestCase
 {
-    public function test_it_can_be_instantiated()
+    /** @test */
+    public function it_can_be_instantiated()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();
@@ -20,7 +21,8 @@ class ConditionalTransformerTest extends TestCase
         $this->assertInstanceOf(TransformerInterface::class, $transformer);
     }
 
-    public function test_it_can_conditionally_transform_a_color()
+    /** @test */
+    public function it_can_conditionally_transform_a_color()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();
@@ -37,7 +39,8 @@ class ConditionalTransformerTest extends TestCase
         $this->assertNotSame($color, $newColor);
     }
 
-    public function test_it_can_apply_a_fallback_transformation()
+    /** @test */
+    public function it_can_apply_a_fallback_transformation()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();

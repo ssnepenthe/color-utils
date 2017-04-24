@@ -11,7 +11,8 @@ use SSNepenthe\ColorUtils\Transformers\TransformerInterface;
 
 class TransformerPipelineTest extends TestCase
 {
-    public function test_it_can_be_instantiated()
+    /** @test */
+    public function it_can_be_instantiated()
     {
         $pipeline = new TransformerPipeline;
 
@@ -19,7 +20,8 @@ class TransformerPipelineTest extends TestCase
         $this->assertInstanceOf(TransformerInterface::class, $pipeline);
     }
 
-    public function test_it_can_add_transformers()
+    /** @test */
+    public function it_can_add_transformers()
     {
         $pipeline = new TransformerPipeline;
         $lighten30 = new Lighten(30);
@@ -29,7 +31,8 @@ class TransformerPipelineTest extends TestCase
         $this->assertAttributeContains($lighten30, 'transformers', $pipeline);
     }
 
-    public function test_it_can_be_isntantiated_with_transformers()
+    /** @test */
+    public function it_can_be_isntantiated_with_transformers()
     {
         $lighten30 = new Lighten(30);
         $pipeline = new TransformerPipeline([$lighten30]);
@@ -37,7 +40,8 @@ class TransformerPipelineTest extends TestCase
         $this->assertAttributeContains($lighten30, 'transformers', $pipeline);
     }
 
-    public function test_it_can_transform_a_color()
+    /** @test */
+    public function it_can_transform_a_color()
     {
         $pipeline = new TransformerPipeline([new Lighten(30)]);
         $color = $pipeline->transform(ColorFactory::fromString('green'));
@@ -46,7 +50,8 @@ class TransformerPipelineTest extends TestCase
         $this->assertEquals('rgb(26, 255, 26)', $color);
     }
 
-    public function test_it_transforms_colors_in_the_order_transformers_were_added()
+    /** @test */
+    public function it_transforms_colors_in_the_order_transformers_were_added()
     {
         $invert = new Invert;
         $shade25 = new Shade(25);

@@ -14,7 +14,8 @@ class HslToRgbTest extends TestCase
         $this->c = new HslToRgb;
     }
 
-    public function test_it_can_convert_hsl_and_hsla()
+    /** @test */
+    public function it_can_convert_hsl_and_hsla()
     {
         $hsl = new Hsl(348, 100, 50);
         $hsla = new Hsla(348, 100, 50, 0.7);
@@ -31,7 +32,8 @@ class HslToRgbTest extends TestCase
         $this->assertEquals('rgba(255, 0, 51, 0.7)', $rgba);
     }
 
-    public function test_it_correctly_handles_each_step_of_conversion()
+    /** @test */
+    public function it_correctly_handles_each_step_of_conversion()
     {
         // Step 1 - zero saturation.
         $hsl = new Hsl(0, 0, 83);

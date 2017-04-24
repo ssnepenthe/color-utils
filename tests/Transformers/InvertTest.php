@@ -18,7 +18,8 @@ class InvertTest extends TestCase
         $this->t = new Invert;
     }
 
-    public function test_it_can_invert_colors()
+    /** @test */
+    public function it_can_invert_colors()
     {
         $c = ColorFactory::fromString('#edc');
 

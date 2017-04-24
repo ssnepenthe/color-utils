@@ -11,7 +11,8 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
  */
 class TintTest extends TestCase
 {
-    public function test_tinting_white_just_gives_white()
+    /** @test */
+    public function tinting_white_just_gives_white()
     {
         // .tint-white {
         //   color: tint(#fff, 75%); // white
@@ -21,7 +22,8 @@ class TintTest extends TestCase
         $this->assertEquals('white', $t->transform($c)->getName());
     }
 
-    public function test_it_can_tint_colors()
+    /** @test */
+    public function it_can_tint_colors()
     {
         // .tint-black {
         //   color: tint(#000, 50%); // gray
