@@ -6,32 +6,23 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 class KeywordParserTest extends PHPUnit_Framework_TestCase
 {
-    const HEXPARSER = HexParser::class;
-
-    public function tearDown()
-    {
-        Mockery::close();
-    }
-
     public function test_it_knows_whether_it_can_parse_a_given_string()
     {
-        $parser = new KeywordParser(Mockery::mock(self::HEXPARSER));
+        $parser = new KeywordParser($this->createMock(HexParser::class));
 
         $this->assertTrue($parser->supports('black'));
         $this->assertTrue($parser->supports('BLACK'));
         $this->assertFalse($parser->supports('notarealcolor'));
     }
 
-    public function test_it_correctly_parses_hex_strings()
+    public function test_it_correctly_delegates_to_hex_parser()
     {
-        $parser = new KeywordParser(
-            Mockery::mock(self::HEXPARSER)
-                ->shouldReceive('parse')
-                ->with('#000000')
-                ->twice()
-                ->andReturn(['red' => 0, 'green' => 0, 'blue' => 0])
-                ->getMock()
-        );
+        $hexParserStub = $this->createMock(HexParser::class);
+        $hexParserStub->method('parse')
+            ->with('#000000')
+            ->willReturn(['red' => 0, 'green' => 0, 'blue' => 0]);
+
+        $parser = new KeywordParser($hexParserStub);
 
         foreach (['black', 'BLACK'] as $color) {
             $this->assertEquals(
