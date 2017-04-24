@@ -32,7 +32,7 @@ class DesaturateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('rgba(114, 107, 107, 0.5)', $t->transform($c));
     }
 
-    public function it_cant_desaturate_shades_of_gray()
+    public function test_it_cant_desaturate_shades_of_gray()
     {
         $c = ColorFactory::fromString('#000');
 
