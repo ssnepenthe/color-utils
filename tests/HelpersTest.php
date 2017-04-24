@@ -10,7 +10,7 @@ use function SSNepenthe\ColorUtils\array_contains_one_of;
 class HelpersTest extends TestCase
 {
     /** @test */
-    public function it_correctly_determines_if_array_contains_all_given_keys()
+    function it_correctly_determines_if_array_contains_all_given_keys()
     {
         $arr = ['one' => 1, 'two' => 2, 'three' => 3];
 
@@ -25,7 +25,7 @@ class HelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_determines_if_array_contains_one_of_given_keys()
+    function it_correctly_determines_if_array_contains_one_of_given_keys()
     {
         $arr = ['one' => 1, 'two' => 2, 'three' => 3];
 
@@ -40,7 +40,7 @@ class HelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_performs_x_mod_y()
+    function it_correctly_performs_x_mod_y()
     {
         // In range.
         $this->assertSame(75.0, modulo(75, 100));
@@ -57,7 +57,7 @@ class HelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_restricts_value_to_given_range()
+    function it_restricts_value_to_given_range()
     {
         // In range.
         $this->assertEquals(25, restrict(25, 0, 100));
@@ -72,7 +72,7 @@ class HelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_tell_if_value_is_in_range_inclusive()
+    function it_can_tell_if_value_is_in_range_inclusive()
     {
         $this->assertTrue(value_is_between(25, 0, 50));
         $this->assertFalse(value_is_between(25, 50, 100));

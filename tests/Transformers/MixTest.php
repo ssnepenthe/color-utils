@@ -12,7 +12,7 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
 class MixTest extends TestCase
 {
     /** @test */
-    public function it_can_mix_colors()
+    function it_can_mix_colors()
     {
         // assert_equal("purple", evaluate("mix(#f00, #00f)"))
         $t = new Mix(ColorFactory::fromString('#f00'));
@@ -58,7 +58,7 @@ class MixTest extends TestCase
     }
 
     /** @test */
-    public function it_can_mix_colors_with_alpha()
+    function it_can_mix_colors_with_alpha()
     {
         // assert_equal("rgba(64, 0, 191, 0.75)", evaluate("mix(rgba(255, 0, 0, 0.5), #00f)"))
         $t = new Mix(ColorFactory::fromRgba(255, 0, 0, 0.5));

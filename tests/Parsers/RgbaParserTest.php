@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class RgbaParserTest extends TestCase
 {
     /** @test */
-    public function it_knows_whether_it_can_parse_a_given_string()
+    function it_knows_whether_it_can_parse_a_given_string()
     {
         $parser = new RgbaParser;
 
@@ -125,7 +125,7 @@ class RgbaParserTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_parses_rgba_strings()
+    function it_correctly_parses_rgba_strings()
     {
         $parser = new RgbaParser;
 

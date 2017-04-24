@@ -12,7 +12,7 @@ use SSNepenthe\ColorUtils\Transformers\TransformerInterface;
 class TransformerPipelineTest extends TestCase
 {
     /** @test */
-    public function it_can_be_instantiated()
+    function it_can_be_instantiated()
     {
         $pipeline = new TransformerPipeline;
 
@@ -21,7 +21,7 @@ class TransformerPipelineTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_transformers()
+    function it_can_add_transformers()
     {
         $pipeline = new TransformerPipeline;
         $lighten30 = new Lighten(30);
@@ -32,7 +32,7 @@ class TransformerPipelineTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_isntantiated_with_transformers()
+    function it_can_be_isntantiated_with_transformers()
     {
         $lighten30 = new Lighten(30);
         $pipeline = new TransformerPipeline([$lighten30]);
@@ -41,7 +41,7 @@ class TransformerPipelineTest extends TestCase
     }
 
     /** @test */
-    public function it_can_transform_a_color()
+    function it_can_transform_a_color()
     {
         $pipeline = new TransformerPipeline([new Lighten(30)]);
         $color = $pipeline->transform(ColorFactory::fromString('green'));
@@ -51,7 +51,7 @@ class TransformerPipelineTest extends TestCase
     }
 
     /** @test */
-    public function it_transforms_colors_in_the_order_transformers_were_added()
+    function it_transforms_colors_in_the_order_transformers_were_added()
     {
         $invert = new Invert;
         $shade25 = new Shade(25);

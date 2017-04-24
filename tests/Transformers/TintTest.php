@@ -12,7 +12,7 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
 class TintTest extends TestCase
 {
     /** @test */
-    public function tinting_white_just_gives_white()
+    function tinting_white_just_gives_white()
     {
         // .tint-white {
         //   color: tint(#fff, 75%); // white
@@ -23,7 +23,7 @@ class TintTest extends TestCase
     }
 
     /** @test */
-    public function it_can_tint_colors()
+    function it_can_tint_colors()
     {
         // .tint-black {
         //   color: tint(#000, 50%); // gray

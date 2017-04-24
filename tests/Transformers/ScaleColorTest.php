@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class ScaleColorTest extends TestCase
 {
     /** @test */
-    public function it_can_scale_colors()
+    function it_can_scale_colors()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -64,7 +64,7 @@ class ScaleColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_scale_multiple_attributes()
+    function it_can_scale_multiple_attributes()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -102,7 +102,7 @@ class ScaleColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_handle_extremes()
+    function it_can_handle_extremes()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -123,7 +123,7 @@ class ScaleColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_non_numeric_adjustments()
+    function it_throws_when_given_non_numeric_adjustments()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -131,7 +131,7 @@ class ScaleColorTest extends TestCase
     }
 
     /** @test */
-    public function it_discards_invalid_channels()
+    function it_discards_invalid_channels()
     {
         // Basically testing that no BadMethodCallException is thrown.
         $t = new ScaleColor(['purple' => 50, 'blue' => 25]);

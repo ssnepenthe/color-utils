@@ -11,7 +11,7 @@ use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
 class ConditionalTransformerTest extends TestCase
 {
     /** @test */
-    public function it_can_be_instantiated()
+    function it_can_be_instantiated()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();
@@ -22,7 +22,7 @@ class ConditionalTransformerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_conditionally_transform_a_color()
+    function it_can_conditionally_transform_a_color()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();
@@ -40,7 +40,7 @@ class ConditionalTransformerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_apply_a_fallback_transformation()
+    function it_can_apply_a_fallback_transformation()
     {
         $transformer = new ConditionalTransformer(function (Color $color) : bool {
             return ! $color->looksBright();

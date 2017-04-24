@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class ChangeColorTest extends TestCase
 {
     /** @test */
-    public function it_can_change_colors()
+    function it_can_change_colors()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -51,7 +51,7 @@ class ChangeColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_change_alpha_values()
+    function it_can_change_alpha_values()
     {
         $c = ColorFactory::fromRgb(10, 20, 30);
 
@@ -62,7 +62,7 @@ class ChangeColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_change_multiple_attributes_at_once()
+    function it_can_change_multiple_attributes_at_once()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -86,7 +86,7 @@ class ChangeColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_non_numeric_adjustments()
+    function it_throws_when_given_non_numeric_adjustments()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -94,7 +94,7 @@ class ChangeColorTest extends TestCase
     }
 
     /** @test */
-    public function it_discards_invalid_channels()
+    function it_discards_invalid_channels()
     {
         // Basically testing that no BadMethodCallException is thrown.
         $t = new ChangeColor(['purple' => 50, 'blue' => 25]);

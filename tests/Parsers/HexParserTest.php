@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HexParserTest extends TestCase
 {
     /** @test */
-    public function it_knows_whether_it_can_parse_a_given_string()
+    function it_knows_whether_it_can_parse_a_given_string()
     {
         $parser = new HexParser;
 
@@ -22,7 +22,7 @@ class HexParserTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_parses_hex_strings()
+    function it_correctly_parses_hex_strings()
     {
         $parser = new HexParser;
 

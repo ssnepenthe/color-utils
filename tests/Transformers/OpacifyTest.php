@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class OpacifyTest extends TestCase
 {
     /** @test */
-    public function it_can_add_opacity_to_colors()
+    function it_can_add_opacity_to_colors()
     {
         $c = ColorFactory::fromRgba(0, 0, 0, 0.2);
 
@@ -37,7 +37,7 @@ class OpacifyTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_invalid_adjustments()
+    function it_throws_when_given_invalid_adjustments()
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

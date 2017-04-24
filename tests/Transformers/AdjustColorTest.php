@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class AdjustColorTest extends TestCase
 {
     /** @test */
-    public function it_can_adjust_colors()
+    function it_can_adjust_colors()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -51,7 +51,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_adjust_alpha_values()
+    function it_can_adjust_alpha_values()
     {
         // assert_equal(evaluate("hsla(120, 30, 90, 0.65)"),
         // evaluate("adjust-color(hsl(120, 30, 90), $alpha: -0.35)"))
@@ -70,7 +70,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_adjust_multiple_attributes_at_once()
+    function it_can_adjust_multiple_attributes_at_once()
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -115,7 +115,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_honors_range_restrictions()
+    function it_honors_range_restrictions()
     {
         // Technically restrictions are handled in the Hsl and Rgb classes...
         $c = ColorFactory::fromHsl(120, 30, 90);
@@ -154,7 +154,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_non_numeric_adjustments()
+    function it_throws_when_given_non_numeric_adjustments()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -162,7 +162,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_adjustments_of_zero()
+    function it_throws_when_given_adjustments_of_zero()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -170,7 +170,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    public function it_discards_invalid_channels()
+    function it_discards_invalid_channels()
     {
         // Basically testing that no BadMethodCallException is thrown.
         $t = new AdjustColor(['purple' => 50, 'blue' => 25]);

@@ -8,7 +8,7 @@ use SSNepenthe\ColorUtils\Colors\ColorInterface;
 class HslaTest extends TestCase
 {
     /** @test */
-    public function it_is_instantiable()
+    function it_is_instantiable()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
 
@@ -17,7 +17,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_forces_a_0_to_1_range_for_alpha()
+    function it_forces_a_0_to_1_range_for_alpha()
     {
         $hsla = new Hsla(0, 0, 0, -0.1);
         $hsla2 = new Hsla(0, 0, 0, 1.1);
@@ -27,7 +27,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_cast_to_a_string()
+    function it_can_be_cast_to_a_string()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
 
@@ -36,7 +36,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_formats_alpha_channel_in_string_conversion()
+    function it_correctly_formats_alpha_channel_in_string_conversion()
     {
         /*
 
@@ -60,7 +60,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function channel_getters_give_correct_value()
+    function channel_getters_give_correct_value()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
 
@@ -69,7 +69,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_produces_hsl_array()
+    function it_correctly_produces_hsl_array()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
         $hsla2 = new Hsla(348, 100, 50, 1);
@@ -85,7 +85,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_produces_color_instance()
+    function it_correctly_produces_color_instance()
     {
         $this->assertInstanceOf(
             Color::class,
@@ -94,7 +94,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_modified_version_of_itself()
+    function it_can_create_a_modified_version_of_itself()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
         $hsla2 = $hsla->with(['hue' => 0]);
@@ -105,7 +105,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_version_of_itself_without_transparency()
+    function it_can_create_a_version_of_itself_without_transparency()
     {
         $hsla = new Hsla(348, 100, 50, 0.7);
         $hsl = $hsla->with(['hue' => 0, 'saturation' => 0, 'alpha' => 1]);
@@ -116,7 +116,7 @@ class HslaTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_be_instantiated_with_non_numeric_values()
+    function it_cant_be_instantiated_with_non_numeric_values()
     {
         $this->expectException(InvalidArgumentException::class);
 

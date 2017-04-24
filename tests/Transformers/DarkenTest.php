@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class DarkenTest extends TestCase
 {
     /** @test */
-    public function it_can_darken_colors()
+    function it_can_darken_colors()
     {
         // assert_equal("#ff6a00", evaluate("darken(hsl(25, 100, 80), 30%)"))
         $c = ColorFactory::fromHsl(25, 100, 80);
@@ -32,7 +32,7 @@ class DarkenTest extends TestCase
     }
 
     /** @test */
-    public function it_can_only_go_as_dark_as_black()
+    function it_can_only_go_as_dark_as_black()
     {
         // assert_equal("black", evaluate("darken(#000, 20%)"))
         $c = ColorFactory::fromString('#000');
@@ -46,7 +46,7 @@ class DarkenTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_invalid_adjustments()
+    function it_throws_when_given_invalid_adjustments()
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

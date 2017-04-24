@@ -9,7 +9,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class ColorFactoryTest extends TestCase
 {
     /** @test */
-    public function it_gets_the_values_right_no_matter_how_it_is_created()
+    function it_gets_the_values_right_no_matter_how_it_is_created()
     {
         $colors = [
             ColorFactory::fromString('hsl(348, 100%, 50%)'),
@@ -31,7 +31,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_array()
+    function it_can_create_colors_from_array()
     {
         $colors = [
             ColorFactory::fromArray(['red' => 255, 'green' => 0, 'blue' => 51]),
@@ -53,7 +53,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_color_from_hsl_values()
+    function it_can_create_color_from_hsl_values()
     {
         $colors = [
             ColorFactory::fromHsl(348, 100, 50),
@@ -67,7 +67,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_color_from_rgb_values()
+    function it_can_create_color_from_rgb_values()
     {
         $colors = [
             ColorFactory::fromRgb(255, 0, 51),
@@ -81,7 +81,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_strings()
+    function it_can_create_colors_from_strings()
     {
         $colors = [
             ColorFactory::fromString('#ff0000'),
@@ -99,7 +99,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_unknown_args()
+    function it_can_create_colors_from_unknown_args()
     {
         $colors = [
             ColorFactory::fromUnknown('#fff'),
@@ -113,7 +113,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_single_unknown_arg()
+    function it_can_create_colors_from_single_unknown_arg()
     {
         $c1 = new Color(new Rgb(255, 255, 255));
         $c2 = ColorFactory::fromUnknownOneArg($c1);
@@ -134,7 +134,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_three_unknown_args()
+    function it_can_create_colors_from_three_unknown_args()
     {
         $this->assertEquals(
             'rgb(255, 255, 255)',
@@ -154,7 +154,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_colors_from_four_unknown_args()
+    function it_can_create_colors_from_four_unknown_args()
     {
         $this->assertEquals(
             'rgba(255, 255, 255, 0.7)',
@@ -174,7 +174,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_a_color_without_a_complete_color_array()
+    function it_cant_create_a_color_without_a_complete_color_array()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -182,7 +182,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_an_unknown_color_with_bad_args()
+    function it_cant_create_an_unknown_color_with_bad_args()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -190,7 +190,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_a_color_from_four_args_if_out_of_bounds()
+    function it_cant_create_a_color_from_four_args_if_out_of_bounds()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -198,7 +198,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_a_color_from_one_arg_if_wrong_type()
+    function it_cant_create_a_color_from_one_arg_if_wrong_type()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -206,7 +206,7 @@ class ColorFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_a_color_from_three_args_if_out_of_bounds()
+    function it_cant_create_a_color_from_three_args_if_out_of_bounds()
     {
         $this->expectException(InvalidArgumentException::class);
 

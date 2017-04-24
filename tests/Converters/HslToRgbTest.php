@@ -9,13 +9,13 @@ use SSNepenthe\ColorUtils\Converters\HslToRgb;
 
 class HslToRgbTest extends TestCase
 {
-    public function setUp()
+    function setUp()
     {
         $this->c = new HslToRgb;
     }
 
     /** @test */
-    public function it_can_convert_hsl_and_hsla()
+    function it_can_convert_hsl_and_hsla()
     {
         $hsl = new Hsl(348, 100, 50);
         $hsla = new Hsla(348, 100, 50, 0.7);
@@ -33,7 +33,7 @@ class HslToRgbTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_handles_each_step_of_conversion()
+    function it_correctly_handles_each_step_of_conversion()
     {
         // Step 1 - zero saturation.
         $hsl = new Hsl(0, 0, 83);

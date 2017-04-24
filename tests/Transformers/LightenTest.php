@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class LightenTest extends TestCase
 {
     /** @test */
-    public function it_can_lighten_colors()
+    function it_can_lighten_colors()
     {
         $c = ColorFactory::fromString('#800');
 
@@ -39,7 +39,7 @@ class LightenTest extends TestCase
     }
 
     /** @test */
-    public function it_can_only_go_as_light_as_white()
+    function it_can_only_go_as_light_as_white()
     {
         $c = ColorFactory::fromString('white');
 
@@ -49,7 +49,7 @@ class LightenTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_when_given_invalid_adjustments()
+    function it_throws_when_given_invalid_adjustments()
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

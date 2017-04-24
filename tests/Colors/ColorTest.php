@@ -10,7 +10,7 @@ use SSNepenthe\ColorUtils\Colors\Color;
 class ColorTest extends TestCase
 {
     /** @test */
-    public function it_is_instantiable()
+    function it_is_instantiable()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
@@ -18,7 +18,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_proxies_all_rgb_methods()
+    function it_correctly_proxies_all_rgb_methods()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
@@ -57,7 +57,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_correctly_proxies_all_hsl_methods()
+    function it_correctly_proxies_all_hsl_methods()
     {
         $color = new Color(new Hsl(348, 100, 50));
 
@@ -83,7 +83,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_override_base_color_on_instantiation()
+    function it_can_override_base_color_on_instantiation()
     {
         $rgb = new Color(new Rgb(255, 0, 51));
         $rgba = new Color(new Rgba(255, 0, 51, 0.7));
@@ -97,7 +97,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_calculate_brightness_difference_with_a_color()
+    function it_can_calculate_brightness_difference_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -113,7 +113,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_calculate_color_difference_with_a_color()
+    function it_can_calculate_color_difference_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -123,7 +123,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_calculate_contrast_ratio_with_a_color()
+    function it_can_calculate_contrast_ratio_with_a_color()
     {
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
@@ -133,7 +133,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_retrieve_individual_representations()
+    function it_can_retrieve_individual_representations()
     {
         $color = new Color(new Rgb(255, 0, 51));
 
@@ -142,7 +142,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_modified_versions_of_itself()
+    function it_can_create_a_modified_versions_of_itself()
     {
         $white = (new Color(new Rgb(255, 255, 0)))->with(['blue' => 255]);
         $blue = (new Color(new Hsl(348, 100, 50)))->with(['hue' => 240]);
@@ -164,7 +164,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_new_color_with_the_same_type_as_original()
+    function it_creates_a_new_color_with_the_same_type_as_original()
     {
         $hsl = new Color(new Hsl(60, 100, 50));
         $rgb = new Color(new Rgb(255, 255, 0));
@@ -174,7 +174,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_for_non_existent_methods()
+    function it_throws_exception_for_non_existent_methods()
     {
         $this->expectException(BadMethodCallException::class);
 
@@ -182,7 +182,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_modify_hsl_and_rgb_in_same_operation()
+    function it_cant_modify_hsl_and_rgb_in_same_operation()
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -190,7 +190,7 @@ class ColorTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_create_a_new_color_without_any_changes()
+    function it_cant_create_a_new_color_without_any_changes()
     {
         $this->expectException(InvalidArgumentException::class);
 
