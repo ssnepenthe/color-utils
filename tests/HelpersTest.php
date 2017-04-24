@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use function SSNepenthe\ColorUtils\modulo;
 use function SSNepenthe\ColorUtils\restrict;
 use function SSNepenthe\ColorUtils\value_is_between;
 use function SSNepenthe\ColorUtils\array_contains_all_of;
 use function SSNepenthe\ColorUtils\array_contains_one_of;
 
-class HelpersTest extends PHPUnit_Framework_TestCase
+class HelpersTest extends TestCase
 {
     public function test_it_correctly_determines_if_array_contains_all_given_keys()
     {

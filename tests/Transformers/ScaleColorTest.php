@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\ScaleColor;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
@@ -9,7 +10,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class ScaleColorTest extends PHPUnit_Framework_TestCase
+class ScaleColorTest extends TestCase
 {
     public function test_it_can_scale_colors()
     {

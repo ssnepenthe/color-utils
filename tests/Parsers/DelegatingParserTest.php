@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Parsers\ParserInterface;
 use SSNepenthe\ColorUtils\Parsers\DelegatingParser;
 use SSNepenthe\ColorUtils\Parsers\ParserResolverInterface;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
-class DelegatingParserTest extends PHPUnit_Framework_TestCase
+class DelegatingParserTest extends TestCase
 {
     public function test_it_is_instantiable()
     {

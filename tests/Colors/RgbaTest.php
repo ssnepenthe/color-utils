@@ -1,10 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Rgba;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorInterface;
 
-class RgbaTest extends PHPUnit_Framework_TestCase
+class RgbaTest extends TestCase
 {
     public function test_it_is_instantiable()
     {

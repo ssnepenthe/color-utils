@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Rgb;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
-class ColorFactoryTest extends PHPUnit_Framework_TestCase
+class ColorFactoryTest extends TestCase
 {
     public function test_it_gets_the_values_right_no_matter_how_it_is_created()
     {

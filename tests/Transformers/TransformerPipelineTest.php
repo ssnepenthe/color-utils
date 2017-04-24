@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Invert;
@@ -8,7 +9,7 @@ use SSNepenthe\ColorUtils\Transformers\AdjustColor;
 use SSNepenthe\ColorUtils\Transformers\TransformerPipeline;
 use SSNepenthe\ColorUtils\Transformers\TransformerInterface;
 
-class TransformerPipelineTest extends PHPUnit_Framework_TestCase
+class TransformerPipelineTest extends TestCase
 {
     public function test_it_can_be_instantiated()
     {

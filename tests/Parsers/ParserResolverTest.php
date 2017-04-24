@@ -1,10 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Parsers\ParserResolver;
 use SSNepenthe\ColorUtils\Parsers\ParserInterface;
 use SSNepenthe\ColorUtils\Parsers\ParserResolverInterface;
 
-class ParserResolverTest extends PHPUnit_Framework_TestCase
+class ParserResolverTest extends TestCase
 {
     public function test_it_is_intantiable()
     {

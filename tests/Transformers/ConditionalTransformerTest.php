@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Darken;
@@ -7,7 +8,7 @@ use SSNepenthe\ColorUtils\Transformers\Lighten;
 use SSNepenthe\ColorUtils\Transformers\TransformerInterface;
 use SSNepenthe\ColorUtils\Transformers\ConditionalTransformer;
 
-class ConditionalTransformerTest extends PHPUnit_Framework_TestCase
+class ConditionalTransformerTest extends TestCase
 {
     public function test_it_can_be_instantiated()
     {

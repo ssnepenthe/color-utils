@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Opacify;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
@@ -9,7 +10,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class OpacifyTest extends PHPUnit_Framework_TestCase
+class OpacifyTest extends TestCase
 {
     public function test_it_can_add_opacity_to_colors()
     {

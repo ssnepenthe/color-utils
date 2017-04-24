@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Rgba as R;
 use SSNepenthe\ColorUtils\Colors\Color as C;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
@@ -10,7 +11,7 @@ use function SSNepenthe\ColorUtils\{
     rgba, saturation
 };
 
-class ColorsTest extends PHPUnit_Framework_TestCase
+class ColorsTest extends TestCase
 {
     protected $c;
 

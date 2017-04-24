@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Rgb;
 use SSNepenthe\ColorUtils\Colors\Hsla;
 use SSNepenthe\ColorUtils\Colors\Rgba;
 use SSNepenthe\ColorUtils\Converters\RgbToHsl;
 
-class RgbToHslTest extends PHPUnit_Framework_TestCase
+class RgbToHslTest extends TestCase
 {
     public function setUp()
     {

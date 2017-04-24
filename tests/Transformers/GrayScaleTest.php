@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\GrayScale;
 
@@ -8,7 +9,7 @@ use SSNepenthe\ColorUtils\Transformers\GrayScale;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class GrayScaleTest extends PHPUnit_Framework_TestCase
+class GrayScaleTest extends TestCase
 {
     protected $t;
 

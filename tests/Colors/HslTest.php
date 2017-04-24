@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Hsla;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorInterface;
 
-class HslTest extends PHPUnit_Framework_TestCase
+class HslTest extends TestCase
 {
     public function test_it_is_instantiable()
     {

@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 
@@ -8,7 +9,7 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
  *
  * @link https://github.com/thoughtbot/bourbon/blob/master/spec/bourbon/library/shade_spec.rb
  */
-class ShadeTest extends PHPUnit_Framework_TestCase
+class ShadeTest extends TestCase
 {
     public function test_shading_white_gives_gray()
     {

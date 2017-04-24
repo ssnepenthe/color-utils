@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Complement;
 
@@ -8,7 +9,7 @@ use SSNepenthe\ColorUtils\Transformers\Complement;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class ComplementTest extends PHPUnit_Framework_TestCase
+class ComplementTest extends TestCase
 {
     protected $t;
 

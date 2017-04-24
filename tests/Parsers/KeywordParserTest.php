@@ -1,10 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Parsers\HexParser;
 use SSNepenthe\ColorUtils\Parsers\KeywordParser;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
-class KeywordParserTest extends PHPUnit_Framework_TestCase
+class KeywordParserTest extends TestCase
 {
     public function test_it_knows_whether_it_can_parse_a_given_string()
     {

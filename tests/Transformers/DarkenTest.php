@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Darken;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
@@ -9,7 +10,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class DarkenTest extends PHPUnit_Framework_TestCase
+class DarkenTest extends TestCase
 {
     public function test_it_can_darken_colors()
     {

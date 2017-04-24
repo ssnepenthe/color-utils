@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use function SSNepenthe\ColorUtils\{
     mix, tint, shade, darken, invert, lighten, saturate, grayscale, adjust_hue,
     complement, desaturate, scale_color, adjust_color, change_color
 };
 
-class TransformationsTest extends PHPUnit_Framework_TestCase
+class TransformationsTest extends TestCase
 {
     public function test_adjust_color()
     {

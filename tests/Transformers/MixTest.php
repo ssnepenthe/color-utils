@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Transformers\Mix;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 
@@ -8,7 +9,7 @@ use SSNepenthe\ColorUtils\Colors\ColorFactory;
  *
  * @link https://github.com/sass/sass/blob/stable/test/sass/functions_test.rb
  */
-class MixTest extends PHPUnit_Framework_TestCase
+class MixTest extends TestCase
 {
     public function test_it_can_mix_colors()
     {

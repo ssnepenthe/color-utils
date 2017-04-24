@@ -1,9 +1,10 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Parsers\HslaParser;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
-class HslaParserTest extends PHPUnit_Framework_TestCase
+class HslaParserTest extends TestCase
 {
     public function test_it_knows_whether_it_can_parse_a_given_string()
     {
