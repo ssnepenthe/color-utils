@@ -47,10 +47,25 @@ class HexParser implements ParserInterface
      */
     public function supports(string $color) : bool
     {
+        return $this->startsWithHash($color)
+            && $this->isValidLength($color)
+            && $this->containsOnlyHexCharacters($color);
+    }
+
+    protected function containsOnlyHexCharacters(string $color) : bool
+    {
+        return ! (bool) preg_match('/[^a-f0-9#]/i', $color);
+    }
+
+    protected function isValidLength(string $color) : bool
+    {
         $len = strlen($color);
 
-        return '#' === substr($color, 0, 1)
-            && (4 === $len || 5 === $len || 7 === $len || 9 === $len)
-            && ! (bool) preg_match('/[^a-f0-9#]/i', $color);
+        return 4 === $len || 5 === $len || 7 === $len || 9 === $len;
+    }
+
+    protected function startsWithHash(string $color) : bool
+    {
+        return '#' === substr($color, 0, 1);
     }
 }
