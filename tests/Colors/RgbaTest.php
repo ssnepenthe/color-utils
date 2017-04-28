@@ -95,15 +95,43 @@ class RgbaTest extends TestCase
     }
 
     /** @test */
-    function it_ignores_alpha_when_converting_to_hex()
+    function it_correctly_produces_hex_array()
     {
-        $rgba = new Rgba(255, 0, 51, 0.7);
+        $one = new Rgba(255, 0, 51, 1.0);
+        $two = new Rgba(255, 0, 51, 0.7);
 
         $this->assertEquals(
             ['red' => 'ff', 'green' => '00', 'blue' => '33'],
-            $rgba->toHexArray()
+            $one->toHexArray()
         );
-        $this->assertEquals('#ff0033', $rgba->toHexString());
+        $this->assertEquals(
+            ['red' => 'ff', 'green' => '00', 'blue' => '33', 'alpha' => 'b3'],
+            $two->toHexArray()
+        );
+    }
+
+    /** @test */
+    function it_correctly_produces_hex_string()
+    {
+        $one = new Rgba(255, 0, 51, 1.0);
+        $two = new Rgba(255, 0, 51, 0.7);
+
+        $this->assertEquals('#ff0033', $one->toHexString());
+        $this->assertEquals('#ff0033b3', $two->toHexString());
+    }
+
+    /**
+     * @link https://github.com/ssnepenthe/color-utils/issues/6
+     *
+     * @test
+     */
+    function it_accounts_for_alpha_value_when_determining_color_name()
+    {
+        $purple = new Rgba(128, 0, 128, 1.0);
+        $notPurple = new Rgba(128, 0, 128, 0.7);
+
+        $this->assertEquals('purple', $purple->getName());
+        $this->assertEquals('', $notPurple->getName());
     }
 
     /** @test */

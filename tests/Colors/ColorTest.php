@@ -43,6 +43,7 @@ class ColorTest extends TestCase
         $this->assertEquals('ff', $color->getRedByte());
         $this->assertEquals('00', $color->getGreenByte());
         $this->assertEquals('33', $color->getBlueByte());
+        $this->assertEquals('ff', $color->getAlphaByte());
 
         $this->assertEquals(
             ['red' => 'ff', 'green' => '00', 'blue' => '33'],

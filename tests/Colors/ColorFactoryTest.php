@@ -85,6 +85,7 @@ class ColorFactoryTest extends TestCase
     {
         $colors = [
             ColorFactory::fromString('#ff0000'),
+            ColorFactory::fromString('#ff0000ff'),
             ColorFactory::fromString('red'),
             ColorFactory::fromString('rgba(255, 0, 0, 1)'),
             ColorFactory::fromString('rgb(255, 0, 0)'),

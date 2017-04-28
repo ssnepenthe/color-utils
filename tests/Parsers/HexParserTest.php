@@ -15,14 +15,26 @@ class HexParserTest extends TestCase
             $this->assertTrue($parser->supports($supported));
         }
 
-        // Each item fails a different condition of ->supports().
-        foreach (['abc', '#abcd', '#gghhii'] as $unsupported) {
-            $this->assertFalse($parser->supports($unsupported));
+        $unsupported = [
+            // No leading hash.
+            'abc',
+            // Invalid length.
+            '#aa',
+            // Invalid length.
+            '#aabbc',
+            // Invalid length.
+            '#aabbccd',
+            // Non-hex characters.
+            '#gghhii'
+        ];
+
+        foreach ($unsupported as $hex) {
+            $this->assertFalse($parser->supports($hex));
         }
     }
 
     /** @test */
-    function it_correctly_parses_hex_strings()
+    function it_correctly_parses_rgb_hex_strings()
     {
         $parser = new HexParser;
 
@@ -32,6 +44,17 @@ class HexParserTest extends TestCase
                 $parser->parse($hex)
             );
         }
+    }
+
+    /** @test */
+    function it_correctly_parses_rgba_hex_strings()
+    {
+        $parser = new HexParser;
+
+        $this->assertEquals(
+            ['red' => 170, 'green' => 187, 'blue' => 204, 'alpha' => 0.86667],
+            $parser->parse('#aabbccdd')
+        );
     }
 
     /** @test */

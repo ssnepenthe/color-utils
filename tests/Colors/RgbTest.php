@@ -83,7 +83,8 @@ class RgbTest extends TestCase
         $this->assertEquals('00', $rgb->getGreenByte());
         $this->assertEquals(51, $rgb->getBlue());
         $this->assertEquals('33', $rgb->getBlueByte());
-        $this->assertEquals(1, $rgb->getAlpha());
+        $this->assertSame(1.0, $rgb->getAlpha());
+        $this->assertEquals('ff', $rgb->getAlphaByte());
         $this->assertFalse($rgb->hasAlpha());
         $this->assertEquals('', (new Rgb(255, 0, 51))->getName());
         $this->assertEquals('aquamarine', (new Rgb(127, 255, 212))->getName());

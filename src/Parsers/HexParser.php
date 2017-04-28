@@ -24,16 +24,21 @@ class HexParser implements ParserInterface
         }
 
         $color = ltrim($color, '#');
-        $isShorthand = 3 === strlen($color);
+        $len = strlen($color);
+        $isShorthand = 3 === $len || 4 === $len;
 
-        list($red, $green, $blue) = array_map(
-            function ($value) use ($isShorthand) : int {
-                return hexdec(str_repeat($value, $isShorthand ? 2 : 1));
-            },
-            str_split($color, $isShorthand ? 1 : 2)
-        );
+        $values = array_map(function ($value) use ($isShorthand) : int {
+            return hexdec($isShorthand ? str_repeat($value, 2) : $value);
+        }, str_split($color, $isShorthand ? 1 : 2));
 
-        return compact('red', 'green', 'blue');
+        $keys = ['red', 'green', 'blue'];
+
+        if (4 === $len || 8 === $len) {
+            $keys[] = 'alpha';
+            $values[3] = round($values[3] / 255, 5);
+        }
+
+        return array_combine($keys, $values);
     }
 
     /**
@@ -44,10 +49,8 @@ class HexParser implements ParserInterface
     {
         $len = strlen($color);
 
-        // Need to keep an eye on alpha-hex notation support, update as appropriate.
-        // http://caniuse.com/#feat=css-rrggbbaa
         return '#' === substr($color, 0, 1)
-            && (4 === $len || 7 === $len)
+            && (4 === $len || 5 === $len || 7 === $len || 9 === $len)
             && ! (bool) preg_match('/[^a-f0-9#]/i', $color);
     }
 }
