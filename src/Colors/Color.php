@@ -112,14 +112,12 @@ class Color
      */
     public function calculateContrastRatioWith(Color $other) : float
     {
-        $luminance = [
+        $luminances = [
             $this->getRgb()->calculateRelativeLuminance(),
             $other->getRgb()->calculateRelativeLuminance(),
         ];
 
-        sort($luminance, SORT_NUMERIC);
-
-        return round(($luminance[1] + 0.05) / ($luminance[0] + 0.05), 5);
+        return round((max($luminances) + 0.05) / (min($luminances) + 0.05), 5);
     }
 
     /**
