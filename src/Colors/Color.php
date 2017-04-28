@@ -2,11 +2,13 @@
 
 namespace SSNepenthe\ColorUtils\Colors;
 
-use function SSNepenthe\ColorUtils\contrast_ratio;
 use SSNepenthe\ColorUtils\Converters\HslToRgb;
 use SSNepenthe\ColorUtils\Converters\RgbToHsl;
+use function SSNepenthe\ColorUtils\contrast_ratio;
+use SSNepenthe\ColorUtils\Exceptions\RuntimeException;
 use SSNepenthe\ColorUtils\Converters\ConverterInterface;
 use function SSNepenthe\ColorUtils\array_contains_one_of;
+use SSNepenthe\ColorUtils\Exceptions\BadMethodCallException;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 /**
@@ -37,7 +39,7 @@ class Color
             }
         }
 
-        throw new \BadMethodCallException(sprintf(
+        throw new BadMethodCallException(sprintf(
             'Method %s does not exist on any color representation',
             $method
         ));
@@ -132,7 +134,7 @@ class Color
         }
 
         // Should never hit this.
-        throw new \RuntimeException('No instance of Hsl found');
+        throw new RuntimeException('No instance of Hsl found');
     }
 
     /**
@@ -147,7 +149,7 @@ class Color
         }
 
         // Should never hit this.
-        throw new \RuntimeException('No instance of Rgb found');
+        throw new RuntimeException('No instance of Rgb found');
     }
 
     /**

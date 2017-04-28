@@ -5,6 +5,7 @@ namespace SSNepenthe\ColorUtils\Converters;
 use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Hsla;
 use SSNepenthe\ColorUtils\Colors\ColorInterface;
+use SSNepenthe\ColorUtils\Exceptions\LogicException;
 use function SSNepenthe\ColorUtils\array_contains_all_of;
 use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
@@ -73,7 +74,7 @@ class RgbToHsl implements ConverterInterface
                 $hue = 4 + ($red - $green) / ($max - $min);
                 break;
             default:
-                throw new \LogicException(
+                throw new LogicException(
                     'It should be impossible for this exception to be thrown... What have you done?'
                 );
         }

@@ -114,15 +114,14 @@ class RgbParserTest extends TestCase
                 $parser->parse($color)
             );
         }
+    }
 
-        try {
-            $parser->parse('rgb(255, 100%, 100%)');
+    /** @test */
+    function it_throws_when_attempting_to_parse_unsupported_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
 
-            $this->fail(
-                'RgbParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $parser = new RgbParser;
+        $parser->parse('rgb(255, 100%, 100%)');
     }
 }

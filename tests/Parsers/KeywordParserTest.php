@@ -33,15 +33,15 @@ class KeywordParserTest extends TestCase
                 $parser->parse($color)
             );
         }
+    }
 
-        try {
-            $parser->parse('notarealcolor');
+    /** @test */
+    function it_throws_when_attempting_to_parse_unsupported_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $hexParserMock = $this->createMock(HexParser::class);
 
-            $this->fail(
-                'KeywordParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $parser = new KeywordParser($hexParserMock);
+        $parser->parse('notarealcolor');
     }
 }

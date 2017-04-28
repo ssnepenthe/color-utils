@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use SSNepenthe\ColorUtils\Colors\Rgba;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorInterface;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 class RgbaTest extends TestCase
 {

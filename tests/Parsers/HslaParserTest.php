@@ -174,16 +174,9 @@ class HslaParserTest extends TestCase
     /** @test */
     function it_throws_when_attempting_to_parse_unsupported_string()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $parser = new HslaParser;
-
-        try {
-            $parser->parse('hsl(120, 95%, 85%)');
-
-            $this->fail(
-                'HslaParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $parser->parse('hsl(120, 95%, 85%)');
     }
 }

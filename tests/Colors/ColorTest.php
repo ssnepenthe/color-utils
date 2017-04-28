@@ -6,6 +6,8 @@ use SSNepenthe\ColorUtils\Colors\Rgb;
 use SSNepenthe\ColorUtils\Colors\Hsla;
 use SSNepenthe\ColorUtils\Colors\Rgba;
 use SSNepenthe\ColorUtils\Colors\Color;
+use SSNepenthe\ColorUtils\Exceptions\BadMethodCallException;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 class ColorTest extends TestCase
 {

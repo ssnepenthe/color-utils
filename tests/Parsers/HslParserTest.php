@@ -111,15 +111,14 @@ class HslParserTest extends TestCase
             ['hue' => 120, 'saturation' => 95, 'lightness' => 85],
             $parser->parse('hsl(120, 95%, 85%)')
         );
+    }
 
-        try {
-            $parser->parse('hsla(120, 95%, 85%, 0.5)');
+    /** @test */
+    function it_throws_when_attempting_to_parse_unsupported_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
 
-            $this->fail(
-                'HslParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $parser = new HslParser;
+        $parser->parse('hsla(120, 95%, 85%, 0.5)');
     }
 }

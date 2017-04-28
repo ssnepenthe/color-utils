@@ -5,6 +5,7 @@ use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Hsla;
 use SSNepenthe\ColorUtils\Colors\Color;
 use SSNepenthe\ColorUtils\Colors\ColorInterface;
+use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 
 class HslTest extends TestCase
 {

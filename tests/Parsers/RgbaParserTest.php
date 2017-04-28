@@ -128,22 +128,22 @@ class RgbaParserTest extends TestCase
     function it_correctly_parses_rgba_strings()
     {
         $parser = new RgbaParser;
+        $supported = ['rgba(255, 255, 255, 0.5)', 'rgba(100%, 100%, 100%, 0.5)'];
 
-        foreach (['rgba(255, 255, 255, 0.5)', 'rgba(100%, 100%, 100%, 0.5)'] as $color) {
+        foreach ($supported as $color) {
             $this->assertEquals(
                 ['red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 0.5],
                 $parser->parse($color)
             );
         }
+    }
 
-        try {
-            $parser->parse('rgba(255, 100%, 100%, 0.5)');
+    /** @test */
+    function it_throws_when_attempting_to_parse_unsupported_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
 
-            $this->fail(
-                'RgbaParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $parser = new RgbaParser;
+        $parser->parse('rgba(255, 100%, 100%, 0.5)');
     }
 }

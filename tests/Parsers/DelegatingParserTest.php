@@ -37,32 +37,34 @@ class DelegatingParserTest extends TestCase
     /** @test */
     function it_correctly_delegates_to_resolver_to_parse_colors()
     {
-        $supported = '#abcdef';
-        $unsupported = 'rgb(120, 120, 120)';
-        $parsedHex = ['red' => 173, 'green' => 205, 'blue' => 239];
-
+        $toParse = '#abcdef';
+        $parsed = ['red' => 173, 'green' => 205, 'blue' => 239];
         $parserStub = $this->createMock(ParserInterface::class);
         $parserStub->method('parse')
-            ->willReturn($parsedHex);
+            ->with($toParse)
+            ->willReturn($parsed);
         $resolverStub = $this->createMock(ParserResolverInterface::class);
         $resolverStub->method('resolve')
-            ->will($this->returnValueMap([
-                [$supported, $parserStub],
-                [$unsupported, false],
-            ]));
+            ->with($toParse)
+            ->willReturn($parserStub);
 
         $parser = new DelegatingParser($resolverStub);
 
-        $this->assertEquals($parsedHex, $parser->parse($supported));
+        $this->assertEquals($parsed, $parser->parse($toParse));
+    }
 
-        try {
-            $parser->parse($unsupported);
+    /** @test */
+    function it_throws_when_attempting_to_parse_unsupported_string()
+    {
+        $this->expectException(InvalidArgumentException::class);
 
-            $this->fail(
-                'DelegatingParser::parse() throws exception when attempting to parse unsupported string'
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->assertInstanceOf(InvalidArgumentException::class, $e);
-        }
+        $toParse = 'rgb(120, 120, 120)';
+        $resolverStub = $this->createMock(ParserResolverInterface::class);
+        $resolverStub->method('resolve')
+            ->with($toParse)
+            ->willReturn(false);
+
+        $parser = new DelegatingParser($resolverStub);
+        $parser->parse($toParse);
     }
 }
