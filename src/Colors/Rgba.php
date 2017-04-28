@@ -42,6 +42,9 @@ class Rgba extends Rgb
         return array_merge(parent::toArray(), ['alpha' => $this->getAlpha()]);
     }
 
+    /**
+     * @return array
+     */
     public function toHexArray() : array
     {
         if (! $this->hasAlpha()) {

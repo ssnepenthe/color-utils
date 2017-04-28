@@ -52,11 +52,19 @@ class HexParser implements ParserInterface
             && $this->containsOnlyHexCharacters($color);
     }
 
+    /**
+     * @param string $color
+     * @return bool
+     */
     protected function containsOnlyHexCharacters(string $color) : bool
     {
         return ! (bool) preg_match('/[^a-f0-9#]/i', $color);
     }
 
+    /**
+     * @param string $color
+     * @return bool
+     */
     protected function isValidLength(string $color) : bool
     {
         $len = strlen($color);
@@ -64,6 +72,10 @@ class HexParser implements ParserInterface
         return 4 === $len || 5 === $len || 7 === $len || 9 === $len;
     }
 
+    /**
+     * @param string $color
+     * @return bool
+     */
     protected function startsWithHash(string $color) : bool
     {
         return '#' === substr($color, 0, 1);

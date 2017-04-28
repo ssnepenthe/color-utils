@@ -105,6 +105,9 @@ class Rgb extends BaseColor
         );
     }
 
+    /**
+     * @return string
+     */
     public function getAlphaByte() : string
     {
         return $this->intToHexByte(intval(round($this->alpha * 255)));
