@@ -120,6 +120,10 @@ class Color
         return round((max($luminances) + 0.05) / (min($luminances) + 0.05), 5);
     }
 
+    /**
+     * @param string $class
+     * @return ColorInterface
+     */
     public function getRepresentation(string $class) : ColorInterface
     {
         foreach ($this->representations as $representation) {
