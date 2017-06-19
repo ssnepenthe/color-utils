@@ -27,7 +27,7 @@ class RgbaParser extends RgbParser
     protected function prepareExtractedData(array $data) : array
     {
         // Red, green and blue channels.
-        $rgba = array_map([$this, 'convertChannel'], array_slice($data, 0, 3));
+        $rgba = parent::prepareExtractedData(array_slice($data, 0, 3));
 
         // Don't forget about alpha.
         $rgba['alpha'] = floatval($data['alpha']);
