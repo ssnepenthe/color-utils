@@ -25,6 +25,7 @@ class Color
      * @param string $method
      * @param mixed $args
      * @return mixed
+     * @throws BadMethodCallException
      */
     public function __call($method, $args)
     {
@@ -123,6 +124,7 @@ class Color
     /**
      * @param string $class
      * @return ColorInterface
+     * @throws RuntimeException
      */
     public function getRepresentation(string $class) : ColorInterface
     {
@@ -154,6 +156,7 @@ class Color
     /**
      * @param array $channels
      * @return Color
+     * @throws InvalidArgumentException
      */
     public function with(array $channels) : Color
     {
@@ -194,6 +197,7 @@ class Color
     /**
      * @param ColorInterface $color
      * @return ConverterInterface
+     * @throws InvalidArgumentException
      */
     protected function makeConverter(ColorInterface $color) : ConverterInterface
     {

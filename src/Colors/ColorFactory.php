@@ -16,6 +16,7 @@ class ColorFactory
     /**
      * @param array $channels
      * @return Color
+     * @throws InvalidArgumentException
      */
     public static function fromArray(array $channels) : Color
     {
@@ -106,6 +107,7 @@ class ColorFactory
     /**
      * @param mixed ...$args
      * @return Color
+     * @throws InvalidArgumentException
      */
     public static function fromUnknown(...$args) : Color
     {
@@ -135,6 +137,7 @@ class ColorFactory
      * @param mixed $three
      * @param mixed $four
      * @return Color
+     * @throws InvalidArgumentException
      */
     public static function fromUnknownFourArgs($one, $two, $three, $four) : Color
     {
@@ -155,6 +158,7 @@ class ColorFactory
     /**
      * @param mixed $one
      * @return Color
+     * @throws InvalidArgumentException
      */
     public static function fromUnknownOneArg($one) : Color
     {
@@ -185,6 +189,7 @@ class ColorFactory
      * @param mixed $two
      * @param mixed $three
      * @return Color
+     * @throws InvalidArgumentException
      */
     public static function fromUnknownThreeArgs($one, $two, $three) : Color
     {

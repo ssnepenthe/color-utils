@@ -15,6 +15,7 @@ class Hsla extends Hsl
      * @param float $saturation
      * @param float $lightness
      * @param float $alpha
+     * @throws InvalidArgumentException
      */
     public function __construct($hue, $saturation, $lightness, $alpha)
     {

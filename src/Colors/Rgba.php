@@ -15,6 +15,7 @@ class Rgba extends Rgb
      * @param int $green
      * @param int $blue
      * @param float $alpha
+     * @throws InvalidArgumentException
      */
     public function __construct($red, $green, $blue, $alpha)
     {

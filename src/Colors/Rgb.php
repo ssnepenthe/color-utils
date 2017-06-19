@@ -35,6 +35,7 @@ class Rgb extends BaseColor
      * @param int $red
      * @param int $green
      * @param int $blue
+     * @throws InvalidArgumentException
      */
     public function __construct($red, $green, $blue)
     {
@@ -236,6 +237,7 @@ class Rgb extends BaseColor
     /**
      * @param array $channels
      * @return ColorInterface
+     * @throws InvalidArgumentException
      */
     public function with(array $channels) : ColorInterface
     {

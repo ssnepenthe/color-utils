@@ -31,6 +31,7 @@ class Hsl extends BaseColor
      * @param float $hue
      * @param float $saturation
      * @param float $lightness
+     * @throws InvalidArgumentException
      */
     public function __construct($hue, $saturation, $lightness)
     {
@@ -112,6 +113,7 @@ class Hsl extends BaseColor
     /**
      * @param array $channels
      * @return ColorInterface
+     * @throws InvalidArgumentException
      */
     public function with(array $channels) : ColorInterface
     {

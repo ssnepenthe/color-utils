@@ -179,6 +179,7 @@ class KeywordParser implements ParserInterface
     /**
      * @param string $color
      * @return array
+     * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
     {

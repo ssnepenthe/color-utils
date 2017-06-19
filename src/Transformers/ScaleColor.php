@@ -33,6 +33,7 @@ class ScaleColor implements TransformerInterface
 
     /**
      * @param array $adjustments
+     * @throws InvalidArgumentException
      */
     public function __construct(array $adjustments)
     {

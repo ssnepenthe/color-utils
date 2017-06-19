@@ -17,6 +17,7 @@ class HslToRgb implements ConverterInterface
     /**
      * @param ColorInterface $color
      * @return ColorInterface
+     * @throws InvalidArgumentException
      */
     public function convert(ColorInterface $color) : ColorInterface
     {
