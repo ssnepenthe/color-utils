@@ -40,14 +40,20 @@ class Rgb extends BaseColor
     {
         $args = [$red, $green, $blue];
 
-        array_walk($args, function ($arg) {
-            if (! is_numeric($arg)) {
-                throw new InvalidArgumentException(sprintf(
-                    '%s args must be numeric',
-                    __METHOD__
-                ));
+        array_walk(
+            $args,
+            /**
+             * @return void
+             */
+            function ($arg) {
+                if (! is_numeric($arg)) {
+                    throw new InvalidArgumentException(sprintf(
+                        '%s args must be numeric',
+                        __METHOD__
+                    ));
+                }
             }
-        });
+        );
 
         $args = array_map(function ($value) : int {
             return restrict(intval(round($value)), 0, 255);

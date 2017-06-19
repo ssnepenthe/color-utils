@@ -36,14 +36,20 @@ class Hsl extends BaseColor
     {
         $args = [$hue, $saturation, $lightness];
 
-        array_walk($args, function ($arg) {
-            if (! is_numeric($arg)) {
-                throw new InvalidArgumentException(sprintf(
-                    '%s must be called with numeric args',
-                    __METHOD__
-                ));
+        array_walk(
+            $args,
+            /**
+             * @return void
+             */
+            function ($arg) {
+                if (! is_numeric($arg)) {
+                    throw new InvalidArgumentException(sprintf(
+                        '%s must be called with numeric args',
+                        __METHOD__
+                    ));
+                }
             }
-        });
+        );
 
         // Hue.
         $args[0] = modulo(floatval($args[0]), 360);
