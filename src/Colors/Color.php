@@ -120,19 +120,23 @@ class Color
         return round((max($luminances) + 0.05) / (min($luminances) + 0.05), 5);
     }
 
+    public function getRepresentation(string $class) : ColorInterface
+    {
+        foreach ($this->representations as $representation) {
+            if ($representation instanceof $class) {
+                return $representation;
+            }
+        }
+
+        throw new RuntimeException("No instance of {$class} found");
+    }
+
     /**
      * @return Hsl
      */
     public function getHsl() : Hsl
     {
-        foreach ($this->representations as $representation) {
-            if ($representation instanceof Hsl) {
-                return $representation;
-            }
-        }
-
-        // Should never hit this.
-        throw new RuntimeException('No instance of Hsl found');
+        return $this->getRepresentation(Hsl::class);
     }
 
     /**
@@ -140,14 +144,7 @@ class Color
      */
     public function getRgb() : Rgb
     {
-        foreach ($this->representations as $representation) {
-            if ($representation instanceof Rgb) {
-                return $representation;
-            }
-        }
-
-        // Should never hit this.
-        throw new RuntimeException('No instance of Rgb found');
+        return $this->getRepresentation(Rgb::class);
     }
 
     /**
