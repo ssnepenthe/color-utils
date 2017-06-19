@@ -24,7 +24,7 @@ class ParserResolver implements ParserResolverInterface
 
     /**
      * @param string $color
-     * @return ParserInterface|bool
+     * @return ParserInterface|false
      */
     public function resolve(string $color)
     {
