@@ -74,7 +74,7 @@ function contrast_ratio(Colors\Color $color1, Colors\Color $color2) : float
  */
 function green(...$args) : int
 {
-    return color(...$args)->getGreen();
+    return color(...$args)->getRgb()->getGreen();
 }
 
 /**
@@ -116,7 +116,7 @@ function hsla(...$args) : Colors\Color
  */
 function hue(...$args) : float
 {
-    return color(...$args)->getHue();
+    return color(...$args)->getHsl()->getHue();
 }
 
 /**
@@ -131,7 +131,7 @@ function is_bright(...$args) : bool
         $threshold = array_pop($args);
     }
 
-    return color(...$args)->isBright($threshold);
+    return color(...$args)->getRgb()->isBright($threshold);
 }
 
 /**
@@ -146,7 +146,7 @@ function is_light(...$args) : bool
         $threshold = array_pop($args);
     }
 
-    return color(...$args)->isLight($threshold);
+    return color(...$args)->getHsl()->isLight($threshold);
 }
 
 /**
@@ -155,7 +155,7 @@ function is_light(...$args) : bool
  */
 function lightness(...$args) : float
 {
-    return color(...$args)->getLightness();
+    return color(...$args)->getHsl()->getLightness();
 }
 
 /**
@@ -170,7 +170,7 @@ function looks_bright(...$args) : bool
         $threshold = array_pop($args);
     }
 
-    return color(...$args)->looksBright($threshold);
+    return color(...$args)->getRgb()->looksBright($threshold);
 }
 
 /**
@@ -179,7 +179,7 @@ function looks_bright(...$args) : bool
  */
 function name(...$args) : string
 {
-    return color(...$args)->getName();
+    return color(...$args)->getRgb()->getName();
 }
 
 /**
@@ -197,7 +197,7 @@ function opacity(...$args) : float
  */
 function perceived_brightness(...$args) : float
 {
-    return color(...$args)->calculatePerceivedBrightness();
+    return color(...$args)->getRgb()->calculatePerceivedBrightness();
 }
 
 /**
@@ -206,7 +206,7 @@ function perceived_brightness(...$args) : float
  */
 function red(...$args) : int
 {
-    return color(...$args)->getRed();
+    return color(...$args)->getRgb()->getRed();
 }
 
 /**
@@ -215,7 +215,7 @@ function red(...$args) : int
  */
 function relative_luminance(...$args) : float
 {
-    return color(...$args)->calculateRelativeLuminance();
+    return color(...$args)->getRgb()->calculateRelativeLuminance();
 }
 
 /**
@@ -257,5 +257,5 @@ function rgba(...$args) : Colors\Color
  */
 function saturation(...$args) : float
 {
-    return color(...$args)->getSaturation();
+    return color(...$args)->getHsl()->getSaturation();
 }
