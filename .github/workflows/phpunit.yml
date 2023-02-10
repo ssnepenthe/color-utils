@@ -37,11 +37,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Determine Composer version
+        id: composer_version
+        run: |
+          if [[ ${ matrix.php } == '7.0' ]]; then
+            echo "::set-output name=version::1.x"
+          else
+            echo "::set-output name=version::2.x"
+          fi
+
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer
+          tools: composer:${{ steps.composer_version.outputs.version }}
 
       - name: Validate composer.json
         run: composer validate --strict
