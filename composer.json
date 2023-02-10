@@ -34,9 +34,6 @@
   "require-dev": {
     "psy/psysh": "^0.10 || ^0.11",
     "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0",
-    "phpmd/phpmd": "^2.6",
-    "phploc/phploc": "^3.0",
-    "squizlabs/php_codesniffer": "^2.8",
     "vimeo/psalm": "^3.0 || ^4.0",
     "yoast/phpunit-polyfills": "^1.0"
   },
@@ -49,12 +46,7 @@
     "psr-4": { "SSNepenthe\\ColorUtils\\": "src/" }
   },
   "scripts": {
-    "phpcs": "./vendor/bin/phpcs --colors --standard=PSR2 {inc,src}",
-    "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 {inc,src}",
-    "phploc": "./vendor/bin/phploc --exclude={vendor,tests} .",
-    "phpmd": "./vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode --exclude vendor/,tests/ --ignore-violations-on-exit",
     "phpunit": "./vendor/bin/phpunit --colors=always",
-    "psalm": "./vendor/bin/psalm",
-    "qc": ["@phpunit", "@phpcs"]
+    "psalm": "./vendor/bin/psalm"
   }
 }
