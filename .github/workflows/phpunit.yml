@@ -40,7 +40,7 @@ jobs:
       - name: Determine Composer version
         id: composer_version
         run: |
-          if [[ ${ matrix.php } == '7.0' ]]; then
+          if [[ ${{ matrix.php }} == '7.0' ]]; then
             echo "::set-output name=version::1.x"
           else
             echo "::set-output name=version::2.x"
