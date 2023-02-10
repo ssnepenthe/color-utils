@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\GrayScale;
 
@@ -13,7 +13,7 @@ class GrayScaleTest extends TestCase
 {
     protected $t;
 
-    function setUp()
+    function set_up()
     {
         $this->t = new GrayScale;
     }

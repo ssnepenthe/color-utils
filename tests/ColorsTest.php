@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Colors\Rgba as R;
 use SSNepenthe\ColorUtils\Colors\Color as C;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
@@ -15,7 +15,7 @@ class ColorsTest extends TestCase
 {
     protected $c;
 
-    function setUp()
+    function set_up()
     {
         $this->c = new C(new R(255, 0, 51, 0.7));
     }

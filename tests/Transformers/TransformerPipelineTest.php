@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 use SSNepenthe\ColorUtils\Transformers\Invert;
@@ -28,7 +28,11 @@ class TransformerPipelineTest extends TestCase
 
         $pipeline->add($lighten30);
 
-        $this->assertAttributeContains($lighten30, 'transformers', $pipeline);
+        // @todo Temporary fix while we are bringing dependencies up-to-date.
+        $ref = new ReflectionProperty(TransformerPipeline::class, 'transformers');
+        $ref->setAccessible(true);
+
+        $this->assertSame([$lighten30], $ref->getValue($pipeline));
     }
 
     /** @test */
@@ -37,7 +41,11 @@ class TransformerPipelineTest extends TestCase
         $lighten30 = new Lighten(30);
         $pipeline = new TransformerPipeline([$lighten30]);
 
-        $this->assertAttributeContains($lighten30, 'transformers', $pipeline);
+        // @todo Temporary fix while we are bringing dependencies up-to-date.
+        $ref = new ReflectionProperty(TransformerPipeline::class, 'transformers');
+        $ref->setAccessible(true);
+
+        $this->assertSame([$lighten30], $ref->getValue($pipeline));
     }
 
     /** @test */

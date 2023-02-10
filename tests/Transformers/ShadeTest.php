@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Transformers\Shade;
 use SSNepenthe\ColorUtils\Colors\ColorFactory;
 

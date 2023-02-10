@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use function SSNepenthe\ColorUtils\modulo;
 use function SSNepenthe\ColorUtils\restrict;
 use function SSNepenthe\ColorUtils\value_is_between;
