@@ -32,12 +32,12 @@
     "php": "^7.0 || ^8.0"
   },
   "require-dev": {
-    "psy/psysh": "^0.8",
+    "psy/psysh": "^0.10 || ^0.11",
     "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0",
     "phpmd/phpmd": "^2.6",
     "phploc/phploc": "^3.0",
     "squizlabs/php_codesniffer": "^2.8",
-    "vimeo/psalm": "^0.3",
+    "vimeo/psalm": "^3.0 || ^4.0",
     "yoast/phpunit-polyfills": "^1.0"
   },
   "autoload": {
