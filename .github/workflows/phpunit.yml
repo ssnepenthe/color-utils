@@ -41,9 +41,9 @@ jobs:
         id: composer_version
         run: |
           if [[ ${{ matrix.php }} == '7.0' ]]; then
-            echo "::set-output name=version::1.x"
+            echo "version=v1" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=version::2.x"
+            echo "version=v2" >> $GITHUB_OUTPUT
           fi
 
       - name: Install PHP
