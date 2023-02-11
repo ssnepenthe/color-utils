@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Rgb;
 use SSNepenthe\ColorUtils\Colors\Hsla;
@@ -9,7 +9,7 @@ use SSNepenthe\ColorUtils\Converters\RgbToHsl;
 
 class RgbToHslTest extends TestCase
 {
-    function setUp()
+    function set_up()
     {
         $this->c = new RgbToHsl;
     }

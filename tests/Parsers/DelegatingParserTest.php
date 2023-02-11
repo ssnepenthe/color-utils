@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Parsers\ParserInterface;
 use SSNepenthe\ColorUtils\Parsers\DelegatingParser;
 use SSNepenthe\ColorUtils\Parsers\ParserResolverInterface;

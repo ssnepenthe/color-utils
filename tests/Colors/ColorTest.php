@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use SSNepenthe\ColorUtils\Colors\Hsl;
 use SSNepenthe\ColorUtils\Colors\Rgb;
 use SSNepenthe\ColorUtils\Colors\Hsla;
@@ -105,13 +105,15 @@ class ColorTest extends TestCase
         $color1 = new Color(new Rgb(255, 0, 51));
         $color2 = new Color(new Rgb(51, 0, 255));
 
-        $this->assertEquals(
+        $this->assertEqualsWithDelta(
             37.74,
-            $color1->calculateBrightnessDifferenceWith($color2)
+            $color1->calculateBrightnessDifferenceWith($color2),
+            0.00001
         );
-        $this->assertEquals(
+        $this->assertEqualsWithDelta(
             37.74,
-            $color2->calculateBrightnessDifferenceWith($color1)
+            $color2->calculateBrightnessDifferenceWith($color1),
+            0.00001
         );
     }
 
