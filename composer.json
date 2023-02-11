@@ -48,5 +48,10 @@
   "scripts": {
     "phpunit": "./vendor/bin/phpunit --colors=always",
     "psalm": "./vendor/bin/psalm"
+  },
+  "config": {
+    "allow-plugins": {
+      "ocramius/package-versions": true
+    }
   }
 }
