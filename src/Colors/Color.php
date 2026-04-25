@@ -50,7 +50,7 @@ class Color
      * @param ColorInterface $color
      * @param string|null $base
      */
-    public function __construct(ColorInterface $color, string $base = null)
+    public function __construct(ColorInterface $color, ?string $base = null)
     {
         $this->representations[] = $color;
 

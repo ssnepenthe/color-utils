@@ -32,7 +32,7 @@ class ConditionalTransformer implements TransformerInterface
     public function __construct(
         callable $callback,
         TransformerInterface $truthyTransformer,
-        TransformerInterface $falsyTransformer = null
+        ?TransformerInterface $falsyTransformer = null
     ) {
         $this->callback = $callback;
         $this->truthyTransformer = $truthyTransformer;

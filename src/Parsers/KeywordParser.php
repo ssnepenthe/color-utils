@@ -171,7 +171,7 @@ class KeywordParser implements ParserInterface
     /**
      * @param HexParser|null $parser
      */
-    public function __construct(HexParser $parser = null)
+    public function __construct(?HexParser $parser = null)
     {
         $this->parser = $parser ?: new HexParser;
     }
