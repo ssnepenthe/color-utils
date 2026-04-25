@@ -21,14 +21,13 @@ jobs:
     strategy:
       matrix:
         php:
-          - '7.0'
-          - '7.1'
-          - '7.2'
-          - '7.3'
           - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
+          - '8.3'
+          - '8.4'
+          - '8.5'
         dependencies:
           - ''
           - '--prefer-lowest'
@@ -37,20 +36,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Determine Composer version
-        id: composer_version
-        run: |
-          if [[ ${{ matrix.php }} == '7.0' ]]; then
-            echo "version=v1" >> $GITHUB_OUTPUT
-          else
-            echo "version=v2" >> $GITHUB_OUTPUT
-          fi
-
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:${{ steps.composer_version.outputs.version }}
+          tools: composer:v2
 
       - name: Validate composer.json
         run: composer validate --strict
