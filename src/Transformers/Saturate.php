@@ -9,10 +9,7 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 class Saturate implements TransformerInterface
 {
-    /**
-     * @var AdjustColor
-     */
-    protected $transformer;
+    protected AdjustColor $transformer;
 
     /**
      * @param float $amount

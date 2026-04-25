@@ -9,10 +9,7 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 class Complement implements TransformerInterface
 {
-    /**
-     * @var AdjustColor
-     */
-    protected $transformer;
+    protected AdjustColor $transformer;
 
     public function __construct()
     {

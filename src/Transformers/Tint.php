@@ -10,10 +10,7 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 class Tint implements TransformerInterface
 {
-    /**
-     * @var Mix
-     */
-    protected $transformer;
+    protected Mix $transformer;
 
     /**
      * @param int $weight

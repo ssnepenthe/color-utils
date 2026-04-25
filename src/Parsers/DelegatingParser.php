@@ -9,10 +9,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  */
 class DelegatingParser implements ParserInterface
 {
-    /**
-     * @var ParserResolverInterface
-     */
-    protected $resolver;
+    protected ParserResolverInterface $resolver;
 
     /**
      * @param ParserResolverInterface $resolver

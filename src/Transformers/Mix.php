@@ -10,10 +10,7 @@ use function SSNepenthe\ColorUtils\restrict;
  */
 class Mix implements TransformerInterface
 {
-    /**
-     * @var Color
-     */
-    protected $color;
+    protected Color $color;
 
     /**
      * @var int

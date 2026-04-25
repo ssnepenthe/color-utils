@@ -163,10 +163,7 @@ class KeywordParser implements ParserInterface
         'yellowgreen'          => '#9acd32',
     ];
 
-    /**
-     * @var HexParser
-     */
-    protected $parser;
+    protected HexParser $parser;
 
     /**
      * @param HexParser|null $parser

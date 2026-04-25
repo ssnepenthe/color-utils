@@ -9,10 +9,7 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 class GrayScale implements TransformerInterface
 {
-    /**
-     * @var ChangeColor
-     */
-    protected $transformer;
+    protected ChangeColor $transformer;
 
     public function __construct()
     {
