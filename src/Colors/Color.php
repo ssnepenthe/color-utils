@@ -27,7 +27,7 @@ class Color
      * @return mixed
      * @throws BadMethodCallException
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         if ('toColor' === $method) {
             // Don't proxy ->toColor() calls, just return this instance.
