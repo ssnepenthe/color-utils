@@ -13,7 +13,7 @@ class GrayScaleTest extends TestCase
 {
     protected $t;
 
-    function set_up()
+    function set_up(): void
     {
         $this->t = new GrayScale;
     }

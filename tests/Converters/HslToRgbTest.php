@@ -9,7 +9,7 @@ use SSNepenthe\ColorUtils\Converters\HslToRgb;
 
 class HslToRgbTest extends TestCase
 {
-    function set_up()
+    function set_up(): void
     {
         $this->c = new HslToRgb;
     }

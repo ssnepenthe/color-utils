@@ -28,7 +28,7 @@ class TransformerPipeline implements TransformerInterface
      * @param TransformerInterface $transformer
      * @return void
      */
-    public function add(TransformerInterface $transformer)
+    public function add(TransformerInterface $transformer): void
     {
         $this->transformers[] = $transformer;
     }

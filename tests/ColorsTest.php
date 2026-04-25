@@ -15,7 +15,7 @@ class ColorsTest extends TestCase
 {
     protected $c;
 
-    function set_up()
+    function set_up(): void
     {
         $this->c = new C(new R(255, 0, 51, 0.7));
     }
