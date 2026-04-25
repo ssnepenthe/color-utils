@@ -42,7 +42,7 @@ class Hsl extends BaseColor
             /**
              * @return void
              */
-            function ($arg) {
+            function ($arg): void {
                 if (! is_numeric($arg)) {
                     throw new InvalidArgumentException(sprintf(
                         '%s must be called with numeric args',
@@ -60,7 +60,7 @@ class Hsl extends BaseColor
             $args[$i] = restrict(floatval($args[$i]), 0.0, 100.0);
         }
 
-        list($this->hue, $this->saturation, $this->lightness) = $args;
+        [$this->hue, $this->saturation, $this->lightness] = $args;
     }
 
     /**
@@ -151,8 +151,8 @@ class Hsl extends BaseColor
     protected function toStringifiedArray() : array
     {
         $channels = array_map('strval', $this->toArray());
-        $channels['saturation'] = $channels['saturation'] . '%';
-        $channels['lightness'] = $channels['lightness'] . '%';
+        $channels['saturation'] .= '%';
+        $channels['lightness'] .= '%';
 
         return $channels;
     }

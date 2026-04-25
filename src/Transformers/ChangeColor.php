@@ -35,9 +35,7 @@ class ChangeColor implements TransformerInterface
     public function __construct(array $adjustments)
     {
         // First filter out non-numeric adjustments.
-        $adjustments = array_filter($adjustments, function ($adjustment) : bool {
-            return is_numeric($adjustment);
-        });
+        $adjustments = array_filter($adjustments, fn($adjustment): bool => is_numeric($adjustment));
 
         foreach ($this->whitelist as $channel) {
             if (isset($adjustments[$channel])) {

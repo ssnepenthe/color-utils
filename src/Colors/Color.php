@@ -202,11 +202,11 @@ class Color
     protected function makeConverter(ColorInterface $color) : ConverterInterface
     {
         switch (get_class($color)) {
-            case 'SSNepenthe\\ColorUtils\\Colors\\Rgb':
-            case 'SSNepenthe\\ColorUtils\\Colors\\Rgba':
+            case \SSNepenthe\ColorUtils\Colors\Rgb::class:
+            case \SSNepenthe\ColorUtils\Colors\Rgba::class:
                 return new RgbToHsl;
-            case 'SSNepenthe\\ColorUtils\\Colors\\Hsl':
-            case 'SSNepenthe\\ColorUtils\\Colors\\Hsla':
+            case \SSNepenthe\ColorUtils\Colors\Hsl::class:
+            case \SSNepenthe\ColorUtils\Colors\Hsla::class:
                 return new HslToRgb;
             default:
                 // Should never hit this.

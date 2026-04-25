@@ -25,8 +25,6 @@ class HslParser extends PatternParser
      */
     protected function prepareExtractedData(array $data) : array
     {
-        return array_map(function ($value) : float {
-            return floatval(trim($value, '%'));
-        }, $data);
+        return array_map(fn($value): float => floatval(trim($value, '%')), $data);
     }
 }

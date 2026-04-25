@@ -28,9 +28,7 @@ class HexParser implements ParserInterface
         $len = strlen($color);
         $isShorthand = 3 === $len || 4 === $len;
 
-        $values = array_map(function ($value) use ($isShorthand) : int {
-            return hexdec($isShorthand ? str_repeat($value, 2) : $value);
-        }, str_split($color, $isShorthand ? 1 : 2));
+        $values = array_map(fn($value): int => hexdec($isShorthand ? str_repeat($value, 2) : $value), str_split($color, $isShorthand ? 1 : 2));
 
         $keys = ['red', 'green', 'blue'];
 

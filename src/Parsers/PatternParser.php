@@ -25,9 +25,7 @@ abstract class PatternParser implements ParserInterface
         }
 
         // Filter out numerically indexed values.
-        $matches = array_filter($matches, function ($key) : bool {
-            return is_string($key);
-        }, ARRAY_FILTER_USE_KEY);
+        $matches = array_filter($matches, fn($key): bool => is_string($key), ARRAY_FILTER_USE_KEY);
 
         return $this->prepareExtractedData($matches);
     }

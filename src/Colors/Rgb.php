@@ -46,7 +46,7 @@ class Rgb extends BaseColor
             /**
              * @return void
              */
-            function ($arg) {
+            function ($arg): void {
                 if (! is_numeric($arg)) {
                     throw new InvalidArgumentException(sprintf(
                         '%s args must be numeric',
@@ -56,11 +56,9 @@ class Rgb extends BaseColor
             }
         );
 
-        $args = array_map(function ($value) : int {
-            return restrict(intval(round($value)), 0, 255);
-        }, $args);
+        $args = array_map(fn($value): int => restrict(intval(round($value)), 0, 255), $args);
 
-        list($this->red, $this->green, $this->blue) = $args;
+        [$this->red, $this->green, $this->blue] = $args;
     }
 
     /**
@@ -101,7 +99,7 @@ class Rgb extends BaseColor
                 return $value / 12.92;
             }
 
-            return pow((($value + 0.055) / 1.055), 2.4);
+            return (($value + 0.055) / 1.055) ** 2.4;
         }, $this->toArray());
 
         return round(
