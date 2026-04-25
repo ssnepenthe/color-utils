@@ -63,7 +63,7 @@ class HslToRgb implements ConverterInterface
         $tempColors = array_map(fn($colorValue): float => modulo($colorValue, 1), ['red' => $hue + (1 / 3), 'green' => $hue, 'blue' => $hue - (1 / 3)]);
 
         // 6) Actual color values.
-        $colors = array_map(function ($colorValue) use ($temp1, $temp2) : float {
+        $colors = array_map(function (float $colorValue) use ($temp1, $temp2) : float {
             if (6 * $colorValue < 1) {
                 return $temp2 + ($temp1 - $temp2) * 6 * $colorValue;
             }
@@ -80,7 +80,7 @@ class HslToRgb implements ConverterInterface
         }, $tempColors);
 
         // 7) Convert to 8-bit and extract.
-        extract(array_map(fn($color): float => $color * 255, $colors));
+        extract(array_map(fn(float $color): float => $color * 255, $colors));
 
         if (isset($alpha)) {
             return new Rgba($red, $green, $blue, $alpha);
