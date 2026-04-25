@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class InvalidArgumentExceptionTest extends TestCase
 {
     /** @test */
-    function it_reflects_expected_hierarchy()
+    function it_reflects_expected_hierarchy(): void
     {
         $e = new InvalidArgumentException('test');
 

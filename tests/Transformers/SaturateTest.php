@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class SaturateTest extends TestCase
 {
     /** @test */
-    function it_can_saturate_colors()
+    function it_can_saturate_colors(): void
     {
         // assert_equal("#d9f2d9", evaluate("saturate(hsl(120, 30, 90), 20%)"))
         $c = ColorFactory::fromHsl(120, 30, 90);
@@ -32,7 +32,7 @@ class SaturateTest extends TestCase
     }
 
     /** @test */
-    function saturating_shades_of_gray_doesnt_change_the_color()
+    function saturating_shades_of_gray_doesnt_change_the_color(): void
     {
         $c = ColorFactory::fromString('#000');
 
@@ -48,7 +48,7 @@ class SaturateTest extends TestCase
     }
 
     /** @test */
-    function it_honors_ranges_when_saturating_colors()
+    function it_honors_ranges_when_saturating_colors(): void
     {
         $c = ColorFactory::fromString('#8a8');
 
@@ -58,7 +58,7 @@ class SaturateTest extends TestCase
     }
 
     /** @test */
-    function it_throws_when_given_invalid_adjustments()
+    function it_throws_when_given_invalid_adjustments(): void
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);

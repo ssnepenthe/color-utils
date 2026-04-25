@@ -9,7 +9,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class DelegatingParserTest extends TestCase
 {
     /** @test */
-    function it_is_instantiable()
+    function it_is_instantiable(): void
     {
         $resolverStub = $this->createMock(ParserResolverInterface::class);
         $parser = new DelegatingParser($resolverStub);
@@ -18,7 +18,7 @@ class DelegatingParserTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_delegates_to_resolver_to_check_support()
+    function it_correctly_delegates_to_resolver_to_check_support(): void
     {
         $supported = '#abcdef';
         $unsupported = 'rgb(120, 120, 120)';
@@ -35,7 +35,7 @@ class DelegatingParserTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_delegates_to_resolver_to_parse_colors()
+    function it_correctly_delegates_to_resolver_to_parse_colors(): void
     {
         $toParse = '#abcdef';
         $parsed = ['red' => 173, 'green' => 205, 'blue' => 239];
@@ -54,7 +54,7 @@ class DelegatingParserTest extends TestCase
     }
 
     /** @test */
-    function it_throws_when_attempting_to_parse_unsupported_string()
+    function it_throws_when_attempting_to_parse_unsupported_string(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

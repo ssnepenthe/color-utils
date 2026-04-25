@@ -19,7 +19,7 @@ class ComplementTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_complements_of_colors()
+    function it_can_create_complements_of_colors(): void
     {
         // assert_equal("#ccbbaa", evaluate("complement(#abc)"))
         $c = ColorFactory::fromString('#abc');
@@ -39,7 +39,7 @@ class ComplementTest extends TestCase
     }
 
     /** @test */
-    function it_cant_adjust_shades_of_gray()
+    function it_cant_adjust_shades_of_gray(): void
     {
         // assert_equal("white", evaluate("complement(white)"))
         $c = ColorFactory::fromString('white');

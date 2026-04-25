@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HslParserTest extends TestCase
 {
     /** @test */
-    function it_knows_whether_it_can_parse_a_given_string()
+    function it_knows_whether_it_can_parse_a_given_string(): void
     {
         $parser = new HslParser;
 
@@ -103,7 +103,7 @@ class HslParserTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_parses_hsla_strings()
+    function it_correctly_parses_hsla_strings(): void
     {
         $parser = new HslParser;
 
@@ -114,7 +114,7 @@ class HslParserTest extends TestCase
     }
 
     /** @test */
-    function it_throws_when_attempting_to_parse_unsupported_string()
+    function it_throws_when_attempting_to_parse_unsupported_string(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

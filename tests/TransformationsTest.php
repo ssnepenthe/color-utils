@@ -10,7 +10,7 @@ use function SSNepenthe\ColorUtils\{
 class TransformationsTest extends TestCase
 {
     /** @test */
-    function adjust_color()
+    function adjust_color(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 50%)',
@@ -19,7 +19,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function adjust_hue()
+    function adjust_hue(): void
     {
         $this->assertEquals(
             'hsl(180, 0%, 0%)',
@@ -28,7 +28,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function change_color()
+    function change_color(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 50%)',
@@ -37,7 +37,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function complement()
+    function complement(): void
     {
         $this->assertEquals(
             'hsl(180, 0%, 0%)',
@@ -46,7 +46,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function darken()
+    function darken(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 70%)',
@@ -55,7 +55,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function desaturate()
+    function desaturate(): void
     {
         $this->assertEquals(
             'hsl(0, 95%, 50%)',
@@ -64,7 +64,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function grayscale()
+    function grayscale(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 50%)',
@@ -73,7 +73,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function invert()
+    function invert(): void
     {
         $this->assertEquals(
             'rgb(255, 255, 255)',
@@ -82,7 +82,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function lighten()
+    function lighten(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 50%)',
@@ -91,7 +91,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function mix()
+    function mix(): void
     {
         $this->assertEquals(
             'rgb(128, 0, 128)',
@@ -100,7 +100,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function opacify_and_fade_in()
+    function opacify_and_fade_in(): void
     {
         $c = ColorFactory::fromRgba(0, 0, 0, 0);
         $functions = [
@@ -114,7 +114,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function saturate()
+    function saturate(): void
     {
         $this->assertEquals(
             'hsl(0, 50%, 0%)',
@@ -123,7 +123,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function scale_color()
+    function scale_color(): void
     {
         $this->assertEquals(
             'hsl(0, 0%, 50%)',
@@ -132,7 +132,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function shade()
+    function shade(): void
     {
         $this->assertEquals(
             'rgb(128, 128, 128)',
@@ -141,7 +141,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function tint()
+    function tint(): void
     {
         $this->assertEquals(
             'rgb(128, 128, 128)',
@@ -150,7 +150,7 @@ class TransformationsTest extends TestCase
     }
 
     /** @test */
-    function transparentize_and_fade_out()
+    function transparentize_and_fade_out(): void
     {
         $c = ColorFactory::fromRgb(0, 0, 0);
         $functions = [

@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\ExceptionInterface;
 class RuntimeExceptionTest extends TestCase
 {
     /** @test */
-    function it_reflects_expected_hierarchy()
+    function it_reflects_expected_hierarchy(): void
     {
         $e = new RuntimeException('test');
 

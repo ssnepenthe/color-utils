@@ -19,7 +19,7 @@ class GrayScaleTest extends TestCase
     }
 
     /** @test */
-    function it_can_convert_colors_to_grayscale()
+    function it_can_convert_colors_to_grayscale(): void
     {
         $c = ColorFactory::fromString('#abc');
 
@@ -39,7 +39,7 @@ class GrayScaleTest extends TestCase
     }
 
     /** @test */
-    function it_doesnt_change_shades_of_gray()
+    function it_doesnt_change_shades_of_gray(): void
     {
         $c = ColorFactory::fromString('#fff');
 
@@ -53,7 +53,7 @@ class GrayScaleTest extends TestCase
     }
 
     /** @test */
-    function it_converts_primary_colors_straight_to_gray()
+    function it_converts_primary_colors_straight_to_gray(): void
     {
         $c = ColorFactory::fromString('#f00');
 
