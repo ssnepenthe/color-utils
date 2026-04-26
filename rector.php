@@ -12,9 +12,8 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withPhpSets()
-    ->withDeadCodeLevel(53)
     ->withCodeQualityLevel(0)
-    ->withPreparedSets(typeDeclarations: true)
+    ->withPreparedSets(deadCode: true, typeDeclarations: true)
     ->withSkip([
         AddArrayFunctionClosureParamTypeRector::class => [
             __DIR__ . '/src/Colors/Hsl.php',
