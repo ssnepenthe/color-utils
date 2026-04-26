@@ -52,6 +52,6 @@ class DarkenTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#880000", evaluate("darken(#800, 0%)"))
-        $t = new Darken(0);
+        new Darken(0);
     }
 }

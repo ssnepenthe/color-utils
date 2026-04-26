@@ -43,6 +43,6 @@ class OpacifyTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("opacify(rgba(0, 0, 0, 0.2), 0%)"))
-        $t = new Opacify(0.0);
+        new Opacify(0.0);
     }
 }

@@ -90,7 +90,7 @@ class ChangeColorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new ChangeColor(['blue' => 'test']);
+        new ChangeColor(['blue' => 'test']);
     }
 
     /** @test */

@@ -127,7 +127,7 @@ class ScaleColorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new ScaleColor(['saturation' => 'test']);
+        new ScaleColor(['saturation' => 'test']);
     }
 
     /** @test */

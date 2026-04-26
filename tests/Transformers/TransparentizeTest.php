@@ -56,6 +56,6 @@ class TransparentizeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0)"))
-        $t = new Transparentize(0);
+        new Transparentize(0);
     }
 }

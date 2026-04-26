@@ -71,6 +71,6 @@ class AdjustHueTest extends TestCase
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new AdjustHue(0);
+        new AdjustHue(0);
     }
 }

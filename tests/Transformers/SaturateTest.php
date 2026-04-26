@@ -64,6 +64,6 @@ class SaturateTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#88aa88", evaluate("saturate(#8a8, 0%)"))
-        $t = new Saturate(0);
+        new Saturate(0);
     }
 }

@@ -158,7 +158,7 @@ class AdjustColorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new AdjustColor(['blue' => 'test']);
+        new AdjustColor(['blue' => 'test']);
     }
 
     /** @test */
@@ -166,7 +166,7 @@ class AdjustColorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new AdjustColor(['green' => 0]);
+        new AdjustColor(['green' => 0]);
     }
 
     /** @test */

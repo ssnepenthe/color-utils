@@ -67,6 +67,6 @@ class DesaturateTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#88aa88", evaluate("desaturate(#8a8, 0%)"))
-        $t = new Desaturate(0);
+        new Desaturate(0);
     }
 }

@@ -55,6 +55,6 @@ class LightenTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("#880000", evaluate("lighten(#800, 0%)"))
-        $t = new Lighten(0);
+        new Lighten(0);
     }
 }
