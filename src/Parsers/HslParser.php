@@ -7,9 +7,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 class HslParser extends PatternParser
 {
-    /**
-     * @return string
-     */
     protected function getPattern() : string
     {
         return '/^hsl\(
@@ -19,9 +16,6 @@ class HslParser extends PatternParser
         \)$/ix';
     }
 
-    /**
-     * @return array
-     */
     protected function prepareExtractedData(array $data) : array
     {
         return array_map(fn($value): float => floatval(trim($value, '%')), $data);

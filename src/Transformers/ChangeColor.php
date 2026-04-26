@@ -50,9 +50,6 @@ class ChangeColor implements TransformerInterface
         }
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $color->with($this->adjustments);

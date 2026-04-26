@@ -16,9 +16,6 @@ class Transparentize implements TransformerInterface
         $this->transformer = new AdjustColor(['alpha' => -1 * $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

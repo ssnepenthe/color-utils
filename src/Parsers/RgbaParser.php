@@ -7,9 +7,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 class RgbaParser extends RgbParser
 {
-    /**
-     * @return string
-     */
     protected function getPattern() : string
     {
         return '/^rgba\(
@@ -20,9 +17,6 @@ class RgbaParser extends RgbParser
         \)$/ix';
     }
 
-    /**
-     * @return array
-     */
     protected function prepareExtractedData(array $data) : array
     {
         // Red, green and blue channels.

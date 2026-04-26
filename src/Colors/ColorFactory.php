@@ -14,7 +14,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class ColorFactory
 {
     /**
-     * @return Color
      * @throws InvalidArgumentException
      */
     public static function fromArray(array $channels) : Color
@@ -51,7 +50,6 @@ class ColorFactory
      * @param float $saturation
      * @param float $lightness
      * @param float $alpha
-     * @return Color
      */
     public static function fromHsla($hue, $saturation, $lightness, $alpha) : Color
     {
@@ -62,7 +60,6 @@ class ColorFactory
      * @param float $hue
      * @param float $saturation
      * @param float $lightness
-     * @return Color
      */
     public static function fromHsl($hue, $saturation, $lightness) : Color
     {
@@ -74,7 +71,6 @@ class ColorFactory
      * @param int $green
      * @param int $blue
      * @param float $alpha
-     * @return Color
      */
     public static function fromRgba($red, $green, $blue, $alpha) : Color
     {
@@ -85,16 +81,12 @@ class ColorFactory
      * @param int $red
      * @param int $green
      * @param int $blue
-     * @return Color
      */
     public static function fromRgb($red, $green, $blue) : Color
     {
         return new Color(new Rgb($red, $green, $blue));
     }
 
-    /**
-     * @return Color
-     */
     public static function fromString(string $color) : Color
     {
         $parser = new DelegatingParser(ParserResolverFactory::all());
@@ -104,7 +96,6 @@ class ColorFactory
 
     /**
      * @param mixed ...$args
-     * @return Color
      * @throws InvalidArgumentException
      */
     public static function fromUnknown(...$args) : Color
@@ -134,7 +125,6 @@ class ColorFactory
      * @param mixed $two
      * @param mixed $three
      * @param mixed $four
-     * @return Color
      * @throws InvalidArgumentException
      */
     public static function fromUnknownFourArgs($one, $two, $three, $four) : Color
@@ -155,7 +145,6 @@ class ColorFactory
 
     /**
      * @param mixed $one
-     * @return Color
      * @throws InvalidArgumentException
      */
     public static function fromUnknownOneArg($one) : Color
@@ -186,7 +175,6 @@ class ColorFactory
      * @param mixed $one
      * @param mixed $two
      * @param mixed $three
-     * @return Color
      * @throws InvalidArgumentException
      */
     public static function fromUnknownThreeArgs($one, $two, $three) : Color
@@ -207,7 +195,6 @@ class ColorFactory
 
     /**
      * @param mixed ...$args
-     * @return bool
      */
     protected static function couldBeHslArgs(...$args) : bool
     {
@@ -220,7 +207,6 @@ class ColorFactory
 
     /**
      * @param mixed ...$args
-     * @return bool
      */
     protected static function couldBeRgbArgs(...$args) : bool
     {

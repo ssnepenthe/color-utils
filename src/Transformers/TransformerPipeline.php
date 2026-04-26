@@ -21,17 +21,11 @@ class TransformerPipeline implements TransformerInterface
         }
     }
 
-    /**
-     * @return void
-     */
     public function add(TransformerInterface $transformer): void
     {
         $this->transformers[] = $transformer;
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         foreach ($this->transformers as $transformer) {

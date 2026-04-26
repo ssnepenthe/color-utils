@@ -16,9 +16,6 @@ class Desaturate implements TransformerInterface
         $this->transformer = new AdjustColor(['saturation' => -1 * $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

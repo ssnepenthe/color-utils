@@ -17,7 +17,6 @@ class DelegatingParser implements ParserInterface
     }
 
     /**
-     * @return array
      * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
@@ -33,9 +32,6 @@ class DelegatingParser implements ParserInterface
         return $parser->parse($color);
     }
 
-    /**
-     * @return bool
-     */
     public function supports(string $color) : bool
     {
         return false !== $this->resolver->resolve($color);

@@ -50,9 +50,6 @@ class AdjustColor implements TransformerInterface
         }
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         $channels = [];

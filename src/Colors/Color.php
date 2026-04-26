@@ -68,17 +68,11 @@ class Color
         }
     }
 
-    /**
-     * @return string
-     */
     public function __toString() : string
     {
         return $this->representations[0]->__toString();
     }
 
-    /**
-     * @return float
-     */
     public function calculateBrightnessDifferenceWith(Color $other) : float
     {
         $brightness1 = $this->getRgb()->calculateBrightness();
@@ -87,9 +81,6 @@ class Color
         return abs($brightness1 - $brightness2);
     }
 
-    /**
-     * @return int
-     */
     public function calculateColorDifferenceWith(Color $other) : int
     {
         $rgb1 = $this->getRgb()->toArray();
@@ -100,9 +91,6 @@ class Color
             + abs($rgb1['blue'] - $rgb2['blue']);
     }
 
-    /**
-     * @return float
-     */
     public function calculateContrastRatioWith(Color $other) : float
     {
         $luminances = [
@@ -114,7 +102,6 @@ class Color
     }
 
     /**
-     * @return ColorInterface
      * @throws RuntimeException
      */
     public function getRepresentation(string $class) : ColorInterface
@@ -128,24 +115,17 @@ class Color
         throw new RuntimeException("No instance of {$class} found");
     }
 
-    /**
-     * @return Hsl
-     */
     public function getHsl() : Hsl
     {
         return $this->getRepresentation(Hsl::class);
     }
 
-    /**
-     * @return Rgb
-     */
     public function getRgb() : Rgb
     {
         return $this->getRepresentation(Rgb::class);
     }
 
     /**
-     * @return Color
      * @throws InvalidArgumentException
      */
     public function with(array $channels) : Color
@@ -185,7 +165,6 @@ class Color
     }
 
     /**
-     * @return ConverterInterface
      * @throws InvalidArgumentException
      */
     protected function makeConverter(ColorInterface $color) : ConverterInterface

@@ -16,9 +16,6 @@ class Opacify implements TransformerInterface
         $this->transformer = new AdjustColor(['alpha' => $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

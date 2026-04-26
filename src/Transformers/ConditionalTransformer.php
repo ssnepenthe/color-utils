@@ -28,9 +28,6 @@ class ConditionalTransformer implements TransformerInterface
         $this->falsyTransformer = $falsyTransformer;
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         if (call_user_func($this->callback, $color)) {

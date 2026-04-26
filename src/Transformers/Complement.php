@@ -16,9 +16,6 @@ class Complement implements TransformerInterface
         $this->transformer = new AdjustColor(['hue' => 180]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

@@ -7,9 +7,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 class HslaParser extends HslParser
 {
-    /**
-     * @return string
-     */
     protected function getPattern() : string
     {
         return '/^hsla\(

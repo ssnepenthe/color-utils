@@ -16,9 +16,6 @@ class GrayScale implements TransformerInterface
         $this->transformer = new ChangeColor(['saturation' => 0]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

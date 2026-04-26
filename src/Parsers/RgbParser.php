@@ -7,9 +7,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 class RgbParser extends PatternParser
 {
-    /**
-     * @return string
-     */
     protected function getPattern() : string
     {
         return '/^rgb\(
@@ -19,9 +16,6 @@ class RgbParser extends PatternParser
         \)$/ix';
     }
 
-    /**
-     * @return array
-     */
     protected function prepareExtractedData(array $data) : array
     {
         return array_map(function (string $channel) : int {

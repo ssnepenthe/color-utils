@@ -17,9 +17,6 @@ class Shade implements TransformerInterface
         $this->transformer = new Mix(new Color(new Rgb(0, 0, 0)), $weight);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

@@ -171,7 +171,6 @@ class KeywordParser implements ParserInterface
     }
 
     /**
-     * @return array
      * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
@@ -187,9 +186,6 @@ class KeywordParser implements ParserInterface
         return $this->parser->parse(self::MAP[strtolower($color)]);
     }
 
-    /**
-     * @return bool
-     */
     public function supports(string $color) : bool
     {
         return array_key_exists(strtolower($color), self::MAP);

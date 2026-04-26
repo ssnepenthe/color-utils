@@ -16,9 +16,6 @@ class AdjustHue implements TransformerInterface
         $this->transformer = new AdjustColor(['hue' => $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

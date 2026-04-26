@@ -57,9 +57,6 @@ class ScaleColor implements TransformerInterface
         }
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         $channels = [];

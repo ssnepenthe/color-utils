@@ -9,9 +9,6 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 class Invert implements TransformerInterface
 {
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $color->with([

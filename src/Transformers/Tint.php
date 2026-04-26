@@ -17,9 +17,6 @@ class Tint implements TransformerInterface
         $this->transformer = new Mix(new Color(new Rgb(255, 255, 255)), $weight);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

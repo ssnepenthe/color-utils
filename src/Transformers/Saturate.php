@@ -16,9 +16,6 @@ class Saturate implements TransformerInterface
         $this->transformer = new AdjustColor(['saturation' => $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

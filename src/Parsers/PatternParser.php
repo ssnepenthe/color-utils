@@ -10,7 +10,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 abstract class PatternParser implements ParserInterface
 {
     /**
-     * @return array
      * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
@@ -29,21 +28,12 @@ abstract class PatternParser implements ParserInterface
         return $this->prepareExtractedData($matches);
     }
 
-    /**
-     * @return bool
-     */
     public function supports(string $color) : bool
     {
         return (bool) preg_match($this->getPattern(), $color);
     }
 
-    /**
-     * @return string
-     */
     abstract protected function getPattern() : string;
 
-    /**
-     * @return array
-     */
     abstract protected function prepareExtractedData(array $data) : array;
 }

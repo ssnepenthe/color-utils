@@ -23,9 +23,6 @@ class Mix implements TransformerInterface
         $this->weight = restrict($weight, 0, 100);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         $percentage = $this->weight / 100;

@@ -63,25 +63,16 @@ class Hsl extends BaseColor
         [$this->hue, $this->saturation, $this->lightness] = $args;
     }
 
-    /**
-     * @return float
-     */
     public function getHue() : float
     {
         return round($this->hue, 5);
     }
 
-    /**
-     * @return float
-     */
     public function getLightness() : float
     {
         return round($this->lightness, 5);
     }
 
-    /**
-     * @return float
-     */
     public function getSaturation() : float
     {
         return round($this->saturation, 5);
@@ -89,7 +80,6 @@ class Hsl extends BaseColor
 
     /**
      * @param float $threshold
-     * @return bool
      */
     public function isLight($threshold = 50.0) : bool
     {
@@ -98,9 +88,6 @@ class Hsl extends BaseColor
         return $threshold <= $this->getLightness();
     }
 
-    /**
-     * @return array
-     */
     public function toArray() : array
     {
         return [
@@ -111,7 +98,6 @@ class Hsl extends BaseColor
     }
 
     /**
-     * @return ColorInterface
      * @throws InvalidArgumentException
      */
     public function with(array $channels) : ColorInterface
@@ -136,17 +122,11 @@ class Hsl extends BaseColor
         return new Hsl($hue, $saturation, $lightness);
     }
 
-    /**
-     * @return string
-     */
     protected function getStringPrefix() : string
     {
         return 'hsl';
     }
 
-    /**
-     * @return array
-     */
     protected function toStringifiedArray() : array
     {
         $channels = array_map('strval', $this->toArray());

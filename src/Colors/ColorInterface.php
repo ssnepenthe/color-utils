@@ -7,23 +7,11 @@ namespace SSNepenthe\ColorUtils\Colors;
  */
 interface ColorInterface
 {
-    /**
-     * @return array
-     */
     public function toArray() : array;
 
-    /**
-     * @return Color
-     */
     public function toColor() : Color;
 
-    /**
-     * @return string
-     */
     public function toString() : string;
 
-    /**
-     * @return ColorInterface
-     */
     public function with(array $channels) : ColorInterface;
 }

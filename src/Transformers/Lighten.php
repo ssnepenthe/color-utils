@@ -16,9 +16,6 @@ class Lighten implements TransformerInterface
         $this->transformer = new AdjustColor(['lightness' => $amount]);
     }
 
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $this->transformer->transform($color);

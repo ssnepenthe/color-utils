@@ -7,13 +7,7 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 interface ParserInterface
 {
-    /**
-     * @return array
-     */
     public function parse(string $color) : array;
 
-    /**
-     * @return bool
-     */
     public function supports(string $color) : bool;
 }

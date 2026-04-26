@@ -9,8 +9,5 @@ use SSNepenthe\ColorUtils\Colors\Color;
  */
 interface TransformerInterface
 {
-    /**
-     * @return Color
-     */
     public function transform(Color $color) : Color;
 }
