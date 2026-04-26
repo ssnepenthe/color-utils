@@ -49,7 +49,7 @@ class ScaleColor implements TransformerInterface
             }
         }
 
-        if (empty($this->adjustments)) {
+        if ($this->adjustments === []) {
             throw new InvalidArgumentException(sprintf(
                 'No valid adjustments provided in %s',
                 __METHOD__
