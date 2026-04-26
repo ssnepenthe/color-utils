@@ -14,7 +14,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class ColorFactory
 {
     /**
-     * @param array $channels
      * @return Color
      * @throws InvalidArgumentException
      */
@@ -94,7 +93,6 @@ class ColorFactory
     }
 
     /**
-     * @param string $color
      * @return Color
      */
     public static function fromString(string $color) : Color

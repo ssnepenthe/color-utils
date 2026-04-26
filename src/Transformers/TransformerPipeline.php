@@ -14,9 +14,6 @@ class TransformerPipeline implements TransformerInterface
      */
     protected $transformers = [];
 
-    /**
-     * @param array $transformers
-     */
     public function __construct(array $transformers = [])
     {
         foreach ($transformers as $transformer) {
@@ -25,7 +22,6 @@ class TransformerPipeline implements TransformerInterface
     }
 
     /**
-     * @param TransformerInterface $transformer
      * @return void
      */
     public function add(TransformerInterface $transformer): void
@@ -34,7 +30,6 @@ class TransformerPipeline implements TransformerInterface
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

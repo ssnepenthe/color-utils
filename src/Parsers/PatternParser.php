@@ -10,7 +10,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 abstract class PatternParser implements ParserInterface
 {
     /**
-     * @param string $color
      * @return array
      * @throws InvalidArgumentException
      */
@@ -31,7 +30,6 @@ abstract class PatternParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     public function supports(string $color) : bool
@@ -45,7 +43,6 @@ abstract class PatternParser implements ParserInterface
     abstract protected function getPattern() : string;
 
     /**
-     * @param array $data
      * @return array
      */
     abstract protected function prepareExtractedData(array $data) : array;

@@ -18,11 +18,6 @@ class ConditionalTransformer implements TransformerInterface
 
     protected TransformerInterface $truthyTransformer;
 
-    /**
-     * @param callable $callback
-     * @param TransformerInterface $truthyTransformer
-     * @param TransformerInterface|null $falsyTransformer
-     */
     public function __construct(
         callable $callback,
         TransformerInterface $truthyTransformer,
@@ -34,7 +29,6 @@ class ConditionalTransformer implements TransformerInterface
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

@@ -12,9 +12,6 @@ class ParserResolver implements ParserResolverInterface
      */
     protected $parsers = [];
 
-    /**
-     * @param array $parsers
-     */
     public function __construct(array $parsers)
     {
         foreach ($parsers as $parser) {
@@ -23,7 +20,6 @@ class ParserResolver implements ParserResolverInterface
     }
 
     /**
-     * @param string $color
      * @return ParserInterface|false
      */
     public function resolve(string $color)
@@ -38,7 +34,6 @@ class ParserResolver implements ParserResolverInterface
     }
 
     /**
-     * @param ParserInterface $parser
      * @return void
      */
     protected function addParser(ParserInterface $parser)

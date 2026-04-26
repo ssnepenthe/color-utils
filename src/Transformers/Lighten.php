@@ -11,16 +11,12 @@ class Lighten implements TransformerInterface
 {
     protected AdjustColor $transformer;
 
-    /**
-     * @param float $amount
-     */
     public function __construct(float $amount)
     {
         $this->transformer = new AdjustColor(['lightness' => $amount]);
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

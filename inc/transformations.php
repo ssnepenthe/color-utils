@@ -135,9 +135,6 @@ function lighten(...$args) : Colors\Color
 }
 
 /**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
- * @param int $weight
  * @return Colors\Color
  */
 function mix(

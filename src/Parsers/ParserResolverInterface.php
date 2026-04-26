@@ -8,7 +8,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
 interface ParserResolverInterface
 {
     /**
-     * @param string $color
      * @return ParserInterface|false
      */
     public function resolve(string $color);

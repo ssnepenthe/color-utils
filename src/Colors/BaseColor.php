@@ -62,7 +62,6 @@ abstract class BaseColor implements ColorInterface
     abstract public function toArray() : array;
 
     /**
-     * @param array $channels
      * @return ColorInterface
      */
     abstract public function with(array $channels) : ColorInterface;

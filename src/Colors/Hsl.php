@@ -111,7 +111,6 @@ class Hsl extends BaseColor
     }
 
     /**
-     * @param array $channels
      * @return ColorInterface
      * @throws InvalidArgumentException
      */

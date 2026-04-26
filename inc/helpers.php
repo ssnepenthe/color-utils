@@ -3,8 +3,6 @@
 namespace SSNepenthe\ColorUtils;
 
 /**
- * @param array $array
- * @param array $keys
  * @return bool
  */
 function array_contains_all_of(array $array, array $keys) : bool
@@ -13,8 +11,6 @@ function array_contains_all_of(array $array, array $keys) : bool
 }
 
 /**
- * @param array $array
- * @param array $keys
  * @return bool
  */
 function array_contains_one_of(array $array, array $keys) : bool

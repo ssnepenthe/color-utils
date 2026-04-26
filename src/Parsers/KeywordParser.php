@@ -165,16 +165,12 @@ class KeywordParser implements ParserInterface
 
     protected HexParser $parser;
 
-    /**
-     * @param HexParser|null $parser
-     */
     public function __construct(?HexParser $parser = null)
     {
         $this->parser = $parser ?: new HexParser;
     }
 
     /**
-     * @param string $color
      * @return array
      * @throws InvalidArgumentException
      */
@@ -192,7 +188,6 @@ class KeywordParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     public function supports(string $color) : bool

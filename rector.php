@@ -12,7 +12,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withPhpSets()
-    ->withDeadCodeLevel(0)
+    ->withDeadCodeLevel(22)
     ->withCodeQualityLevel(0)
     ->withPreparedSets(typeDeclarations: true)
     ->withSkip([

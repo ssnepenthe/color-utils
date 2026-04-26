@@ -233,7 +233,6 @@ class Rgb extends BaseColor
     }
 
     /**
-     * @param array $channels
      * @return ColorInterface
      * @throws InvalidArgumentException
      */
@@ -267,7 +266,6 @@ class Rgb extends BaseColor
     }
 
     /**
-     * @param int $int
      * @return string
      */
     protected function intToHexByte(int $int) : string

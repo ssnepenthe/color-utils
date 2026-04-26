@@ -11,16 +11,12 @@ class DelegatingParser implements ParserInterface
 {
     protected ParserResolverInterface $resolver;
 
-    /**
-     * @param ParserResolverInterface $resolver
-     */
     public function __construct(ParserResolverInterface $resolver)
     {
         $this->resolver = $resolver;
     }
 
     /**
-     * @param string $color
      * @return array
      * @throws InvalidArgumentException
      */
@@ -38,7 +34,6 @@ class DelegatingParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     public function supports(string $color) : bool

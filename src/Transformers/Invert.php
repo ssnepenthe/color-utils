@@ -10,7 +10,6 @@ use SSNepenthe\ColorUtils\Colors\Color;
 class Invert implements TransformerInterface
 {
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

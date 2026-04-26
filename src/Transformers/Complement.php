@@ -17,7 +17,6 @@ class Complement implements TransformerInterface
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

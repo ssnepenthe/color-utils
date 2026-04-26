@@ -21,7 +21,6 @@ class RgbaParser extends RgbParser
     }
 
     /**
-     * @param array $data
      * @return array
      */
     protected function prepareExtractedData(array $data) : array

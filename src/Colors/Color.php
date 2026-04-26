@@ -22,7 +22,6 @@ class Color
     protected $representations = [];
 
     /**
-     * @param string $method
      * @param mixed $args
      * @return mixed
      * @throws BadMethodCallException
@@ -46,10 +45,6 @@ class Color
         ));
     }
 
-    /**
-     * @param ColorInterface $color
-     * @param string|null $base
-     */
     public function __construct(ColorInterface $color, ?string $base = null)
     {
         $this->representations[] = $color;
@@ -82,7 +77,6 @@ class Color
     }
 
     /**
-     * @param Color $other
      * @return float
      */
     public function calculateBrightnessDifferenceWith(Color $other) : float
@@ -94,7 +88,6 @@ class Color
     }
 
     /**
-     * @param Color $other
      * @return int
      */
     public function calculateColorDifferenceWith(Color $other) : int
@@ -108,7 +101,6 @@ class Color
     }
 
     /**
-     * @param Color $other
      * @return float
      */
     public function calculateContrastRatioWith(Color $other) : float
@@ -122,7 +114,6 @@ class Color
     }
 
     /**
-     * @param string $class
      * @return ColorInterface
      * @throws RuntimeException
      */
@@ -154,7 +145,6 @@ class Color
     }
 
     /**
-     * @param array $channels
      * @return Color
      * @throws InvalidArgumentException
      */
@@ -195,7 +185,6 @@ class Color
     }
 
     /**
-     * @param ColorInterface $color
      * @return ConverterInterface
      * @throws InvalidArgumentException
      */

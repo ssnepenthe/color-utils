@@ -15,7 +15,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HslToRgb implements ConverterInterface
 {
     /**
-     * @param ColorInterface $color
      * @return ColorInterface
      * @throws InvalidArgumentException
      */

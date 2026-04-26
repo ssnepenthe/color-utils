@@ -10,7 +10,6 @@ use SSNepenthe\ColorUtils\Colors\ColorInterface;
 interface ConverterInterface
 {
     /**
-     * @param ColorInterface $color
      * @return ColorInterface
      */
     public function convert(ColorInterface $color) : ColorInterface;

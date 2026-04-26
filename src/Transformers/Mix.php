@@ -17,10 +17,6 @@ class Mix implements TransformerInterface
      */
     protected $weight;
 
-    /**
-     * @param Color $color
-     * @param int $weight
-     */
     public function __construct(Color $color, int $weight = 50)
     {
         $this->color = $color;
@@ -28,7 +24,6 @@ class Mix implements TransformerInterface
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

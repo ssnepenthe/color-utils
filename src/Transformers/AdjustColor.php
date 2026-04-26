@@ -29,7 +29,6 @@ class AdjustColor implements TransformerInterface
     ];
 
     /**
-     * @param array $adjustments
      * @throws InvalidArgumentException
      */
     public function __construct(array $adjustments)
@@ -52,7 +51,6 @@ class AdjustColor implements TransformerInterface
     }
 
     /**
-     * @param Color $color
      * @return Color
      */
     public function transform(Color $color) : Color

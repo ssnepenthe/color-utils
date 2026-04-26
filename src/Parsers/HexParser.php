@@ -10,7 +10,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HexParser implements ParserInterface
 {
     /**
-     * @param string $color
      * @return array
      * @throws InvalidArgumentException
      */
@@ -41,7 +40,6 @@ class HexParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     public function supports(string $color) : bool
@@ -52,7 +50,6 @@ class HexParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     protected function containsOnlyHexCharacters(string $color) : bool
@@ -61,7 +58,6 @@ class HexParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     protected function isValidLength(string $color) : bool
@@ -72,7 +68,6 @@ class HexParser implements ParserInterface
     }
 
     /**
-     * @param string $color
      * @return bool
      */
     protected function startsWithHash(string $color) : bool

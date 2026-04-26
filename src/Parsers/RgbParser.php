@@ -20,7 +20,6 @@ class RgbParser extends PatternParser
     }
 
     /**
-     * @param array $data
      * @return array
      */
     protected function prepareExtractedData(array $data) : array

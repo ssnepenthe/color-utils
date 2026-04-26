@@ -30,8 +30,6 @@ function brightness(...$args) : float
 }
 
 /**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
  * @return float
  */
 function brightness_difference(Colors\Color $color1, Colors\Color $color2) : float
@@ -49,8 +47,6 @@ function color(...$args) : Colors\Color
 }
 
 /**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
  * @return int
  */
 function color_difference(Colors\Color $color1, Colors\Color $color2) : int
@@ -59,8 +55,6 @@ function color_difference(Colors\Color $color1, Colors\Color $color2) : int
 }
 
 /**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
  * @return float
  */
 function contrast_ratio(Colors\Color $color1, Colors\Color $color2) : float

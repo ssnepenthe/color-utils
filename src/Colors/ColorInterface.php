@@ -23,7 +23,6 @@ interface ColorInterface
     public function toString() : string;
 
     /**
-     * @param array $channels
      * @return ColorInterface
      */
     public function with(array $channels) : ColorInterface;
