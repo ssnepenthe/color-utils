@@ -9,7 +9,7 @@ function array_contains_all_of(array $array, array $keys) : bool
 
 function array_contains_one_of(array $array, array $keys) : bool
 {
-    return ! empty(array_intersect($keys, array_keys($array)));
+    return array_intersect($keys, array_keys($array)) !== [];
 }
 
 /**

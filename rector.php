@@ -13,7 +13,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withPhpSets()
-    ->withCodeQualityLevel(66)
+    ->withCodeQualityLevel(69)
     ->withPreparedSets(deadCode: true, typeDeclarations: true)
     ->withSkip([
         AddArrayFunctionClosureParamTypeRector::class => [
