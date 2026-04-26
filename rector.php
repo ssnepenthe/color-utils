@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\CodeQuality\Rector\Equal\UseIdenticalOverEqualWithSameTypeRector;
 use Rector\TypeDeclaration\Rector\FuncCall\AddArrayFunctionClosureParamTypeRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -13,13 +14,13 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withPhpSets()
-    ->withCodeQualityLevel(69)
-    ->withPreparedSets(deadCode: true, typeDeclarations: true)
+    ->withPreparedSets(codeQuality: true, deadCode: true, typeDeclarations: true)
     ->withSkip([
         AddArrayFunctionClosureParamTypeRector::class => [
             __DIR__ . '/src/Colors/Hsl.php',
             __DIR__ . '/src/Colors/Rgb.php',
         ],
+        SafeDeclareStrictTypesRector::class,
         UseIdenticalOverEqualWithSameTypeRector::class => [
             __DIR__ . '/src/Colors/BaseColor.php',
         ],
