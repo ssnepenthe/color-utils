@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class AdjustColorTest extends TestCase
 {
     /** @test */
-    function it_can_adjust_colors()
+    function it_can_adjust_colors(): void
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -51,7 +51,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    function it_can_adjust_alpha_values()
+    function it_can_adjust_alpha_values(): void
     {
         // assert_equal(evaluate("hsla(120, 30, 90, 0.65)"),
         // evaluate("adjust-color(hsl(120, 30, 90), $alpha: -0.35)"))
@@ -70,7 +70,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    function it_can_adjust_multiple_attributes_at_once()
+    function it_can_adjust_multiple_attributes_at_once(): void
     {
         $c = ColorFactory::fromHsl(120, 30, 90);
 
@@ -115,7 +115,7 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    function it_honors_range_restrictions()
+    function it_honors_range_restrictions(): void
     {
         // Technically restrictions are handled in the Hsl and Rgb classes...
         $c = ColorFactory::fromHsl(120, 30, 90);
@@ -154,23 +154,23 @@ class AdjustColorTest extends TestCase
     }
 
     /** @test */
-    function it_throws_when_given_non_numeric_adjustments()
+    function it_throws_when_given_non_numeric_adjustments(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new AdjustColor(['blue' => 'test']);
+        new AdjustColor(['blue' => 'test']);
     }
 
     /** @test */
-    function it_throws_when_given_adjustments_of_zero()
+    function it_throws_when_given_adjustments_of_zero(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $t = new AdjustColor(['green' => 0]);
+        new AdjustColor(['green' => 0]);
     }
 
     /** @test */
-    function it_discards_invalid_channels()
+    function it_discards_invalid_channels(): void
     {
         // Basically testing that no BadMethodCallException is thrown.
         $t = new AdjustColor(['purple' => 50, 'blue' => 25]);

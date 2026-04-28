@@ -31,9 +31,6 @@ class Rgba extends Rgb
         $this->alpha = restrict(floatval($alpha), 0.0, 1.0);
     }
 
-    /**
-     * @return array
-     */
     public function toArray() : array
     {
         if (! $this->hasAlpha()) {
@@ -43,9 +40,6 @@ class Rgba extends Rgb
         return array_merge(parent::toArray(), ['alpha' => $this->getAlpha()]);
     }
 
-    /**
-     * @return array
-     */
     public function toHexArray() : array
     {
         if (! $this->hasAlpha()) {
@@ -55,9 +49,6 @@ class Rgba extends Rgb
         return array_merge(parent::toHexArray(), ['alpha' => $this->getAlphaByte()]);
     }
 
-    /**
-     * @return string
-     */
     protected function getStringPrefix() : string
     {
         if (! $this->hasAlpha()) {
@@ -67,9 +58,6 @@ class Rgba extends Rgb
         return 'rgba';
     }
 
-    /**
-     * @return array
-     */
     protected function toStringifiedArray() : array
     {
         $channels = parent::toStringifiedArray();

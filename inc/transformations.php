@@ -4,7 +4,6 @@ namespace SSNepenthe\ColorUtils;
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function adjust_color(...$args) : Colors\Color
 {
@@ -17,7 +16,6 @@ function adjust_color(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function adjust_hue(...$args) : Colors\Color
 {
@@ -30,7 +28,6 @@ function adjust_hue(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function change_color(...$args) : Colors\Color
 {
@@ -43,7 +40,6 @@ function change_color(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function complement(...$args) : Colors\Color
 {
@@ -55,7 +51,6 @@ function complement(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function darken(...$args) : Colors\Color
 {
@@ -68,7 +63,6 @@ function darken(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function desaturate(...$args) : Colors\Color
 {
@@ -81,7 +75,6 @@ function desaturate(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function fade_in(...$args) : Colors\Color
 {
@@ -90,7 +83,6 @@ function fade_in(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function fade_out(...$args) : Colors\Color
 {
@@ -99,7 +91,6 @@ function fade_out(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function grayscale(...$args) : Colors\Color
 {
@@ -111,7 +102,6 @@ function grayscale(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function invert(...$args) : Colors\Color
 {
@@ -123,7 +113,6 @@ function invert(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function lighten(...$args) : Colors\Color
 {
@@ -134,12 +123,6 @@ function lighten(...$args) : Colors\Color
     return $transformer->transform($color);
 }
 
-/**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
- * @param int $weight
- * @return Colors\Color
- */
 function mix(
     Colors\Color $color1,
     Colors\Color $color2,
@@ -152,7 +135,6 @@ function mix(
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function opacify(...$args) : Colors\Color
 {
@@ -165,7 +147,6 @@ function opacify(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function saturate(...$args) : Colors\Color
 {
@@ -178,7 +159,6 @@ function saturate(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function scale_color(...$args) : Colors\Color
 {
@@ -191,7 +171,6 @@ function scale_color(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function shade(...$args) : Colors\Color
 {
@@ -209,7 +188,6 @@ function shade(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function tint(...$args) : Colors\Color
 {
@@ -227,7 +205,6 @@ function tint(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function transparentize(...$args) : Colors\Color
 {

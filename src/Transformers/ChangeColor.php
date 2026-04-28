@@ -29,15 +29,12 @@ class ChangeColor implements TransformerInterface
     ];
 
     /**
-     * @param array $adjustments
      * @throws InvalidArgumentException
      */
     public function __construct(array $adjustments)
     {
         // First filter out non-numeric adjustments.
-        $adjustments = array_filter($adjustments, function ($adjustment) : bool {
-            return is_numeric($adjustment);
-        });
+        $adjustments = array_filter($adjustments, fn($adjustment): bool => is_numeric($adjustment));
 
         foreach ($this->whitelist as $channel) {
             if (isset($adjustments[$channel])) {
@@ -45,7 +42,7 @@ class ChangeColor implements TransformerInterface
             }
         }
 
-        if (empty($this->adjustments)) {
+        if ($this->adjustments === []) {
             throw new InvalidArgumentException(sprintf(
                 'No valid adjustments provided in %s',
                 __METHOD__
@@ -53,10 +50,6 @@ class ChangeColor implements TransformerInterface
         }
     }
 
-    /**
-     * @param Color $color
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         return $color->with($this->adjustments);

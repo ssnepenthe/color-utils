@@ -13,7 +13,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class TransparentizeTest extends TestCase
 {
     /** @test */
-    function it_can_add_transparency_to_colors()
+    function it_can_add_transparency_to_colors(): void
     {
         $t = new Transparentize(0.2);
 
@@ -50,12 +50,12 @@ class TransparentizeTest extends TestCase
     }
 
     /** @test */
-    function it_throws_when_invalid_adjustments_provided()
+    function it_throws_when_invalid_adjustments_provided(): void
     {
         // SASS allows this, I don't like it.
         $this->expectException(InvalidArgumentException::class);
 
         // assert_equal("rgba(0, 0, 0, 0.2)", evaluate("transparentize(rgba(0, 0, 0, 0.2), 0)"))
-        $t = new Transparentize(0);
+        new Transparentize(0);
     }
 }

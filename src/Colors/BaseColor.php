@@ -12,9 +12,6 @@ abstract class BaseColor implements ColorInterface
      */
     protected $alpha = 1.0;
 
-    /**
-     * @return string
-     */
     public function __toString() : string
     {
         return sprintf(
@@ -24,56 +21,31 @@ abstract class BaseColor implements ColorInterface
         );
     }
 
-    /**
-     * @return float
-     */
     public function getAlpha() : float
     {
         return round($this->alpha, 5);
     }
 
-    /**
-     * @return bool
-     */
     public function hasAlpha() : bool
     {
         return 1.0 != $this->getAlpha();
     }
 
-    /**
-     * @return Color
-     */
     public function toColor() : Color
     {
         return new Color($this);
     }
 
-    /**
-     * @return string
-     */
     public function toString() : string
     {
         return $this->__toString();
     }
 
-    /**
-     * @return array
-     */
     abstract public function toArray() : array;
 
-    /**
-     * @param array $channels
-     * @return ColorInterface
-     */
     abstract public function with(array $channels) : ColorInterface;
 
-    /**
-     * @return string
-     */
     abstract protected function getStringPrefix() : string;
 
-    /**
-     * @return array
-     */
     abstract protected function toStringifiedArray() : array;
 }

@@ -13,13 +13,13 @@ class InvertTest extends TestCase
 {
     protected $t;
 
-    function set_up()
+    function set_up(): void
     {
         $this->t = new Invert;
     }
 
     /** @test */
-    function it_can_invert_colors()
+    function it_can_invert_colors(): void
     {
         $c = ColorFactory::fromString('#edc');
 

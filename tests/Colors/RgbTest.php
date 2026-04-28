@@ -10,7 +10,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class RgbTest extends TestCase
 {
     /** @test */
-    function it_is_instantiable()
+    function it_is_instantiable(): void
     {
         $rgb = new Rgb(255, 0, 51);
 
@@ -19,14 +19,14 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_forces_a_0_to_255_range_for_colors()
+    function it_forces_a_0_to_255_range_for_colors(): void
     {
         $this->assertEquals('rgb(0, 0, 0)', new Rgb(-1, -50, -100));
         $this->assertEquals('rgb(255, 255, 255)', new Rgb(256, 300, 350));
     }
 
     /** @test */
-    function it_can_be_cast_to_a_string()
+    function it_can_be_cast_to_a_string(): void
     {
         $rgb = new Rgb(255, 0, 51);
 
@@ -35,13 +35,13 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_can_calculate_brightness()
+    function it_can_calculate_brightness(): void
     {
         $this->assertEquals(82.059, (new Rgb(255, 0, 51))->calculateBrightness());
     }
 
     /** @test */
-    function it_can_calculate_perceived_brightness()
+    function it_can_calculate_perceived_brightness(): void
     {
         $map = [
             '0.0'       => new Rgb(0, 0, 0), // Black.
@@ -64,7 +64,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_can_calculate_relative_luminance()
+    function it_can_calculate_relative_luminance(): void
     {
         $this->assertEquals(
             0.21499,
@@ -73,7 +73,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function channel_getters_give_correct_value()
+    function channel_getters_give_correct_value(): void
     {
         $rgb = new Rgb(255, 0, 51);
 
@@ -91,33 +91,33 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_can_tell_brightness()
+    function it_can_tell_brightness(): void
     {
         $this->assertFalse((new Rgb(255, 0, 51))->isBright());
     }
 
     /** @test */
-    function it_can_tell_brightness_with_custom_threshold()
+    function it_can_tell_brightness_with_custom_threshold(): void
     {
         $this->assertTrue((new Rgb(255, 0, 51))->isBright(80));
     }
 
     /** @test */
-    function it_can_tell_perceived_brightness()
+    function it_can_tell_perceived_brightness(): void
     {
         $this->assertTrue((new Rgb(255, 165, 0))->looksBright()); // Orange.
         $this->assertFalse((new Rgb(0, 0, 255))->looksBright()); // Blue.
     }
 
     /** @test */
-    function it_can_tell_perceived_brightness_with_custom_threshold()
+    function it_can_tell_perceived_brightness_with_custom_threshold(): void
     {
         $this->assertFalse((new Rgb(255, 255, 0))->looksBright(245)); // Yellow.
         $this->assertTrue((new Rgb(0, 0, 255))->looksBright(80)); // Blue.
     }
 
     /** @test */
-    function it_correctly_produces_rgb_array()
+    function it_correctly_produces_rgb_array(): void
     {
         $this->assertEquals(
             ['red' => 255, 'green' => 0, 'blue' => 51],
@@ -126,13 +126,13 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_produces_color_instance()
+    function it_correctly_produces_color_instance(): void
     {
         $this->assertInstanceOf(Color::class, (new Rgb(255, 0, 51))->toColor());
     }
 
     /** @test */
-    function it_correctly_produces_hex_array()
+    function it_correctly_produces_hex_array(): void
     {
         $this->assertEquals(
             ['red' => 'ff', 'green' => '00', 'blue' => '33'],
@@ -141,13 +141,13 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_produces_hex_string()
+    function it_correctly_produces_hex_string(): void
     {
         $this->assertEquals('#ff0033', (new Rgb(255, 0, 51))->toHexString());
     }
 
     /** @test */
-    function it_can_create_a_modified_version_of_itself()
+    function it_can_create_a_modified_version_of_itself(): void
     {
         $rgb = new Rgb(255, 0, 51);
 
@@ -156,7 +156,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_a_version_of_itself_with_transparency()
+    function it_can_create_a_version_of_itself_with_transparency(): void
     {
         $rgba = (new Rgb(255, 0, 51))->with([
             'red' => 0, 'blue' => 0, 'alpha' => 0.7]
@@ -167,7 +167,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_cant_be_instantiated_with_non_numeric_values()
+    function it_cant_be_instantiated_with_non_numeric_values(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -175,7 +175,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_cant_create_a_new_instance_without_valid_attrs()
+    function it_cant_create_a_new_instance_without_valid_attrs(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -183,7 +183,7 @@ class RgbTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_pads_hex_bytes()
+    function it_correctly_pads_hex_bytes(): void
     {
         $this->assertEquals(
             ['red' => '0a', 'green' => '0b', 'blue' => '0c'],

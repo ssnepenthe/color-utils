@@ -7,9 +7,6 @@ namespace SSNepenthe\ColorUtils\Parsers;
  */
 class ParserResolverFactory
 {
-    /**
-     * @return ParserResolver
-     */
     public static function all() : ParserResolver
     {
         $hexParser = new HexParser;
@@ -24,9 +21,6 @@ class ParserResolverFactory
         ]);
     }
 
-    /**
-     * @return ParserResolver
-     */
     public static function rgb() : ParserResolver
     {
         $hexParser = new HexParser;
@@ -39,9 +33,6 @@ class ParserResolverFactory
         ]);
     }
 
-    /**
-     * @return ParserResolver
-     */
     public static function hsl() : ParserResolver
     {
         return new ParserResolver([

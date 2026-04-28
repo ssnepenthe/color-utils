@@ -22,12 +22,11 @@ class Color
     protected $representations = [];
 
     /**
-     * @param string $method
      * @param mixed $args
      * @return mixed
      * @throws BadMethodCallException
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         if ('toColor' === $method) {
             // Don't proxy ->toColor() calls, just return this instance.
@@ -46,11 +45,7 @@ class Color
         ));
     }
 
-    /**
-     * @param ColorInterface $color
-     * @param string|null $base
-     */
-    public function __construct(ColorInterface $color, string $base = null)
+    public function __construct(ColorInterface $color, ?string $base = null)
     {
         $this->representations[] = $color;
 
@@ -73,18 +68,11 @@ class Color
         }
     }
 
-    /**
-     * @return string
-     */
     public function __toString() : string
     {
         return $this->representations[0]->__toString();
     }
 
-    /**
-     * @param Color $other
-     * @return float
-     */
     public function calculateBrightnessDifferenceWith(Color $other) : float
     {
         $brightness1 = $this->getRgb()->calculateBrightness();
@@ -93,10 +81,6 @@ class Color
         return abs($brightness1 - $brightness2);
     }
 
-    /**
-     * @param Color $other
-     * @return int
-     */
     public function calculateColorDifferenceWith(Color $other) : int
     {
         $rgb1 = $this->getRgb()->toArray();
@@ -107,10 +91,6 @@ class Color
             + abs($rgb1['blue'] - $rgb2['blue']);
     }
 
-    /**
-     * @param Color $other
-     * @return float
-     */
     public function calculateContrastRatioWith(Color $other) : float
     {
         $luminances = [
@@ -122,8 +102,6 @@ class Color
     }
 
     /**
-     * @param string $class
-     * @return ColorInterface
      * @throws RuntimeException
      */
     public function getRepresentation(string $class) : ColorInterface
@@ -137,25 +115,17 @@ class Color
         throw new RuntimeException("No instance of {$class} found");
     }
 
-    /**
-     * @return Hsl
-     */
     public function getHsl() : Hsl
     {
         return $this->getRepresentation(Hsl::class);
     }
 
-    /**
-     * @return Rgb
-     */
     public function getRgb() : Rgb
     {
         return $this->getRepresentation(Rgb::class);
     }
 
     /**
-     * @param array $channels
-     * @return Color
      * @throws InvalidArgumentException
      */
     public function with(array $channels) : Color
@@ -195,18 +165,16 @@ class Color
     }
 
     /**
-     * @param ColorInterface $color
-     * @return ConverterInterface
      * @throws InvalidArgumentException
      */
     protected function makeConverter(ColorInterface $color) : ConverterInterface
     {
         switch (get_class($color)) {
-            case 'SSNepenthe\\ColorUtils\\Colors\\Rgb':
-            case 'SSNepenthe\\ColorUtils\\Colors\\Rgba':
+            case \SSNepenthe\ColorUtils\Colors\Rgb::class:
+            case \SSNepenthe\ColorUtils\Colors\Rgba::class:
                 return new RgbToHsl;
-            case 'SSNepenthe\\ColorUtils\\Colors\\Hsl':
-            case 'SSNepenthe\\ColorUtils\\Colors\\Hsla':
+            case \SSNepenthe\ColorUtils\Colors\Hsl::class:
+            case \SSNepenthe\ColorUtils\Colors\Hsla::class:
                 return new HslToRgb;
             default:
                 // Should never hit this.

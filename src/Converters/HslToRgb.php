@@ -15,8 +15,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HslToRgb implements ConverterInterface
 {
     /**
-     * @param ColorInterface $color
-     * @return ColorInterface
      * @throws InvalidArgumentException
      */
     public function convert(ColorInterface $color) : ColorInterface
@@ -33,8 +31,8 @@ class HslToRgb implements ConverterInterface
         extract($channels);
 
         // 0) We want saturation and lightness on a scale of 0 - 1.
-        $saturation = $saturation / 100;
-        $lightness = $lightness / 100;
+        $saturation /= 100;
+        $lightness /= 100;
 
         // 1) No saturation means no hue means color is a shade of gray.
         if (0 === $saturation) {
@@ -57,15 +55,13 @@ class HslToRgb implements ConverterInterface
         $temp2 = 2 * $lightness - $temp1;
 
         // 4) Get hue on a scale of 0 - 1.
-        $hue = $hue / 360;
+        $hue /= 360;
 
         // 5) Temporary colors.
-        $tempColors = array_map(function ($colorValue) : float {
-            return modulo($colorValue, 1);
-        }, ['red' => $hue + (1 / 3), 'green' => $hue, 'blue' => $hue - (1 / 3)]);
+        $tempColors = array_map(fn($colorValue): float => modulo($colorValue, 1), ['red' => $hue + (1 / 3), 'green' => $hue, 'blue' => $hue - (1 / 3)]);
 
         // 6) Actual color values.
-        $colors = array_map(function ($colorValue) use ($temp1, $temp2) : float {
+        $colors = array_map(function (float $colorValue) use ($temp1, $temp2) : float {
             if (6 * $colorValue < 1) {
                 return $temp2 + ($temp1 - $temp2) * 6 * $colorValue;
             }
@@ -82,9 +78,7 @@ class HslToRgb implements ConverterInterface
         }, $tempColors);
 
         // 7) Convert to 8-bit and extract.
-        extract(array_map(function ($color) : float {
-            return $color * 255;
-        }, $colors));
+        extract(array_map(fn(float $color): float => $color * 255, $colors));
 
         if (isset($alpha)) {
             return new Rgba($red, $green, $blue, $alpha);

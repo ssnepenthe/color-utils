@@ -15,61 +15,61 @@ class ColorsTest extends TestCase
 {
     protected $c;
 
-    function set_up()
+    function set_up(): void
     {
         $this->c = new C(new R(255, 0, 51, 0.7));
     }
 
     /** @test */
-    function alpha()
+    function alpha(): void
     {
         $this->assertEquals(0.7, alpha($this->c));
     }
 
     /** @test */
-    function blue()
+    function blue(): void
     {
         $this->assertEquals(51, blue($this->c));
     }
 
     /** @test */
-    function brightness()
+    function brightness(): void
     {
         $this->assertEquals(82.059, brightness($this->c));
     }
 
     /** @test */
-    function brightness_difference()
+    function brightness_difference(): void
     {
         $this->assertEquals(143.871, brightness_difference($this->c, color('#ff0')));
     }
 
     /** @test */
-    function color()
+    function color(): void
     {
         $this->assertInstanceOf(C::class, color(255, 0, 51, 0.7));
     }
 
     /** @test */
-    function color_difference()
+    function color_difference(): void
     {
         $this->assertEquals(306, color_difference($this->c, color('#ff0')));
     }
 
     /** @test */
-    function contrast_ratio()
+    function contrast_ratio(): void
     {
         $this->assertEquals(3.68995, contrast_ratio($this->c, color('#ff0')));
     }
 
     /** @test */
-    function green()
+    function green(): void
     {
         $this->assertEquals(0, green($this->c));
     }
 
     /** @test */
-    function hsl()
+    function hsl(): void
     {
         foreach ([hsl(348, 100, 50), hsl('hsl(348, 100%, 50%)')] as $color) {
             $this->assertInstanceOf(C::class, $color);
@@ -77,7 +77,7 @@ class ColorsTest extends TestCase
     }
 
     /** @test */
-    function hsla()
+    function hsla(): void
     {
         $colors = [
             hsla(348, 100, 50, 0.7),
@@ -92,70 +92,70 @@ class ColorsTest extends TestCase
     }
 
     /** @test */
-    function hue()
+    function hue(): void
     {
         $this->assertEquals(348, hue($this->c));
     }
 
     /** @test */
-    function is_bright()
+    function is_bright(): void
     {
         $this->assertFalse(is_bright($this->c));
         $this->assertTrue(is_bright($this->c, 80));
     }
 
     /** @test */
-    function is_light()
+    function is_light(): void
     {
         $this->assertTrue(is_light($this->c));
         $this->assertFalse(is_light($this->c, 55));
     }
 
     /** @test */
-    function lightness()
+    function lightness(): void
     {
         $this->assertEquals(50, lightness($this->c));
     }
 
     /** @test */
-    function looks_bright()
+    function looks_bright(): void
     {
         $this->assertTrue(looks_bright($this->c));
         $this->assertFalse(looks_bright($this->c, 150));
     }
 
     /** @test */
-    function name()
+    function name(): void
     {
         $this->assertEquals('white', name(ColorFactory::fromString('#ffffff')));
     }
 
     /** @test */
-    function opacity()
+    function opacity(): void
     {
         $this->assertEquals(0.7, opacity($this->c));
     }
 
     /** @test */
-    function perceived_brightness()
+    function perceived_brightness(): void
     {
         $this->assertEquals(140.49551, perceived_brightness($this->c));
     }
 
     /** @test */
-    function red()
+    function red(): void
     {
         $this->assertEquals(255, red($this->c));
     }
 
     /** @test */
-    function relative_luminance()
+    function relative_luminance(): void
     {
         $this->assertEquals(0.21499, relative_luminance($this->c));
     }
 
     /** @test */
-    function rgb()
+    function rgb(): void
     {
         foreach ([rgb(255, 0, 51), rgb('rgb(255, 0, 51)')] as $color) {
             $this->assertInstanceOf(C::class, $color);
@@ -163,7 +163,7 @@ class ColorsTest extends TestCase
     }
 
     /** @test */
-    function rgba()
+    function rgba(): void
     {
         $colors = [
             rgba(255, 0, 51, 0.7),
@@ -178,7 +178,7 @@ class ColorsTest extends TestCase
     }
 
     /** @test */
-    function saturation()
+    function saturation(): void
     {
         $this->assertEquals(100, saturation($this->c));
     }

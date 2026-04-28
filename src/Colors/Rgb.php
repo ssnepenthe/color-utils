@@ -46,7 +46,7 @@ class Rgb extends BaseColor
             /**
              * @return void
              */
-            function ($arg) {
+            function ($arg): void {
                 if (! is_numeric($arg)) {
                     throw new InvalidArgumentException(sprintf(
                         '%s args must be numeric',
@@ -56,16 +56,11 @@ class Rgb extends BaseColor
             }
         );
 
-        $args = array_map(function ($value) : int {
-            return restrict(intval(round($value)), 0, 255);
-        }, $args);
+        $args = array_map(fn($value): int => restrict(intval(round($value)), 0, 255), $args);
 
-        list($this->red, $this->green, $this->blue) = $args;
+        [$this->red, $this->green, $this->blue] = $args;
     }
 
-    /**
-     * @return float
-     */
     public function calculateBrightness() : float
     {
         return round(
@@ -77,9 +72,6 @@ class Rgb extends BaseColor
         );
     }
 
-    /**
-     * @return float
-     */
     public function calculatePerceivedBrightness() : float
     {
         return round(sqrt(
@@ -89,9 +81,6 @@ class Rgb extends BaseColor
         ), 5);
     }
 
-    /**
-     * @return float
-     */
     public function calculateRelativeLuminance() : float
     {
         $rgb = array_map(function ($value) : float {
@@ -101,7 +90,7 @@ class Rgb extends BaseColor
                 return $value / 12.92;
             }
 
-            return pow((($value + 0.055) / 1.055), 2.4);
+            return (($value + 0.055) / 1.055) ** 2.4;
         }, $this->toArray());
 
         return round(
@@ -112,49 +101,31 @@ class Rgb extends BaseColor
         );
     }
 
-    /**
-     * @return string
-     */
     public function getAlphaByte() : string
     {
         return $this->intToHexByte(intval(round($this->alpha * 255)));
     }
 
-    /**
-     * @return int
-     */
     public function getBlue() : int
     {
         return $this->blue;
     }
 
-    /**
-     * @return string
-     */
     public function getBlueByte() : string
     {
         return $this->intToHexByte($this->getBlue());
     }
 
-    /**
-     * @return int
-     */
     public function getGreen() : int
     {
         return $this->green;
     }
 
-    /**
-     * @return string
-     */
     public function getGreenByte() : string
     {
         return $this->intToHexByte($this->getGreen());
     }
 
-    /**
-     * @return string
-     */
     public function getName() : string
     {
         if ($name = array_search($this->toHexString(), KeywordParser::MAP)) {
@@ -164,17 +135,11 @@ class Rgb extends BaseColor
         return '';
     }
 
-    /**
-     * @return int
-     */
     public function getRed() : int
     {
         return $this->red;
     }
 
-    /**
-     * @return string
-     */
     public function getRedByte() : string
     {
         return $this->intToHexByte($this->getRed());
@@ -182,7 +147,6 @@ class Rgb extends BaseColor
 
     /**
      * @param float $threshold
-     * @return bool
      */
     public function isBright($threshold = 127.5) : bool
     {
@@ -193,7 +157,6 @@ class Rgb extends BaseColor
 
     /**
      * @param float $threshold
-     * @return bool
      */
     public function looksBright($threshold = 127.5) : bool
     {
@@ -202,9 +165,6 @@ class Rgb extends BaseColor
         return $threshold <= $this->calculatePerceivedBrightness();
     }
 
-    /**
-     * @return array
-     */
     public function toArray() : array
     {
         return [
@@ -214,9 +174,6 @@ class Rgb extends BaseColor
         ];
     }
 
-    /**
-     * @return array
-     */
     public function toHexArray() : array
     {
         return [
@@ -226,17 +183,12 @@ class Rgb extends BaseColor
         ];
     }
 
-    /**
-     * @return string
-     */
     public function toHexString() : string
     {
         return '#' . implode('', $this->toHexArray());
     }
 
     /**
-     * @param array $channels
-     * @return ColorInterface
      * @throws InvalidArgumentException
      */
     public function with(array $channels) : ColorInterface
@@ -260,26 +212,16 @@ class Rgb extends BaseColor
         return new Rgb($red, $green, $blue);
     }
 
-    /**
-     * @return string
-     */
     protected function getStringPrefix() : string
     {
         return 'rgb';
     }
 
-    /**
-     * @param int $int
-     * @return string
-     */
     protected function intToHexByte(int $int) : string
     {
         return str_pad(dechex($int), 2, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * @return array
-     */
     protected function toStringifiedArray() : array
     {
         return array_map('strval', $this->toArray());

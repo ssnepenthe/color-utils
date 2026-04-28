@@ -2,30 +2,19 @@
 
 namespace SSNepenthe\ColorUtils;
 
-/**
- * @param array $array
- * @param array $keys
- * @return bool
- */
 function array_contains_all_of(array $array, array $keys) : bool
 {
     return $keys === array_intersect($keys, array_keys($array));
 }
 
-/**
- * @param array $array
- * @param array $keys
- * @return bool
- */
 function array_contains_one_of(array $array, array $keys) : bool
 {
-    return ! empty(array_intersect($keys, array_keys($array)));
+    return array_intersect($keys, array_keys($array)) !== [];
 }
 
 /**
  * @param mixed $value1
  * @param mixed $value2
- * @return float
  */
 function modulo($value1, $value2) : float
 {
@@ -49,7 +38,6 @@ function restrict($value, $min, $max)
  * @param mixed $value
  * @param mixed $min
  * @param mixed $max
- * @return bool
  */
 function value_is_between($value, $min, $max) : bool
 {
@@ -58,7 +46,6 @@ function value_is_between($value, $min, $max) : bool
 
 /**
  * @param mixed ...$args
- * @return bool
  */
 function _color_args_probably_contain_extra_arg(...$args) : bool
 {

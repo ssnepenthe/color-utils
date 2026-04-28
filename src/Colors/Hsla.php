@@ -31,9 +31,6 @@ class Hsla extends Hsl
         $this->alpha = restrict(floatval($alpha), 0.0, 1.0);
     }
 
-    /**
-     * @return array
-     */
     public function toArray() : array
     {
         if (! $this->hasAlpha()) {
@@ -43,9 +40,6 @@ class Hsla extends Hsl
         return array_merge(parent::toArray(), ['alpha' => $this->getAlpha()]);
     }
 
-    /**
-     * @return string
-     */
     protected function getStringPrefix() : string
     {
         if (! $this->hasAlpha()) {
@@ -55,9 +49,6 @@ class Hsla extends Hsl
         return 'hsla';
     }
 
-    /**
-     * @return array
-     */
     protected function toStringifiedArray() : array
     {
         $channels = parent::toStringifiedArray();

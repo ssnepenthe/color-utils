@@ -15,8 +15,6 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class RgbToHsl implements ConverterInterface
 {
     /**
-     * @param ColorInterface $color
-     * @return ColorInterface
      * @throws InvalidArgumentException
      * @throws LogicException
      */
@@ -34,9 +32,7 @@ class RgbToHsl implements ConverterInterface
         extract($channels);
 
         // 1) Get RGB values in a range of 0-1.
-        list($red, $green, $blue) = array_map(function ($value) : float {
-            return $value / 255;
-        }, [$red, $green, $blue]);
+        [$red, $green, $blue] = array_map(fn($value): float => $value / 255, [$red, $green, $blue]);
 
         // 2) Find the max and min values from $red, $green, $blue.
         $max = max($red, $green, $blue);

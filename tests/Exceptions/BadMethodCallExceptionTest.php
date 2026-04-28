@@ -7,7 +7,7 @@ use SSNepenthe\ColorUtils\Exceptions\BadMethodCallException;
 class BadMethodCallExceptionTest extends TestCase
 {
     /** @test */
-    function it_reflects_expected_hierarchy()
+    function it_reflects_expected_hierarchy(): void
     {
         $e = new BadMethodCallException('test');
 

@@ -10,7 +10,7 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
 class HslTest extends TestCase
 {
     /** @test */
-    function it_is_instantiable()
+    function it_is_instantiable(): void
     {
         $hsl = new Hsl(348, 100, 50);
 
@@ -19,7 +19,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_rotates_hue_into_a_0_to_360_range()
+    function it_rotates_hue_into_a_0_to_360_range(): void
     {
         $tests = [
             1   => new Hsl(361, 50, 50),
@@ -34,7 +34,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_forces_a_0_to_100_range_for_saturation_and_lightness()
+    function it_forces_a_0_to_100_range_for_saturation_and_lightness(): void
     {
         $hsl = new Hsl(0, -50, -100);
         $hsl2 = new Hsl(0, 150, 200);
@@ -47,7 +47,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_can_be_cast_to_a_string()
+    function it_can_be_cast_to_a_string(): void
     {
         $hsl = new Hsl(348, 100, 50);
 
@@ -56,7 +56,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function channel_getters_give_correct_value()
+    function channel_getters_give_correct_value(): void
     {
         $hsl = new Hsl(348, 100, 50);
 
@@ -68,21 +68,21 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_can_tell_lightness()
+    function it_can_tell_lightness(): void
     {
         $this->assertTrue((new Hsl(38, 100, 51))->isLight());
         $this->assertFalse((new Hsl(274, 100, 25))->isLight());
     }
 
     /** @test */
-    function it_can_tell_lightness_with_custom_threshold()
+    function it_can_tell_lightness_with_custom_threshold(): void
     {
         $this->assertTrue((new Hsl(60, 100, 50))->isLight(35));
         $this->assertFalse((new Hsl(120, 100, 25))->isLight(35));
     }
 
     /** @test */
-    function it_correctly_produces_hsl_array()
+    function it_correctly_produces_hsl_array(): void
     {
         $this->assertEquals(
             ['hue' => 348, 'saturation' => 100, 'lightness' => 50],
@@ -91,7 +91,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_produces_color_instance()
+    function it_correctly_produces_color_instance(): void
     {
         $this->assertInstanceOf(
             Color::class,
@@ -100,7 +100,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_a_modified_version_of_itself()
+    function it_can_create_a_modified_version_of_itself(): void
     {
         $hsl = new Hsl(348, 100, 50);
         $hsl2 = $hsl->with(['hue' => 0]);
@@ -111,7 +111,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_a_version_of_itself_with_transparency()
+    function it_can_create_a_version_of_itself_with_transparency(): void
     {
         $hsl = new Hsl(348, 100, 50);
         $hsla = $hsl->with(['hue' => 0, 'saturation' => 0, 'alpha' => 0.7]);
@@ -121,7 +121,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_cant_be_instantiated_with_non_numeric_values()
+    function it_cant_be_instantiated_with_non_numeric_values(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -129,7 +129,7 @@ class HslTest extends TestCase
     }
 
     /** @test */
-    function it_cant_create_a_new_instance_without_valid_attrs()
+    function it_cant_create_a_new_instance_without_valid_attrs(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

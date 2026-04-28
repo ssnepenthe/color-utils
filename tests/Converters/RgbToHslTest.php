@@ -9,13 +9,13 @@ use SSNepenthe\ColorUtils\Converters\RgbToHsl;
 
 class RgbToHslTest extends TestCase
 {
-    function set_up()
+    function set_up(): void
     {
         $this->c = new RgbToHsl;
     }
 
     /** @test */
-    function it_can_convert_rgb_and_rgba()
+    function it_can_convert_rgb_and_rgba(): void
     {
         $rgb = new Rgb(255, 0, 51);
         $rgba = new Rgba(255, 0, 51, 0.7);
@@ -32,7 +32,7 @@ class RgbToHslTest extends TestCase
     }
 
     /** @test */
-    function it_correctly_handles_each_step_of_conversion()
+    function it_correctly_handles_each_step_of_conversion(): void
     {
         // Step 4 - Shades of gray.
         $rgb = new Rgb(100, 100, 100);

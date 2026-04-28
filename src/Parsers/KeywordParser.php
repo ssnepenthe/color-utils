@@ -163,22 +163,14 @@ class KeywordParser implements ParserInterface
         'yellowgreen'          => '#9acd32',
     ];
 
-    /**
-     * @var HexParser
-     */
-    protected $parser;
+    protected HexParser $parser;
 
-    /**
-     * @param HexParser|null $parser
-     */
-    public function __construct(HexParser $parser = null)
+    public function __construct(?HexParser $parser = null)
     {
         $this->parser = $parser ?: new HexParser;
     }
 
     /**
-     * @param string $color
-     * @return array
      * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
@@ -194,10 +186,6 @@ class KeywordParser implements ParserInterface
         return $this->parser->parse(self::MAP[strtolower($color)]);
     }
 
-    /**
-     * @param string $color
-     * @return bool
-     */
     public function supports(string $color) : bool
     {
         return array_key_exists(strtolower($color), self::MAP);

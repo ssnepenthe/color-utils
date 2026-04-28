@@ -4,7 +4,6 @@ namespace SSNepenthe\ColorUtils;
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function alpha(...$args) : float
 {
@@ -13,7 +12,6 @@ function alpha(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return int
  */
 function blue(...$args) : int
 {
@@ -22,18 +20,12 @@ function blue(...$args) : int
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function brightness(...$args) : float
 {
     return color(...$args)->getRgb()->calculateBrightness();
 }
 
-/**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
- * @return float
- */
 function brightness_difference(Colors\Color $color1, Colors\Color $color2) : float
 {
     return $color1->calculateBrightnessDifferenceWith($color2);
@@ -41,28 +33,17 @@ function brightness_difference(Colors\Color $color1, Colors\Color $color2) : flo
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function color(...$args) : Colors\Color
 {
     return Colors\ColorFactory::fromUnknown(...$args);
 }
 
-/**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
- * @return int
- */
 function color_difference(Colors\Color $color1, Colors\Color $color2) : int
 {
     return $color1->calculateColorDifferenceWith($color2);
 }
 
-/**
- * @param Colors\Color $color1
- * @param Colors\Color $color2
- * @return float
- */
 function contrast_ratio(Colors\Color $color1, Colors\Color $color2) : float
 {
     return $color1->calculateContrastRatioWith($color2);
@@ -70,7 +51,6 @@ function contrast_ratio(Colors\Color $color1, Colors\Color $color2) : float
 
 /**
  * @param mixed ...$args
- * @return int
  */
 function green(...$args) : int
 {
@@ -79,7 +59,6 @@ function green(...$args) : int
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function hsl(...$args) : Colors\Color
 {
@@ -92,7 +71,6 @@ function hsl(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function hsla(...$args) : Colors\Color
 {
@@ -112,7 +90,6 @@ function hsla(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function hue(...$args) : float
 {
@@ -121,7 +98,6 @@ function hue(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return boolean
  */
 function is_bright(...$args) : bool
 {
@@ -136,7 +112,6 @@ function is_bright(...$args) : bool
 
 /**
  * @param mixed ...$args
- * @return bool
  */
 function is_light(...$args) : bool
 {
@@ -151,7 +126,6 @@ function is_light(...$args) : bool
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function lightness(...$args) : float
 {
@@ -160,7 +134,6 @@ function lightness(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return bool
  */
 function looks_bright(...$args) : bool
 {
@@ -175,7 +148,6 @@ function looks_bright(...$args) : bool
 
 /**
  * @param mixed ...$args
- * @return string
  */
 function name(...$args) : string
 {
@@ -184,7 +156,6 @@ function name(...$args) : string
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function opacity(...$args) : float
 {
@@ -193,7 +164,6 @@ function opacity(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function perceived_brightness(...$args) : float
 {
@@ -202,7 +172,6 @@ function perceived_brightness(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return int
  */
 function red(...$args) : int
 {
@@ -211,7 +180,6 @@ function red(...$args) : int
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function relative_luminance(...$args) : float
 {
@@ -220,7 +188,6 @@ function relative_luminance(...$args) : float
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function rgb(...$args) : Colors\Color
 {
@@ -233,7 +200,6 @@ function rgb(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return Colors\Color
  */
 function rgba(...$args) : Colors\Color
 {
@@ -253,7 +219,6 @@ function rgba(...$args) : Colors\Color
 
 /**
  * @param mixed ...$args
- * @return float
  */
 function saturation(...$args) : float
 {

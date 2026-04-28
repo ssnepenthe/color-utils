@@ -14,35 +14,20 @@ class ConditionalTransformer implements TransformerInterface
      */
     protected $callback;
 
-    /**
-     * @var TransformerInterface|null
-     */
-    protected $falsyTransformer = null;
+    protected ?TransformerInterface $falsyTransformer;
 
-    /**
-     * @var TransformerInterface
-     */
-    protected $truthyTransformer;
+    protected TransformerInterface $truthyTransformer;
 
-    /**
-     * @param callable $callback
-     * @param TransformerInterface $truthyTransformer
-     * @param TransformerInterface|null $falsyTransformer
-     */
     public function __construct(
         callable $callback,
         TransformerInterface $truthyTransformer,
-        TransformerInterface $falsyTransformer = null
+        ?TransformerInterface $falsyTransformer = null
     ) {
         $this->callback = $callback;
         $this->truthyTransformer = $truthyTransformer;
         $this->falsyTransformer = $falsyTransformer;
     }
 
-    /**
-     * @param Color $color
-     * @return Color
-     */
     public function transform(Color $color) : Color
     {
         if (call_user_func($this->callback, $color)) {

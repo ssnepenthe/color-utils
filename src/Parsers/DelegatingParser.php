@@ -9,22 +9,14 @@ use SSNepenthe\ColorUtils\Exceptions\InvalidArgumentException;
  */
 class DelegatingParser implements ParserInterface
 {
-    /**
-     * @var ParserResolverInterface
-     */
-    protected $resolver;
+    protected ParserResolverInterface $resolver;
 
-    /**
-     * @param ParserResolverInterface $resolver
-     */
     public function __construct(ParserResolverInterface $resolver)
     {
         $this->resolver = $resolver;
     }
 
     /**
-     * @param string $color
-     * @return array
      * @throws InvalidArgumentException
      */
     public function parse(string $color) : array
@@ -40,10 +32,6 @@ class DelegatingParser implements ParserInterface
         return $parser->parse($color);
     }
 
-    /**
-     * @param string $color
-     * @return bool
-     */
     public function supports(string $color) : bool
     {
         return false !== $this->resolver->resolve($color);
