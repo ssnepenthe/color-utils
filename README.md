@@ -2,7 +2,7 @@
 This package is intended to provide a variety of [SASS-like color manipulation functions](http://sass-lang.com/documentation/Sass/Script/Functions.html).
 
 ## Requirements
-Composer, PHP 7.0 or later.
+Composer, PHP 7.4 or later.
 
 ## Installation
 Install using Composer:
